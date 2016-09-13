@@ -1,0 +1,166 @@
+head test
+
+Head - 18 January 2012
+----------------------
+Tag LAST_BEFORE_64 created. The cvs distribution with this tag is the last
+available one for SLC4/32 bits only release.
+
+Head - 6 December 2010
+----------------------
+-"old" AjaxLogReader version moved to repository named : AjaxLogReader.withoutFileServer. If one wants to compile the old Ajax version,
+just rename the repository AjaxLogReader.withoutFileServer to AjaxLogReader before configuring & compiling.
+-AjaxLogReader default repository now holds the AjaxLogReaderWithFileServer files content, i.e. AjaxLogReaderWithFileServer is the default online application.
+
+Head - 4 November 2010
+----------------------
+-AjaxLogReadeWithFileServer application added. Allows to parse HDD on server side and to select an archived logfile to visualize into logReader applet.
+-FileServer application added. Base developement used prior to AjaxLogReadeWithFileServer developement, included into distribution in order to have a generic file access example
+
+Head - 26 September 2010
+----------------------
+-All Makefiles cleaned up and updated ; Makefiles now respects strictly the reallocable makefiles guidelines from xdaq
+-Conditional compilation option added to version information files (..V.cc and ..V.hh) to temporarily comply, on request, to GCC 4.4.3 (see
+previous entry in this file)
+
+Head - 26 September 2010
+----------------------
+Added the option --enable-compilewith_package_infos=yes(default)/no to configuration stage.
+On Fedora Core 12 with GCC 4.4.3, the way namespaces are declared in xdaq for retrieving package infos at instanciation creates me compilation/runtime problems.
+This point can be bypassed by, as a temporary solution, configuring as usual but with the extra argument --enable-compilewith_package_infos=no
+
+
+Head - 11 June 2010
+----------------------
+GED internals
+- Log files management system secured in case of loss of NFS mounted logging repository ; fallback set to /tmp as logging repository
+- Log files management factorized
+
+Head - 27 May 2010
+----------------------
+Bug corrected in AjaxLogReader, applet was crashing when a logfile change occured and at the same time multiple clients were connected to the Ajax server.
+
+GlobalErrorDispatcher changes
+-Faulty and/or useless checks to file acesses in diagBagWizard removed.
+-Threaded 4 type of logs according to pattern recognition applied to messages content, all thread goes to a different logfile
+--Standard messages (i.e. all but the following) ; only what gos into this file will be visualised under the AjaxLogReader applet
+--DCU readout and DCU workloop related messages
+--FED debug messages
+--FED temperature monitoring messages
+-MaxLogsInFile limit raised from 100K to 500K for each of the 4 types of files now created
+-RunNumber changes sent by RCMS (typically in case of STOP->START transition) now closes current logfiles and opens new logfiles specific to each run number ; No more run numbers mixed in one single file
+
+Head - 11 February 2010
+----------------------
+Cosmetic changes in AjaxLogReader hyperdaq default pages
+
+Head - 10 February 2010
+----------------------
+Intelligent filtering system added into modules AjaxLogReader and ErrorDbUploader
+-ErrorDbUploader
+--No upload at all of Fed Monitoring debug messages
+--Upload of first occurence of "DCU Workloop full" warn message emitted by FecSupervisor, then no upload of additional similar messages
+--Upload of first occurence of "DCU download error" error message emitted by FecSupervisor, then no upload of additional similar messages. In this case, similar means all fields exactly similar from FECHARDID down to I2CADDRESS.
+-AjaxLogReader
+--Added links onto the default hyperdaq webpage to choose on the fly to visualize or not the previous three types of messages.
+--Default startup configuration is : show all except Fed Monitoring debug messages
+--When show/hide options are changed on the AjaxLogReader xdaq default hyperdaq page, changes are applied on the fly. If, when option changed,the logfile is re-parsed into the GWT applet the modifications are taken into account.
+
+
+Head - 05 February 2010
+----------------------
+Beta version of module OfflineDbUploader added to CVS tree.
+
+
+Head - 29 January 2010
+----------------------
+-SOAP method implemented in GED, sends as reply the current run number if any. If RCMS has not yet assigned a run number to processes, returns "0".
+-ErrorDbUploader now makes direct connection to errDB, according to connection parameters defined in environment variable CONFDB.
+-ErrorDbUploader waits for a valid run number given by GED (see method implemented GED side) before beginning the logs upload process. Therefore all uploaded logs
+should have a valid run number, even the ones issued during initialization stage.
+-ErrorDbUploader uploads logs 1 per 1, and continue to cycle through logs when an upload fails due to misformed log structure content (bad timestamp, etc...).
+-The default page of GED displays statistics about the number of logs received and wrote into log file.
+-The default page of ErrorDbUploader displays statistics about the number of logs read from logfile, the number of logs successfully and unsuccessfully inserted
+into DB, and about insertion times measurments (min/max/mean).
+
+
+Head - 28 January 2010
+----------------------
+Bugfix. INFO messages that displayed during INITIALIZATION stage, even when startup settings cuts display at WARN or higher, does not display anymore.
+What's defined in settings files or default DS package behaviour is now exactly what's issued in logfiles.
+
+Head - 21 January 2010
+----------------------
+Pixels-BugFixed version (on CVS HEAD) tagged as PROD_P5_04
+
+Head - 21 January 2010
+----------------------
+Bug affecting Pixels corrected. Now the option --enable-compile_for_pixels will create, at configure time, the file toolbox/reportErrorReturnType.h. This file is used as header file to be included into DiagBagWizard.h file.
+In reportErrorReturnType.h the return type of reportError() methods (coded in DiagBagWizard.xx files) is defined as REPORT_ERROR_RETURN_TYPE according to the detector the package is compiled for.
+A string is returned for the pixels, containing the error message passed as one of the reportError() parameters when reportError() method is called. Void is the return type of reportError() method when the DS package is compiled for any other detector.
+
+Head - 03 April 2009
+--------------------
+- Default behaviour is to DISABLE posting to sentinel network. It avoids to have console logs flooded by unattended exceptions messages when ws-eventing system is not installed on network computers.
+
+Head - 18 March 2009
+---------------------
+- One million of changes, bugfixes, modules additions, DB connections, etc...
+- Configure script modified. To configure the package before compilation, please run :
+  -- For the Tracker : ./configure --enable-use_trackeronline_db --enable-compile_for_tracker  --enable-parse_tracker_xtra_buffer --enable-store_logs_to_trackerdb  --enable-use_gwtapplet_fireitems_viewer
+  -- For the Pixels : ./configure --enable-compile_for_pixels --enable-store_logs_to_pixelsdb
+  
+
+No tag - just checked in cvs : 16 July 2008
+--------------------------------------------
+- Automatic reconnection to Chainsaw when the appender is shutted down then restarted
+- Chainsaw can be instanciated AFTER the GED, the connection will still work
+- Environment variables added that, if present, overrides the first chainsaw stream settings for modes tuned, default and oldway
+  -- export TK_CS_MACHINE_NAME_FOR_GED=cmstkint11.cern.ch
+  -- export TK_CS_PORT_NUMBER_FOR_GED=4448
+  -- export TK_CS_RECEIVER_NAME_FOR_GED=testReceiver
+  -- export TK_CS_LOG_LEVEL_FOR_GED=DEBUG
+  
+  
+No tag - just checked in cvs : 20 March 2008
+--------------------------------------------
+Hardware errors tree in LogReader out of Beta, now works online 
+with the errors logfile used as passthrough.
+
+
+
+No tag - just checked in cvs : 17 March 2008
+--------------------------------------------
+DIAG_LOGREADER_USES_DB defined in DiagHeader.linux
+If setted to "yes" then LogReader will compile with online errors analysis. This option needs to compile against FEC Software.
+
+Log files management changed for GlobalErrorDispatcher.
+-Timestamp in filename is the timestamp of file opening
+-XML format of logfiles modified according to Umesh&Anton requirements for Errors DB
+
+Feature "Summarize received Logs" added to LogReader
+-Need, at runtime, the environnement information about online tk DB
+-Allows to see the arrival and propagation of hardware errors on the tracker structure
+-Class ErrorsChecker handles connection maps retrieved from Fred's classes. Used to handle errors propagation scheme.
+-Class ErrorsTreeBuilder handles tracker structure maps.Used to handle incoming errors scheme.
+
+CVS tag : "testing_1_2"
+Tag creation date : end of January 2007
+---------------------------------------
+- DiagSystem package now needs the FecSoftwareV3_0 package installed in order to compile because access to some header files is requested :
+    - FecSoftware header file needed : FecExceptionHandler.h
+    - FecSoftware header file needed : TkDiagErrorAnalyser.h
+- LogReader application needs to link against libDeviceDescriptions.so when compiled
+- LogReader application needs to link against Fed libraries when compiled (due to libDeviceDescriptions inlines)
+- Diagnostic tool added to the LogReader application. Can be accessed through the "Summarize received Logs" tab. Allows a structured view of errors listed by crate/slot/pmc/etc... Gives three views or correlated errors : FEC view, FED view, PSU view. Still in development, results displayed in this tab are not significative for now.
+
+
+CVS tag : "testing_1_2-pristine"
+Tag creation date : end of January 2007
+---------------------------------------
+- This version is not intended to be checked out and used as is, but see tag "testing_1_2" for approximative changelog.
+
+
+CVS tag : "LAST_STANDALONE"
+Tag creation date : Somewhere around mid January 2007
+-----------------------------------------------------
+- Last version which can be compiled as standalone, with no need of any external reference except xdaq.

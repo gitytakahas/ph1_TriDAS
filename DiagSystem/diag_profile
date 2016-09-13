@@ -1,0 +1,22 @@
+##########################################################
+# XDAQ environment variables
+export ENV_CMS_TK_BASE=/exports/xdaq/dev/
+export XDAQ_BASE=${ENV_CMS_TK_BASE}/TriDAS
+export XDAQ_ROOT=${XDAQ_BASE}
+export XDAQ_OS=linux
+export XDAQ_PLATFORM=x86
+
+
+##########################################################
+# DIAG related environment variables
+export JAVA_HOME=/opt/j2sdk1.4.2_06
+export PATH=$PATH:$JAVA_HOME/bin/
+export ANT_HOME=/opt/apache-ant-1.6.2
+export PATH=$PATH:$ANT_HOME/bin
+
+##########################################################
+# DIAG environment variables
+export ENV_CMS_TK_DIAG_HOME=DiagSystem
+export ENV_CMS_TK_DIAG_ROOT=${ENV_CMS_TK_BASE}/${ENV_CMS_TK_DIAG_HOME}
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ENV_CMS_TK_DIAG_ROOT}/tools/diagbag/lib/linux/x86:${ENV_CMS_TK_DIAG_ROOT}/tools/soapdiagappender/lib/linux/x86:${ENV_CMS_TK_DIAG_ROOT}/tools/xmldiagappender/lib/linux/x86
+

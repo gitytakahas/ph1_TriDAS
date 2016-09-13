@@ -1,0 +1,42 @@
+<xc:Partition xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <xc:Context url="http://127.0.0.1:14000">
+
+
+		<xc:Application class="DummySupervisor" id="30" instance="0" network="local">
+		    <properties xmlns="urn:xdaq-application:DummySupervisor" xsi:type="soapenc:Struct">
+		       <UseDiagSystem xsi:type="xsd:string">tuned</UseDiagSystem>
+		       <DiagSystemSettings xsi:type="xsd:string">/home/$${USER}$$/DiagSystem/settings/clientApp.set</DiagSystemSettings>
+			<UseDefaultAppender xsi:type="xsd:boolean">true</UseDefaultAppender>
+			<DefaultAppenderLogLevel xsi:type="xsd:string">TRACE</DefaultAppenderLogLevel>
+
+		    </properties>
+		</xc:Application>
+		<xc:Module>/home/lgross/DiagSystem/modules/DummySupervisor/lib/linux/x86_slc4/libDummySupervisor.so</xc:Module>
+
+
+
+        <xc:Application class="GlobalErrorDispatcher" id="41" instance="0" network="local">
+            <properties xmlns="urn:xdaq-application:GlobalErrorDispatcher" xsi:type="soapenc:Struct">	
+		       <UseDiagSystem xsi:type="xsd:string">tuned</UseDiagSystem>
+		       <DiagSystemSettings xsi:type="xsd:string">/home/$${USER}$$/DiagSystem/settings/glbEd.set</DiagSystemSettings>
+		       <LogFilePath xsi:type="xsd:string">/tmp/</LogFilePath>
+            </properties>
+        </xc:Application>
+        <xc:Module>/home/${USER}/DiagSystem/modules/GlobalErrorDispatcher/lib/linux/x86_slc4/libGlobalErrorDispatcher.so</xc:Module>
+
+
+
+        <xc:Application class="AjaxLogReaderWithFileServer" id="40" instance="0" network="local">
+            <properties xmlns="urn:xdaq-application:AjaxLogReaderWithFileServer" xsi:type="soapenc:Struct">	
+            </properties>
+        </xc:Application>
+        <xc:Module>/home/${USER}/DiagSystem/modules/AjaxLogReaderWithFileServer/lib/linux/x86_slc4/libAjaxLogReaderWithFileServer.so</xc:Module>
+
+
+    </xc:Context>
+
+
+</xc:Partition>

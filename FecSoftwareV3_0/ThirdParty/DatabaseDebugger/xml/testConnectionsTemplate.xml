@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<TrackerDescription><FedChannelList>
+<FedChannelConnection  fedId="4" fedChannel="0" apvAddress ="32" dcuHardId ="50467328"/>
+<FedChannelConnection  fedId="4" fedChannel="1" apvAddress ="34" dcuHardId ="42144768"/>
+</FedChannelList></TrackerDescription>

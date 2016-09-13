@@ -1,0 +1,51 @@
+# Do not modify this file anymore. Please refer to config/cvs_profile and modify depending of your hardware.
+# The FEC device driver does not need anymore modify for the different version.
+
+##################################################################
+# are we building against the XDAQ RPM? 
+XDAQ_RPMBUILD=@xdaq_rpmbuild@
+# OS and Plateform
+XDAQ_OS=@xdaq_os@
+XDAQ_PLATFORM=@xdaq_platform@
+# FecSoftwareV3_0 root directory
+FECSOFTWARE_ROOT=@fec_root@
+# Device driver directory
+DEVICEDRIVERPATH=${FECSOFTWARE_ROOT}/FecPciDeviceDriver
+# TriDAS root directory
+XDAQ_ROOT=@xdaq_base@
+# XERCES ROOT
+XERCESCROOT=@xerces_root@
+# HAL and SBS directories
+HALDIR=@hal_root@
+# HAL version: include ${HALDIR}/thisVersion.txt
+#export HALVER=`cat ${HALDIR}/thisVersion.txt | awk '{print $1}'`
+#SBS_DIR=@sbs_root@
+CAEN_DIR=@caen_root@
+# Linux sources for PCI device driver compilation
+# Since this option is not yet implemented then should be always yes
+PCIFEC_COMPILE=@pcifec_enabled@
+# USB FEC support
+USBFEC_COMPILE=@usbfec_enabled@
+# I2C bus speed (possible values are 100, 200, 400, 1000). Take care about this speed and use 100 KHz for your program. Higher speed need resistor for the termination of the I2C bus (for CCU 25)
+BUSI2CSPEED=100
+# DCU base address (usefull only for stable version greater than stable0703, stable0204, and last/CVS)
+DCUADDRESS=0x0
+# For detector specificity sources and flags (See config.FecRules.linux)
+# Possible values are (for the moment) => PRESHOWER, TRACKER, TOTEM => all the compilation is done with the preshower
+#DETECTOR=PRESHOWER
+#DETECTOR=TOTEM
+#DETECTOR=PIXEL
+DETECTOR=ALL
+# Debug messages in the applications
+DO_DEBUGFECSOFT=no
+# The next flags display all the registers in case of error but decrease the performace
+DO_DEBUGGETREGISTERS=no
+
+@fed9u_envvar@@fed9u_root@
+@icutils_envvar@@icutils_root@
+@tkcommon_envvar@@tk_common@
+@tkxdaq_envvar@@tk_xdaq@
+@diag_envvar@@diag_root@
+@oracle_envvar@@oracle_root@
+##################################################################
+#EOF

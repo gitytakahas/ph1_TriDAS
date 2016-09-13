@@ -1,0 +1,99 @@
+<xc:Partition xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <xc:Context url="http://cmstkint11.cern.ch:14000">
+
+
+		<!--xc:Module>${XDAQ_ROOT}/lib/libwsaddressing.so</xc:Module>
+		<xc:Module>${XDAQ_ROOT}/lib/libwseventing.so</xc:Module-->
+
+
+        <!-- WS-eventing -->
+		<xc:Application class="ws::service::Eventing" id="400"  network="local" group="exception" service="ws-eventing">
+                <properties xmlns="urn:xdaq-application:ws::service::Eventing" xsi:type="soapenc:Struct">
+                </properties>
+        </xc:Application>
+        <xc:Module>${XDAQ_ROOT}/lib/libxalanMsg.so</xc:Module>
+        <xc:Module>${XDAQ_ROOT}/lib/libxalan-c.so</xc:Module>
+        <xc:Module>${XDAQ_ROOT}/lib/libxoapfilter.so</xc:Module>
+        <xc:Module>${XDAQ_ROOT}/lib/libwsaddressing.so</xc:Module>
+        <xc:Module>${XDAQ_ROOT}/lib/libwseventing.so</xc:Module>
+        <xc:Module>${XDAQ_ROOT}/lib/libwsserviceeventing.so</xc:Module>
+
+
+
+
+
+		<xc:Application class="xplore::Application" id="9"  network="local">
+		    <properties xmlns="urn:xdaq-application:xplore::Application" xsi:type="soapenc:Struct">
+        		<settings xsi:type="xsd:string">/home/lgross/TriDAS.3.11.0/daq/xplore/xml/shortcuts.xml</settings>
+		    </properties>
+		</xc:Application>       
+		<xc:Module>/lib/libslp.so</xc:Module>
+		<xc:Module>${XDAQ_ROOT}/lib/libxslp.so</xc:Module>
+		<xc:Module>${XDAQ_ROOT}/lib/libxploreutils.so</xc:Module>
+		<xc:Module>${XDAQ_ROOT}/lib/libxplore.so</xc:Module>
+
+
+
+
+		<xc:Application class="sentinel::Application" id="21"  network="local"  group="exception" service="sentinel">
+		    <properties xmlns="urn:xdaq-application:Sentinel" xsi:type="soapenc:Struct">
+		        <useDiscovery xsi:type="xsd:boolean">true</useDiscovery>
+		        <publish xsi:type="xsd:string">exception</publish>
+		        <watchdog xsi:type="xsd:string">PT1S</watchdog>
+		    </properties>
+		</xc:Application>
+        <xc:Module>${XDAQ_ROOT}/lib/libwsaddressing.so</xc:Module>
+        <xc:Module>${XDAQ_ROOT}/lib/libwseventing.so</xc:Module>
+		<xc:Module>${XDAQ_ROOT}/lib/libsentinelutils.so</xc:Module>     
+		<xc:Module>${XDAQ_ROOT}/lib/libsentinel.so</xc:Module>
+
+
+
+		<xc:Application class="SentinelSender" id="100"  network="local" group="default">
+		    <properties xmlns="urn:xdaq-application:SentinelSender" xsi:type="soapenc:Struct">
+		    </properties>
+		</xc:Application>
+		<xc:Module>/home/lgross/DiagSystem/modules/SentinelSender/lib/linux/x86_slc4/libSentinelSender.so</xc:Module>
+
+		<!--xc:Application class="sentinel::dashboard::Application" id="210"  network="local"  group="exception" service="sentinel-dashboard-1">
+			<properties xmlns="urn:xdaq-application:dashboard:Application" xsi:type="soapenc:Struct">
+				<useDiscovery xsi:type="xsd:boolean">true</useDiscovery>
+				<subscribeGroup xsi:type="xsd:string">exception</subscribeGroup>
+			</properties>
+		</xc:Application>
+		<xc:Module>${XDAQ_ROOT}/lib/libsentineldashboard.so</xc:Module-->
+
+		<xc:Application class="TkDashBoard" id="220"  network="local"  group="exception" service="sentinel-tkdashboard">
+			<properties xmlns="urn:xdaq-application:TkDashBoard" xsi:type="soapenc:Struct">
+				<useDiscovery xsi:type="xsd:boolean">true</useDiscovery>
+				<subscribeGroup xsi:type="xsd:string">exception</subscribeGroup>
+			</properties>
+		</xc:Application>
+		<xc:Module>/home/lgross/DiagSystem/modules/TkDashBoard/lib/linux/x86_slc4/libTkDashBoard.so</xc:Module>
+
+
+
+    </xc:Context>
+
+
+</xc:Partition>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

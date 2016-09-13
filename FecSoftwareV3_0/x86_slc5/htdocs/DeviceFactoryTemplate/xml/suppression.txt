@@ -1,0 +1,403 @@
+{
+<CAEN0>
+   Memcheck:Param
+   open(mode)
+   fun:__open_nocancel
+   fun:CAENVME_Init
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN1>
+   Memcheck:Cond
+   obj:/usr/lib/libCAENVME.so.2.3
+   fun:CAENVME_Init
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN2>
+   Memcheck:Param
+   open(mode)
+   fun:__open_nocancel
+   fun:CAENVME_Init
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN3>
+   Memcheck:Cond
+   obj:/usr/lib/libCAENVME.so.2.3
+   fun:CAENVME_Init
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN4>
+   Memcheck:Cond
+   fun:CAENVME_GetFIFOMode
+   fun:CAENVME_Init
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN5>
+   Memcheck:Value4
+   fun:vfprintf
+   fun:vsprintf
+   fun:sprintf
+   fun:CAENVME_BoardFWRelease
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN6>
+   Memcheck:Cond
+   fun:vfprintf
+   fun:vsprintf
+   fun:sprintf
+   fun:CAENVME_BoardFWRelease
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN7>
+   Memcheck:Cond
+   fun:vfprintf
+   fun:vsprintf
+   fun:sprintf
+   fun:CAENVME_BoardFWRelease
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN8>
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   obj:/usr/lib/libCAENVME.so.2.3
+   fun:CAENVME_BoardFWRelease
+   fun:_ZN3HAL19CAENLinuxBusAdapterC1ENS0_9CAENModelEii
+   fun:_ZN16FecVmeRingDevice16createBusAdapterEmSs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN9>
+   Memcheck:Cond
+   fun:CAENVME_ReadCycle
+   fun:_ZN3HAL19CAENLinuxBusAdapter4readEPNS_16DeviceIdentifierEmmmPm
+   fun:_ZNK3HAL9VMEDevice12hardwareReadERKNS_22GeneralHardwareAddressEPmm
+   fun:_ZNK3HAL14HardwareDevice12unmaskedReadESsPmm
+   fun:_ZN16FecVmeRingDevice14detectVmeBoardEPN3HAL12VME64xDeviceEh
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<CAEN10>
+   Memcheck:Cond
+   fun:CAENVME_ReadCycle
+   fun:_ZN3HAL19CAENLinuxBusAdapter4readEPNS_16DeviceIdentifierEmmmPm
+   fun:_ZNK3HAL27VMEConfigurationSpaceDevice12hardwareReadERKNS_22GeneralHardwareAddressEPmm
+   fun:_ZNK3HAL14HardwareDevice4readESsPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler10configReadESsmPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler20containsVME64xModuleEm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler22checkVME64xConfigSpaceEm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+}
+{
+<HAL0>
+   Memcheck:Cond
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler20containsVME64xModuleEm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler22checkVME64xConfigSpaceEm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<HAL1>
+   Memcheck:Cond
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler18getUserROMIntervalEm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<HAL3>
+   Memcheck:Cond
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler18getUserROMIntervalEm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler12readROMBlockEmmmPSt6vectorIhSaIhEE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+
+{
+<HAL4>
+   Memcheck:Cond
+   fun:_ZNK3HAL14HardwareDevice4readESsPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler10configReadESsmPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler8saveReadESsmPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler12readROMBlockEmmmPSt6vectorIhSaIhEE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+}
+{
+<HAL5>
+   Memcheck:Cond
+   fun:_ZNK3HAL15VMEAddressTable18checkAddressLimitsERKNS_22GeneralHardwareAddressEm
+   fun:_ZNK3HAL14HardwareDevice4readESsPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler10configReadESsmPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler8saveReadESsmPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler12readROMBlockEmmmPSt6vectorIhSaIhEE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+}
+{
+<CAEN11>
+   Memcheck:Cond
+   fun:CAENVME_ReadCycle
+   fun:_ZN3HAL19CAENLinuxBusAdapter4readEPNS_16DeviceIdentifierEmmmPm
+   fun:_ZNK3HAL27VMEConfigurationSpaceDevice12hardwareReadERKNS_22GeneralHardwareAddressEPmm
+   fun:_ZNK3HAL14HardwareDevice4readESsPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler10configReadESsmPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler8saveReadESsmPmm
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler12readROMBlockEmmmPSt6vectorIhSaIhEE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+}
+{
+<HAL6>
+   Memcheck:Cond
+   fun:_vgrZU_libcZdsoZa_strlen
+   fun:_ZNSsC1EPKcRKSaIcE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<HAL6>
+   Memcheck:Cond
+   fun:_vgrZU_libcZdsoZa_strlen
+   fun:_ZNSsC1EPKcRKSaIcE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<HAL7>
+   Memcheck:Leak
+   fun:_vgrZU_libstdcZpZpZa__Znwj
+   fun:_ZN3HAL26VMEAddressTableASCIIReaderC1ESs
+   fun:_ZN16FecVmeRingDevice24configureHardBaseAddressEmSsmjSs
+   fun:_ZN9FecAccess22configureBaseAddressesEmSsPKmSs
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<HAL8>
+   Memcheck:Cond
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler12readROMBlockEmmmPSt6vectorIhSaIhEE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<HAL9>
+   Memcheck:Cond
+   fun:_vgrZU_libcZdsoZa_strlen
+   fun:_ZNSsC1EPKcRKSaIcE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<HAL10>
+   Memcheck:Cond
+   fun:_vgrZU_libcZdsoZa_strlen
+   fun:_ZNSsC1EPKcRKSaIcE
+   fun:_ZNK3HAL28VMEConfigurationSpaceHandler16readSerialNumberEm
+   fun:_ZN16FecVmeRingDevice15getSerialNumberEmm
+   fun:_ZN16FecVmeRingDeviceC1EPN3HAL12VME64xDeviceEhhb31fecRingDeviceFifoAccessModeEnumm
+   fun:_ZN9FecAccess16setFecRingDeviceEj
+   fun:_ZN9FecAccess11scanFecRingEhhhh
+   fun:_ZN9FecAccess16setInitFecAccessEbbbbthhhh
+   fun:_ZN9FecAccessC1EmSsPKmbbbbtSsb
+   fun:_ZN9FecAccess15createFecAccessEiPPcPibtb
+   fun:_Z15createFecAccessiPPcPi
+   fun:main
+}
+{
+<XERCES1>
+   Memcheck:Cond
+   fun:_ZN11xercesc_2_717XMLUTF8Transcoder13transcodeFromEPKhjPtjRjPh
+   fun:_ZN11xercesc_2_79XMLReader14xcodeMoreCharsEPtPhj
+   fun:_ZN11xercesc_2_79XMLReader17refreshCharBufferEv
+   fun:_ZN11xercesc_2_79ReaderMgr12peekNextCharEv
+   fun:_ZN11xercesc_2_710XMLScanner10scanPrologEv
+   fun:_ZN11xercesc_2_712IGXMLScanner12scanDocumentERKNS_11InputSourceE
+   fun:_ZN11xercesc_2_717SAX2XMLReaderImpl5parseERKNS_11InputSourceE
+   fun:_ZN6XMLFec14parseXMLBufferEv
+   fun:_ZN12XMLFecDevice10getDevicesEv
+   fun:_ZN16FecDeviceFactory11addFileNameESs
+   fun:_ZN16FecDeviceFactory16setInputFileNameESs
+   fun:_ZN10FecFactory16setInputFileNameESs
+}
+{
+<XERCES2>
+   Memcheck:Cond
+   fun:_ZN11xercesc_2_717XMLUTF8Transcoder13transcodeFromEPKhjPtjRjPh
+   fun:_ZN11xercesc_2_79XMLReader14xcodeMoreCharsEPtPhj
+   fun:_ZN11xercesc_2_79XMLReader17refreshCharBufferEv
+   fun:_ZN11xercesc_2_79XMLReader16getNextCharIfNotEtRt
+   fun:_ZN11xercesc_2_712IGXMLScanner12scanCharDataERNS_9XMLBufferE
+   fun:_ZN11xercesc_2_712IGXMLScanner11scanContentEv
+   fun:_ZN11xercesc_2_712IGXMLScanner12scanDocumentERKNS_11InputSourceE
+   fun:_ZN11xercesc_2_717AbstractDOMParser5parseERKNS_11InputSourceE
+   fun:_ZN11xercesc_2_712IGXMLScanner20resolveSchemaGrammarEPKtS2_
+   fun:_ZN11xercesc_2_712IGXMLScanner28scanRawAttrListforNameSpacesEi
+   fun:_ZN11xercesc_2_712IGXMLScanner14scanStartTagNSERb
+   fun:_ZN11xercesc_2_712IGXMLScanner11scanContentEv
+}
+{
+<CAEN12>
+   Memcheck:Cond
+   fun:CAENVME_WriteCycle
+   fun:_ZN3HAL19CAENLinuxBusAdapter5writeEPNS_16DeviceIdentifierEmmmm
+   fun:_ZNK3HAL9VMEDevice13hardwareWriteERKNS_22GeneralHardwareAddressEmm
+   fun:_ZNK3HAL14HardwareDevice13unmaskedWriteESsmNS_15HalVerifyOptionEm
+   fun:_ZN16FecVmeRingDevice13setFecRingCR1Et
+   fun:_ZN13FecRingDevice10writeFrameEPhb
+   fun:_ZN13FecRingDevice10getCcuTypeEjPm
+   fun:_ZN13FecRingDevice10getCcuTypeEj
+   fun:_ZN13FecRingDevice10connectCCUEj
+   fun:_ZN13FecRingDevice15basicCheckErrorEj
+   fun:_ZN13FecRingDevice16setChannelEnableEjb
+   fun:_ZN9piaAccess16setChannelEnableEb
+}
+

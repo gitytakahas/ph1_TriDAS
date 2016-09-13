@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------------------------------------
+
+PrintUsage()
+{
+	echo "Usage: RunMaskCheck <test directory>"
+}
+
+#----------------------------------------------------------------------------------------------------
+
+# check number of parameters
+if [ $# -lt 1 ]
+then
+	PrintUsage
+	exit 1
+fi
+dir="$1"
+
+# check if directory exists
+if [ ! -d "$dir" ]
+then
+	echo "$dir is not a directory"
+	PrintUsage
+	exit 2
+fi
+
+# check presence of MonitorCfg.xml
+if [ ! -f "$dir/MonitorCfg.xml" ]
+then
+	echo "$dir is not a test directory"
+	PrintUsage
+	exit 3
+fi
+
+#----------------------------------------------------------------------------------------------------
+
+# run the check
+CWD=`pwd`
+cd "$dir"
+
+#echo "$dir"
+monitor TTP Mask "Summary.txt" &> /dev/null
+return=$?
+
+#echo "Mask Check return code: $return"
+
+if [ $return=100 ]
+then
+#	echo "Mask Check returns <$return>, no serious problems"
+	exit 100
+else
+	echo "Mask Check returns <$return>, SERIOUS problems"
+	exit 110
+fi
+

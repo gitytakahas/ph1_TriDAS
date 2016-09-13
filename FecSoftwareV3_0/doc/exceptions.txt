@@ -1,0 +1,394 @@
+---# FEC errors codes
+
+---++ Write a frame
+
+---+++ The next errors are the check done before sending the command other the ring
+
+---++++ Error 25
+   * *Software define:* DD_NO_MORE_FREE_TRANSACTION_NUMBER
+   * *Error message:* \FecRingDevice::writeFrame: no more transaction number available, all are in used
+
+---++++ Error 29
+   * *Software define:* DD_TOO_LONG_FRAME_LENGTH
+   * *Error message:* \FecRingDevice::writeFrame: size in frame is bigger than the FIFO size
+   * *Precompilation flag:* S2NDLEVELCHECK
+
+---++++ Error 210
+   * *Software define:* TSCFEC_SR0NOTNOMINAL
+   * *Error message:* \FecRingDevice::writeFrame: The FEC status register 0 is not correct
+	
+---++++ Error 72
+   * *Software define:* DD_FIFOTRA_RUNNING_FLAG_IS_ALWAYS_ON
+   * *Error message:* \FecRingDevice::writeFrame: FIFO transmit empty and you try to toggle the bit send (CR0[3])
+   * *Precompilation flag:* S2NDLEVELCHECK
+
+---+++ The next errors appears after the command is sent other the ring.
+
+---++++ Error 72
+   * *Software define:* DD_FIFOTRA_RUNNING_FLAG_IS_ALWAYS_ON
+   * *Error message:* \FecRingDevice::writeFrame: FIFO transmit running bit is always ON
+
+---++++ Error 64
+   * *Software define:* DD_WRITE_OPERATION_FAILED
+   * *Error message:* \FecRingDevice::writeFrame: timeout reached on the direct acknowledge
+
+---++++ Error 70
+   * *Software define:* DD_DATA_OVERFLOW
+   * *Error message:* \FecRingDevice::writeFrame: size in the direct acknowledge is bigger than the FIFO size
+
+---++++ Error 251
+   * *Software define:* TSCFEC_BADDIRECTACKNOWLEDGE
+   * *Error message:* \FecRingDevice::writeFrame: corrupted direct acknowledge status: size between the original frame and the direct acknowledge is changed
+   * *Precompilation flag:* S2NDLEVELCHECK
+
+---++++ Error 251
+   * *Software define:* TSCFEC_BADDIRECTACKNOWLEDGE
+   * *Error message:* \FecRingDevice::writeFrame: corrupted direct acknowledge status: the original transaction number and the direct ack. transaction number is different
+
+---++++ Error 23
+   * *Software define:* DD_DATA_CORRUPT_ON_WRITE
+   * *Error message:* \FecRingDevice::writeFrame: bad direct acknowledge status
+
+---++ Read a frame
+
+---+++ Error 68
+   * *Software define:* DD_CANNOT_READ_DATA
+   * *Error message:* \FecRingDevice::readFrame: Unable to read a frame or the force acknowledge, timeout reached
+
+---+++ Error 252
+   * *Software define:* TSCFEC_BADFACKORREADANS
+   * *Error message:* \FecRingDevice::readFrame: size in frame is bigger than the FIFO size
+
+---+++ Error 252
+   * *Software define:* TSCFEC_BADFACKORREADANS
+   * *Error message:* \FecRingDevice::readFrame: the original transaction number and the direct ack. transction number is different
+
+---+++ Error 70
+   * *Software define:* DD_DATA_OVERFLOW
+   * *Error message:* \FecRingDevice::readFrame: the size expected is different than the size received
+
+---+++ Error 230
+   * *Software define:* TSCFEC_I2CREGISTERACCESS
+   * *Error message:* \FecRingDevice::readFrame: the status at the end of the frame is not correct
+	
+
+----# Other Error Codes
+
+The error code 221 is duplicated for TSCFEC_FECPARAMETERNOTMANAGED and TSCFEC_INVALIDOPERATION. Since the 24 of january 2004, the TSCFEC_INVALIDOPERATION is now numbered as 224.
+
+---+++ Error 221 (basicCheckError)
+   * *Method:* \FecRingDevice::basicCheckError ( keyType index )
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::basicCheckError: wrong FEC slot or wrong ring slot
+   * *Precompilation flag:* S2NDLEVELCHECK
+
+---+++ Error 221 (basicCheckError)
+   * *Method:* \FecRingDevice::basicCheckError ( keyType index )
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::basicCheckError: (CCU 25): wrong channel slot
+   * *Precompilation flag:* S2NDLEVELCHECK
+
+---+++ Error 222 (fecRingRelease)
+   * *Method:* \FecRingDevice::fecRingRelease
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::fecRingRelease: FIFO transmit running bit is always ON
+
+---+++ Error 222 (emptyFifoReceive)
+   * *Method:* \FecRingDevice::emptyFifoReceive 
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::emptyFifoReceive: FEC recv. fifo could not be emptyied
+
+---+++ Error 222 (emptyFifoReturn)
+   * *Method:* \FecRingDevice::emptyFifoReturn 
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::emptyFifoReturn: FEC recv. fifo could not be emptyied
+
+---+++ Error 222 (emptyFifoTransmit)
+   * *Method:* \FecRingDevice::emptyFifoTransmit
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::emptyFifoTransmit: FEC recv. fifo could not be emptyied
+
+---+++ Error 250 (fecScanRingBroadcast)
+   * *Method:* \FecRingDevice::fecScanRingBroadcast
+   * *Software define:* TSCFEC_CODECONSISTENCYERROR
+   * *Error message:* \FecRingDevice::fecScanRingBroadcast: code consistency error when I try to scan the ring for CCU
+
+---+++ Error 260 (fecScanRingBroadcast)
+   * *Method:* \FecRingDevice::fecScanRingBroadcast 
+   * *Software define:* TSCFEC_CCUADDRESSDUPLICATEDERROR
+   * *Error message:* \FecRingDevice::fecScanRingBroadcast: code consistency error when I try to scan the ring for CCU, several CCUs have the same address
+
+---+++ Error 210 (fecRingReconfigure)
+   * *Method:* \FecRingDevice::fecRingReconfigure
+   * *Software define:* TSCFEC_SR0NOTNOMINAL
+   * *Error message:* \FecRingDevice::fecRingReconfigure: ring reconfiguration is useless, the ring is closed
+
+---+++ Error 224 (fecRingReconfigure)
+   * *Method:* \FecRingDevice::fecRingReconfigure 
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::fecRingReconfigure: invalid command for old CCUs, the ring cannot be reconfigured
+
+---+++ Error 224 (fecRingReconfigure)
+   * *Method:* \FecRingDevice::fecRingReconfigure
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::fecRingReconfigure: not enough CCUs (0 or 1 CCU is available)
+
+---+++ Error 221 (setCcuRegister)
+   * *Method:* \FecRingDevice::setCcuRegister
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setCcuRegister: the CCU is not present on the ring
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (setCcuRegister)
+   * *Method:* \FecRingDevice::setCcuRegister
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setCcuRegister: invalid command
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 221 (getCcuRegister)
+   * *Method:* \FecRingDevice::getCcuRegister
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::getCcuRegister: the CCU is not present on the ring
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (getCcuRegister)
+   * *Method:* \FecRingDevice::getCcuRegister
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::getCcuRegister: invalid command
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 222 (getCcuRegister)
+   * *Method:* \FecRingDevice::getCcuRegister
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::getCcuRegister: cannot read back CCU register (bad size in frame
+
+---+++ Error 224 (setCcuRegister)
+   * *Method:* \FecRingDevice::setCcuRegister   
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setCcuRegister(RMW): setting the CCU CRA by read-modify-write cannot be used
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (setCcuRegister(RMW))
+   * *Method:* \FecRingDevice::setCcuRegister(RMW)
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setCcuRegister(RMW): invalid logical operation (cannot set a CCU register (RMW))
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (setCcuCRC)
+   * *Method:* \FecRingDevice::setCcuCRC
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setCcuCRC: invalid value to be set on a CCU register C
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (setCcuCRC(RMW))
+   * *Method:* \FecRingDevice::setCcuCRC(RMW)
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setCcuCRC(RMW): invalid value to be set on a CCU register C
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (setCcuCRE)
+   * *Method:* \FecRingDevice::setCcuCRE
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setCcuCRE: cannot set to control register E for old CCUs
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (setCcuCRE(RMW))
+   * *Method:* \FecRingDevice::setCcuCRE(RMW)
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setCcuCRE(RMW): invalid logical operation (cannot set a FEC register (RMW))
+
+---+++ Error 221 (setChannelEnable)
+   * *Method:* \FecRingDevice::setChannelEnable
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setChannelEnable: wrong CCU channel number
+   
+---+++ Error 221 (setChannelEnable)
+   * *Method:* \FecRingDevice::setChannelEnable
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setChannelEnable: PIA channels cannot be used on old CCUs
+
+---+++ Error 221 (setChannelEnable)
+   * *Method:* \FecRingDevice::setChannelEnable
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setChannelEnable: memory channel cannot be used on old CCUs
+
+---+++ Error 221 (setChannelEnable)
+   * *Method:* \FecRingDevice::setChannelEnable
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setChannelEnable: trigger channel cannot be used on old CCUs
+
+---+++ Error 221 (setChannelEnable)
+   * *Method:* \FecRingDevice::setChannelEnable
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setChannelEnable: JTAG channel cannot be used on old CCUs
+
+---+++ Error 224 (waitForAnyCcuAlarms)
+   * *Method:* \FecRingDevice::waitForAnyCcuAlarms
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::waitForAnyCcuAlarms: Cannot wait for alarms, they are not enabled
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 250 (waitForAnyCcuAlarms)
+   * *Method:* \FecRingDevice::waitForAnyCcuAlarms
+   * *Software define:* TSCFEC_CODECONSISTENCYERROR
+   * *Error message:* \FecRingDevice::waitForAnyCcuAlarms: Method not yet implemented, please contact us for the implementation !
+
+---+++ Error 222 (waitForAnyCcuAlarms)
+   * *Method:* \FecRingDevice::waitForAnyCcuAlarms
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::waitForAnyCcuAlarms: Unable to read a frame in FIFO return
+
+---+++ Error 250 (waitForAnyCcuAlarms)
+   * *Method:* \FecRingDevice::waitForAnyCcuAlarms
+   * *Software define:* TSCFEC_CODECONSISTENCYERROR
+   * *Error message:* \FecRingDevice::waitForAnyCcuAlarms: size in frame is bigger than the FIFO size => cannot be !
+   * *Precompilation flag:* S2NDLEVELCHECK
+
+---+++ Error 221 (waitForAnyCcuAlarms)
+   * *Method:* \FecRingDevice::waitForAnyCcuAlarms
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::waitForAnyCcuAlarms: CCU alarms cannot be used with old CCUs
+
+---+++ Error 222 (waitForAnyCcuAlarms)
+   * *Method:* \FecRingDevice::waitForAnyCcuAlarms
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::waitForAnyCcuAlamrs: Unable to read a frame in FIFO return: no data in the FIFO return
+
+---+++ Error 250 (waitForAnyCcuAlarms)
+   * *Method:* \FecRingDevice::waitForAnyCcuAlarms
+   * *Software define:* TSCFEC_CODECONSISTENCYERROR
+   * *Error message:* \FecRingDevice::waitForAnyCcuAlarms: size in frame is bigger than the FIFO size => cannot be !
+   * *Precompilation flag:* S2NDLEVELCHECK
+
+---+++ Error 224 (setChannelRegister)
+   * *Method:* \FecRingDevice::setChannelRegister
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setChannelRegister: invalid command
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (setChannelRegister(RMW))
+   * *Method:* \FecRingDevice::setChannelRegister(RMW)
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setChannelRegister(RMW): invalid command
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 224 (setChannelRegister(RMW))
+   * *Method:* \FecRingDevice::setChannelRegister(RMW)
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setChannelRegister(RMW): invalid logical operation (cannot set a channel register (RMW))
+
+---+++ Error 224 (getChannelRegister)
+   * *Method:* \FecRingDevice::getChannelRegister
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::getChannelRegister: invalid command
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 221 (setInitPiaChannel)
+   * *Method:* \FecRingDevice::setInitPiaChannel
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setInitPiaChannel: PIA channels cannot be used on old CCUs
+
+---+++ Error 221 (setPiaChannelDDR)
+   * *Method:* \FecRingDevice::setPiaChannelDDR
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setPiaChannelDDR: the CCU is not present on the ring
+
+---+++ Error 221 (setPiaChannelDDR(RMW))
+   * *Method:* \FecRingDevice::setPiaChannelDDR(RMW)
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setPiaChannelDDR: the CCU is not present on the ring
+
+---+++ Error 221 (setPiaInterruptEnable)
+   * *Method:* \FecRingDevice::setPiaInterruptEnable
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setCcuAlarms: CCU alarms cannot be used with old CCUs
+
+---+++ Error 221 (setPiaClearInterrupts)
+   * *Method:* \FecRingDevice::setPiaClearInterrupts
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setCcuAlarms: CCU alarms cannot be used with old CCUs
+
+---+++ Error 221 (seti2cChannelCRA)
+   * *Method:* \FecRingDevice::seti2cChannelCRA
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::seti2cChannelCRA: the CCU is not present on the ring
+
+---+++ Error 221 (isChannelEnabled)
+   * *Method:* \FecRingDevice::isChannelEnabled
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::setChannelEnable: Other channels than i2c channels cannot be used on old CCUs
+
+---+++ Error 224 (setMemoryChannelWinReg)
+   * *Method:* \FecRingDevice::setMemoryChannelWinReg
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setMemoryChannelWinReg: invalid command to access memory channel register
+
+---+++ Error 221 (getMemoryChannelWinReg)
+   * *Method:* \FecRingDevice::getMemoryChannelWinReg
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::getMemoryChannelWinReg: memory channel cannot be used on old CCUs
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 222 (getMemoryChannelWinReg)
+   * *Method:* \FecRingDevice::getMemoryChannelWinReg
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::getMemoryChannelWinReg: cannot read back memory channel register (bad size in frame)
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 221 (writeIntoMemory)
+   * *Method:* \FecRingDevice::writeIntoMemory
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::writeIntoMemory: Too many bytes to be written in the memory channel
+
+---+++ Error 224 (writeIntoMemory(RMW))
+   * *Method:* \FecRingDevice::writeIntoMemory(RMW)
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::writeIntoMemory(RMW): invalid logical operation (cannot set values into memory channel (RMW))
+
+---+++ Error 222 (readFromMemory)
+   * *Method:* \FecRingDevice::readFromMemory
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::readFromMemory: memory channel read error in single byte mode, cannot read back the value (bad size in frame)
+
+---+++ Error 221 (readFromMemory(RMW))
+   * *Method:* \FecRingDevice::readFromMemory(RMW)
+   * *Software define:* TSCFEC_FECPARAMETERNOTMANAGED
+   * *Error message:* \FecRingDevice::readFromMemory: Too many bytes to be read from memory
+
+---+++ Error 224 (getTriggerChannelCounter)
+   * *Method:* \FecRingDevice::getTriggerChannelCounter
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::getTriggerChannelCounter: old CCU not supported
+   * *Precompilation flag:* T3TDLEVELCHECK
+
+---+++ Error 222 (getTriggerChannelCounter)
+   * *Method:* \FecRingDevice::getTriggerChannelCounter
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::getTriggerChannelCounter: cannot read back a trigger counter register (bad size in frame)
+
+---+++ Error 210 (setBlockDevices)
+   * *Method:* \FecRingDevice::setBlockDevices
+   * *Software define:* TSCFEC_SR0NOTNOMINAL
+   * *Error message:* \FecRingDevice::setBlockDevices: The FEC status register 0 is not correct, the frame is not sent
+
+---+++ Error 224 (setBlockDevices)
+   * *Method:* \FecRingDevice::setBlockDevices
+   * *Software define:* TSCFEC_INVALIDOPERATION
+   * *Error message:* \FecRingDevice::setBlockDevices: This method is forseen only for PIA or I2C channels
+   * *Precompilation flag:* S2NDLEVELCHECK
+
+---+++ Error 72 (setBlockDevices)
+   * *Method:* \FecRingDevice::setBlockDevices
+   * *Software define:* DD_FIFOTRA_RUNNING_FLAG_IS_ALWAYS_ON
+   * *Error message:* \FecRingDevice::setBlockDevices: FIFO transmit running bit is always ON
+
+---+++ Error 222 (setBlockDevices)
+   * *Method:* \FecRingDevice::setBlockDevices
+   * *Software define:* TSCFEC_REGISTERACCESS
+   * *Error message:* \FecRingDevice::setBlockDevices: some transactions has been not managed correctly (software problem)
+   * *Precompilation flag:* F1STLEVELCHECK
+
+---+++ Error 210 (setBlockDevices)
+   * *Method:* \FecRingDevice::setBlockDevices
+   * *Software define:* TSCFEC_SR0NOTNOMINAL
+   * *Error message:* \FecRingDevice::setBlockDevices: The FEC status register 0 is not correct, the next frames are not sent

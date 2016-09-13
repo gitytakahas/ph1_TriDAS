@@ -1,0 +1,9 @@
+#!/bin/bash
+# This is to be used in normal runs: just releases the trigger
+
+#sudo /home/xdaq/LVDSAdapter/setPrinterPort.0
+
+# This it to set trigger sequences for calibration runs (threshold, calpulse latency)
+
+sudo /home/xdaq/LVDSAdapter/writePrinter.command
+usleep 200000

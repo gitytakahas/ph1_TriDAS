@@ -1,0 +1,69 @@
+<?xml version='1.0'?>
+<xc:Partition
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30">
+
+	<!-- Declare a context that contain applcation -->
+    	<xc:Context id = "0" url="http://cmstkint02:13000">
+		
+
+		<!-- Declare the ErrorDispatcher first -->
+                <xc:Application class="ErrorDispatcher" id="31" instance="0" network="local"/>
+		
+		<!-- Shared object library that contains the ErrorDispatcher inplementation -->		
+		<xc:Module>/exports/xdaq/dev35/DiagSystem/modules/ErrorDispatcher/lib/linux/x86/libErrorDispatcher.so</xc:Module>
+
+
+		<!-- Declare a DummySupervisor application -->
+                <xc:Application class="DummySupervisor" id="30" instance="0" network="local">
+		    <properties xmlns="urn:xdaq-application:FecSupervisor" xsi:type="soapenc:Struct">
+		       <!-- DEFAULT Appender Parameters -->
+		       <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+		       <DefaultAppenderLogLevel xsi:type="xsd:string">WARN</DefaultAppenderLogLevel>
+		       <DuplicateMsgToLocalConsole xsi:type="xsd:boolean">true</DuplicateMsgToLocalConsole>
+		       <!-- SENTINEL Parameters -->
+		       <UseSentinel xsi:type="xsd:boolean">false</UseSentinel>
+		       <SentinelAppenderLogLevel xsi:type="xsd:string">ERROR</SentinelAppenderLogLevel>
+		       <PushErrorsToContext xsi:type="xsd:string">TestErrorsPool</PushErrorsToContext>
+		       <UseSentinelRelayedEm xsi:type="xsd:boolean">false</UseSentinelRelayedEm>
+		       <!-- ERROR DISPATCHER Parameters -->
+		       <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+		       <ErrorDispatcherLogLevel xsi:type="xsd:string">DEBUG</ErrorDispatcherLogLevel>
+		       <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+		       <ErrorDispatcherInstance xsi:type="xsd:string">0</ErrorDispatcherInstance>
+		       <ErrorDispatcherLID xsi:type="xsd:string">31</ErrorDispatcherLID>
+		       <ErrorDispatcherIP xsi:type="xsd:string">cmstkint02.cern.ch</ErrorDispatcherIP>
+		       <ErrorDispatcherPort xsi:type="xsd:string">13000</ErrorDispatcherPort>
+		       <!-- LEVEL 1 Parameters -->
+		       <UseErrorManager xsi:type="xsd:boolean">false</UseErrorManager>
+		       <ErrorManagerName xsi:type="xsd:string">DummySupervisorDiagLvl1</ErrorManagerName>
+		       <ErrorManagerInstance xsi:type="xsd:string">0</ErrorManagerInstance>
+		       <ErrorManagerLID_ xsi:type="xsd:string">31</ErrorManagerLID_>
+		       <ErrorManagerIP xsi:type="xsd:string">cmstkint02.cern.ch</ErrorManagerIP>
+		       <ErrorManagerPort xsi:type="xsd:string">13000</ErrorManagerPort>
+		       <!-- SPECIAL ROUTING Parameters -->
+		       <ForceDbLogging xsi:type="xsd:boolean">true</ForceDbLogging>
+		       <ForcedDbLoggingLevel xsi:type="xsd:string">FATAL</ForcedDbLoggingLevel>
+		       <ForceChainsawLogging xsi:type="xsd:boolean">false</ForceChainsawLogging>
+		       <ForcedChainsawLoggingLevel xsi:type="xsd:string">TRACE</ForcedChainsawLoggingLevel>
+		       <ForceConsoleLogging xsi:type="xsd:boolean">false</ForceConsoleLogging>
+		       <ForcedConsoleLoggingLevel xsi:type="xsd:string">TRACE</ForcedConsoleLoggingLevel>
+		    </properties>
+		</xc:Application>
+
+		
+		<!-- Shared object library that contains the DummySupervisor inplementation -->		
+		<xc:Module>/exports/xdaq/dev35/DiagSystem/modules/DummySupervisor/lib/linux/x86/libDummySupervisor.so</xc:Module>
+
+
+		<!-- Declare a DummySupervisorDiagLvlOne application -->
+                <xc:Application class="DummySupervisorDiagLvlOne" id="32" instance="0" network="local">
+		</xc:Application>
+		
+		<!-- Shared object library that contains the DummySupervisorDiagLvlOne inplementation -->		
+		<xc:Module>/exports/xdaq/dev35/DiagSystem/modules/DummySupervisorDiagLvlOne/lib/linux/x86/libDummySupervisorDiagLvlOne.so</xc:Module>
+
+        </xc:Context>
+
+</xc:Partition>

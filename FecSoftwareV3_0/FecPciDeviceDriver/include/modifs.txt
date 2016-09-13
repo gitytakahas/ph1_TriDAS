@@ -1,0 +1,16 @@
+	#define DD_BA2_SIZE_FOR_REMAP_V0		0x4000
+	#define DD_BA2_SIZE_FOR_REMAP_V1		0x2B
+
+
+	#define DD_FEC_FIFOTRA_OFFSET_V0		0x1000
+	#define DD_FEC_FIFOTRA_OFFSET_V1		0x20
+
+	#define DD_FEC_FIFORET_OFFSET_V0		0x2000
+	#define DD_FEC_FIFORET_OFFSET_V1		0x24
+
+	#define DD_FEC_FIFOREC_OFFSET_V0		0x3000
+	#define DD_FEC_FIFOREC_OFFSET_V1		0x28
+
+
+assigner les DD_FEC_FIFOTRA_OFFSET_V0 dans driver au load time
+assigner les DD_BA2_SIZE_FOR_REMAP_V0 dans driver au load time

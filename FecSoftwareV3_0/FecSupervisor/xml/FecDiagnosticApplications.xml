@@ -1,0 +1,197 @@
+<?xml version='1.0'?>
+
+<!-- 
+     #####################################################################
+     This example shows how you can avoid havein an additional 
+     configuration file by replacing "[file=...]" in the <Configuration> 
+     variablewith the actual configuration itself 
+     #####################################################################
+-->
+
+<xc:Partition xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<i2o:protocol xmlns:i2o="http://xdaq.web.cern.ch/xdaq/xsd/2004/I2OConfiguration-30">
+  <i2o:target class="FecSupervisor"  instance="0" tid="11"/>
+  <i2o:target class="DcuFilter" instance="0" tid="12"/>
+</i2o:protocol>
+
+<!-- Declare a context that contain the FEC supervisor application -->
+<xc:Context url="http://cmstkint10:13000">
+
+  <xc:Endpoint protocol="tcp" service="i2o" hostname="cmstkint10.cern.ch" port="15001" network="tcp1" />
+
+  <xc:Application class="PeerTransportTCP"  instance="0"  id="40" network="local">
+    <properties xmlns="urn:xdaq-application:PeerTransportTCP" xsi:type="soapenc:Struct">
+	<autoSize xsi:type="xsd:boolean">false</autoSize>
+	<maxPacketSize xsi:type="xsd:unsignedInt">256000</maxPacketSize>
+    </properties>
+  </xc:Application>
+
+
+<!-- ************************************************************************************ -->
+<!--                       GlobalErrorDispatcher Application                                              -->
+<!-- ************************************************************************************ -->
+	<xc:Application class="GlobalErrorDispatcher" id="19" instance="0" network="tcp1">
+            <properties xmlns="urn:xdaq-application:GlobalErrorDispatcher" xsi:type="soapenc:Struct">	
+		       <UseDiagSystem xsi:type="xsd:string">default</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+		       <DiagSystemSettings xsi:type="xsd:string">/path/to/config/file/if/used</DiagSystemSettings>
+            </properties>
+        </xc:Application>
+
+
+<!-- ************************************************************************************ -->
+<!--                       LogReader Application                                                  -->
+<!-- ************************************************************************************ -->
+	<xc:Application class="LogReader" id="20" instance="0" network="tcp1">
+		<properties xmlns="urn:xdaq-application:LogReader" xsi:type="soapenc:Struct">
+			<UseDiagSystem xsi:type="xsd:string">default</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+			<DiagSystemSettings xsi:type="xsd:string">/path/to/config/file/if/used</DiagSystemSettings>
+		</properties>
+	</xc:Application>
+
+<!-- ************************************************************************************ -->
+<!--                       XDAQ sentinel                                                  -->
+<!-- ************************************************************************************ -->
+  <!-- Declare processes requested for errors management -->
+  <xc:Application class="Sentinel" id="21"  network="local" watchover="TkDiagErrorsPool,FFErrorsPool,TestErrorsPool"/>
+
+
+<!-- ************************************************************************************ -->
+<!--                       Declare a FecSupervisor application                            -->
+<!-- ************************************************************************************ -->
+  <xc:Application class="FecSupervisor" id="11" instance="0" network="tcp1">
+    <properties xmlns="urn:xdaq-application:FecSupervisor" xsi:type="soapenc:Struct">
+       <FecBusType xsi:type="xsd:string">VME_FEC</FecBusType>
+       <StrBusAdapter xsi:type="xsd:string">CAENPCI</StrBusAdapter>
+<!--       <XMLFileNameInput xsi:type="xsd:string">http://cmstkint07.cern.ch/~xdaqtk/xml/fec.xml</XMLFileNameInput> -->
+       <XMLFileNameInput xsi:type="xsd:string">/tmp/cmstkint10.xml</XMLFileNameInput>
+       <DCU_Thread_Used xsi:type="xsd:boolean">true</DCU_Thread_Used>
+       <DCU_Thread_LoopTime  xsi:type="xsd:unsignedLong">1</DCU_Thread_LoopTime>
+       <ReloadFirmware xsi:type="xsd:boolean">false</ReloadFirmware>
+       <PIAReset xsi:type="xsd:boolean">true</PIAReset>
+       <FECReset xsi:type="xsd:boolean">false</FECReset>
+       <FECSlot xsi:type="xsd:unsignedLong">6</FECSlot>
+       <ColdPllInit xsi:type="xsd:boolean">false</ColdPllInit>
+
+<!-- The partition name can be define here or in a environment variable ENV_CMS_TK_PARTITION -->
+       <PartitionName xsi:type="xsd:string">TELESCOPE</PartitionName>
+
+       <SSID xsi:type="xsd:string">TRACKER</SSID>
+<!--       You must choose a FEC type                                          -->
+<!--       <FecBusType xsi:type="xsd:string">PCI_FEC</FecBusType>              -->
+<!--       <FecBusType xsi:type="xsd:string">USB_FEC</FecBusType>              -->
+       <FecBusType xsi:type="xsd:string">VME_FEC</FecBusType>
+<!--       And a bus type for the VME FEC                                      -->
+<!--       <StrBusAdapter xsi:type="xsd:string">SBS</StrBusAdapter>            -->
+<!--       <StrBusAdapter xsi:type="xsd:string">CAENUSB</StrBusAdapter>        -->
+       <StrBusAdapter xsi:type="xsd:string">CAENPCI</StrBusAdapter>
+
+	<!-- DiagSystem Parameters-->
+	<UseDiagSystem xsi:type="xsd:string">default</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+	<DiagSystemSettings xsi:type="xsd:string">/path/to/config/file/if/used</DiagSystemSettings>
+
+    </properties>                     
+  </xc:Application>
+
+<!-- ************************************************************************************ -->
+<!--                       Declare a DcuFilter application                                -->
+<!-- ************************************************************************************ -->
+  <xc:Application class="DcuFilter" id="12" instance="0"  network="tcp1">
+    <properties xmlns="urn:xdaq-application:DcuFilter" xsi:type="soapenc:Struct">
+
+<!-- The partition name can be define here or in a environment variable ENV_CMS_TK_PARTITION -->
+       <PartitionName xsi:type="xsd:string">TELESCOPE</PartitionName>
+
+       <UploadFile xsi:type="xsd:boolean">false</UploadFile>
+       <UploadDatabase xsi:type="xsd:boolean">false</UploadDatabase>
+       <PVSSClassName xsi:type="xsd:string">psx</PVSSClassName>
+       <PVSSInstance xsi:type="xsd:unsignedLong">0</PVSSInstance>
+       <Conversion xsi:type="xsd:boolean">true</Conversion>
+       <ConversionFromFile xsi:type="xsd:boolean">true</ConversionFromFile>
+       <DisplayDcuList xsi:type="xsd:boolean">true</DisplayDcuList>
+<!--       <ConversionXMLFile xsi:type="xsd:string"></ConversionXMLFile>      Automatically detected -->
+       <DCUPSUChannelDetection xsi:type="xsd:boolean">false</DCUPSUChannelDetection>
+<!--       <PSUConfigurationFile xsi:type="xsd:string"></PSUConfigurationFile> -->
+       <UploadPVSS xsi:type="xsd:boolean">true</UploadPVSS>
+       <PVSSPoint xsi:type="xsd:string">SliceTest</PVSSPoint>
+       <TimePVSSSend xsi:type="xsd:unsignedLong">100</TimePVSSSend>
+       <PourcentDifferenceForPVSS xsi:type="xsd:unsignedLong">20</PourcentDifferenceForPVSS>
+
+	<!-- DiagSystem Parameters-->
+	<UseDiagSystem xsi:type="xsd:string">default</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+	<DiagSystemSettings xsi:type="xsd:string">/path/to/config/file/if/used</DiagSystemSettings>
+
+    </properties>                     
+  </xc:Application>
+
+<!-- ************************************************************************************ -->
+<!--                       CrateController application                                    -->
+<!-- ************************************************************************************ -->
+  <!-- Declare a CrateController application -->
+  <xc:Application class="CrateController" id="14" instance="0" network="local">
+  <properties xmlns="urn:xdaq-application:CrateController" xsi:type="soapenc:Struct">
+       <UploadFile xsi:type="xsd:boolean">false</UploadFile>
+       <UploadDatabase xsi:type="xsd:boolean">false</UploadDatabase>
+       <VMESlotBegin xsi:type="xsd:unsignedLong">2</VMESlotBegin>
+       <VMESlotEnd xsi:type="xsd:unsignedLong">21</VMESlotEnd>
+       <StrBusAdapter xsi:type="xsd:string">CAENPCI</StrBusAdapter>
+<!-- FED part -->
+       <ScanFEDs xsi:type="xsd:boolean">false</ScanFEDs>
+<!--       <FEDVmeFileName xsi:type="xsd:string></FEDVmeFileName> -->
+<!--       <FEDStartIdOffset xsi:type="xsd:string></FEDStartIdOffset> -->
+<!--       <FEDTemplateFileName xsi:type="xsd:string></FEDTemplateFileName> -->
+
+<!-- FEC part -->
+       <ScanFECs xsi:type="xsd:boolean">true</ScanFECs>
+       <FecBusType xsi:type="xsd:string">VME_FEC</FecBusType>
+       <ScanRedundancy xsi:type="xsd:boolean">false</ScanRedundancy>
+       <CheckDcuConversion xsi:type="xsd:boolean">false</CheckDcuConversion>
+       <RemoveBadModules xsi:type="xsd:boolean">true</RemoveBadModules>
+
+	<!-- DiagSystem Parameters-->
+	<UseDiagSystem xsi:type="xsd:string">default</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+	<DiagSystemSettings xsi:type="xsd:string">/path/to/config/file/if/used</DiagSystemSettings>
+
+  </properties>                     
+  </xc:Application>
+
+<!-- ************************************************************************************ -->
+<!--                      TkConfigurationDb  application                                    -->
+<!-- ************************************************************************************ -->
+  <!-- Declare a TkConfigurationDb application -->
+  <xc:Application class="TkConfigurationDb" id="15" instance="0" network="local">
+  <properties xmlns="urn:xdaq-application:TkConfigurationDb" xsi:type="soapenc:Struct">
+
+	<!-- DiagSystem Parameters-->
+	<UseDiagSystem xsi:type="xsd:string">default</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+	<DiagSystemSettings xsi:type="xsd:string">/path/to/config/file/if/used</DiagSystemSettings>
+
+  </properties>                     
+  </xc:Application>
+
+
+<!-- ************************************************************************************ -->
+<!--                       Needed modules                                                 -->
+<!-- ************************************************************************************ -->
+  <xc:Module>/exports/xdaq/unstable/TriDAS/daq/sentinel/lib/linux/x86/libsentinel.so</xc:Module>
+  <xc:Module>/exports/xdaq/unstable/FecSoftwareV3_0/FecSupervisor/lib/linux/x86/libFecSupervisor.so</xc:Module>
+  <xc:Module>/exports/xdaq/unstable/FecSoftwareV3_0/DcuFilter/lib/linux/x86/libDcuFilter.so</xc:Module>
+  <xc:Module>/exports/xdaq/unstable/FecSoftwareV3_0/CrateController/lib/linux/x86/libCrateController.so</xc:Module>
+  <xc:Module>/exports/xdaq/unstable/FecSoftwareV3_0/TkConfigurationDb/lib/linux/x86/libTkConfigurationDb.so</xc:Module>
+  <xc:Module>/exports/xdaq/unstable/TriDAS/daq/pt/tcp/lib/linux/x86/libpttcp.so</xc:Module>
+  <!-- DiagSystem modules-->
+  <xc:Module>/exports/xdaq/unstable/DiagSystem/modules/GlobalErrorDispatcher/lib/linux/x86/libGlobalErrorDispatcher.so</xc:Module>
+  <xc:Module>/exports/xdaq/unstable/DiagSystem/modules/LogReader/lib/linux/x86/libLogReader.so</xc:Module>
+
+</xc:Context>
+
+<xc:Context url="http://pccmstrdcs4.cern.ch:1972">
+                 <xc:Application class="psx" id="30" instance="0" network="local"/> 
+</xc:Context>
+
+<!--<xc:Context url="http://daqpic01.cern.ch:1972"> -->
+<!--                <xc:Application class="psx" id="30" instance="0" network="local"/>  -->
+<!-- </xc:Context> -->
+
+
+</xc:Partition>

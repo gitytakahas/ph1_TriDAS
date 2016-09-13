@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ROWSET>
+
+ <CCU fecSlot="0" ringSlot="0" ccuAddress="10" arrangement="0" input="0" output="1"/>
+ <CCU fecSlot="0" ringSlot="0" ccuAddress="11" arrangement="1" input="1" output="0"/>
+ <CCU fecSlot="0" ringSlot="0" ccuAddress="12" arrangement="2" input="0" output="1"/>
+ <CCU fecSlot="0" ringSlot="0" ccuAddress="13" arrangement="3" input="1" output="0"/>
+ <CCU fecSlot="0" ringSlot="1" ccuAddress="10" arrangement="0" input="0" output="1"/>
+ <CCU fecSlot="0" ringSlot="1" ccuAddress="11" arrangement="1" input="1" output="0"/>
+ <CCU fecSlot="0" ringSlot="1" ccuAddress="12" arrangement="2" input="0" output="1"/>
+ <CCU fecSlot="0" ringSlot="1" ccuAddress="13" arrangement="3" input="1" output="0"/>
+
+</ROWSET>
+

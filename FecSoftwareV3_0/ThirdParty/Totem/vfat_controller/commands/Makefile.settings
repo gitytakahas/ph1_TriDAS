@@ -1,0 +1,84 @@
+# vfat_controller compilation options
+
+# GPIB 
+#USEGPIB=yes
+
+# Write error log files in case of error (TTP only)
+#ERRORLOGS=yes
+
+# TTCci trigger
+TTCCITRIG=yes
+
+# VME readout
+VMEREADOUT=yes
+
+# OptoRx data emulator
+#OPTORXDATAEMU=yes
+
+# VME trigger (with OptoRx emulator only)
+#VMETRIG=yes
+
+# Debug
+#DEBUGMODE=yes
+
+
+
+
+# Append the additional libraries and flags
+
+# GPIB
+ifeq (${USEGPIB},yes)
+  VFAT_CONTROLLER_LIBS += gpibapi
+  VFAT_CONTROLLERC++FLAGS += -DUSB_GPIB_PS
+  VFAT_CONTROLLER_OBJS += bin/GPIBDevice.o
+endif
+
+# USB FEC Parts
+ifeq (${USBFEC_COMPILE},yes)
+  VFAT_CONTROLLER_OBJS += bin/3_ChipTesting.o
+  VFAT_CONTROLLER_OBJS += bin/3_Panel.o 
+endif
+
+# Error logs
+ifeq (${ERRORLOGS},yes)
+  VFAT_CONTROLLERC++FLAGS += -DERRORLOGS
+endif
+
+# TTCci trigger
+ifeq (${TTCCITRIG},yes)
+  VFAT_CONTROLLERC++FLAGS += -DTTCCI_TRIGGER
+  VFAT_CONTROLLER_INCS += ${TTCSOFTWARE_ROOT}/common/include
+  VFAT_CONTROLLER_INCS += ${XDAQ_ROOT}/include/hal
+  VFAT_CONTROLLER_LIBPATHS += ${TTCSOFTWARE_ROOT}/common
+  VFAT_CONTROLLER_LIBPATHS += ${TTCSOFTWARE_ROOT}/TCPBusAdapter
+  VFAT_CONTROLLER_LIBS += TTC
+  VFAT_CONTROLLER_LIBS += TCPBusAdapter
+  VFAT_CONTROLLER_LIBS += DummyBusAdapters
+endif
+
+# VME readout
+ifeq (${VMEREADOUT},yes)
+  VFAT_CONTROLLERC++FLAGS += -DVMEREADOUT
+  VFAT_CONTROLLER_INCS += ${TOTFED_ROOT}/include
+  VFAT_CONTROLLER_INCS += ${XDAQ_ROOT}/include/hal
+  VFAT_CONTROLLER_OBJS += ${TOTFED_ROOT}/src/TOTFED.o
+endif
+
+# OptoRx data emulator
+ifeq (${OPTORXDATAEMU},yes)
+  VFAT_CONTROLLERC++FLAGS += -DOPTORX_DATAEMU
+endif
+
+# VME trigger
+ifeq (${VMETRIG},yes)
+  VFAT_CONTROLLERC++FLAGS += -DVME_TRIGGER
+endif
+
+
+# Debug mode
+ifeq (${DEBUGMODE},yes)
+  VFAT_CONTROLLERC++FLAGS += -DDEBUGMODE
+endif
+
+# To use files from Monitor as they are
+VFAT_CONTROLLERC++FLAGS += -D_MONITOR_

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ROWSET xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation='http://cmsdoc.cern.ch/cms/cmt/System_aspects/FecControl/binaries/misc/schema.xsd'>
+ <PIARESET fecSlot = "0" ringSlot = "0" enabled = "T" ccuAddress = "127" piaChannel = "48" mask = "255" delayActiveReset = "10" intervalDelayReset = "10000" />
+ <APV25 fecSlot = "0" ringSlot = "0" enabled = "T" ccuAddress = "127" i2cChannel = "26" i2cAddress = "32" apvError = "0" apvMode = "47" cdrv = "0" csel = "8" ical = "40" imuxin = "30" ipcasc = "45" ipre = "85" ipsf = "30" ipsp = "48" isha = "50" ispare = "0" issf = "30" latency = "100" muxGain = "4" vfp = "30" vfs = "60" vpsp = "37" />
+ <APVMUX fecSlot = "0" ringSlot = "0" enabled = "T" ccuAddress = "127" i2cChannel = "26" i2cAddress = "67" resistor = "15" />
+ <DCU fecSlot = "0" ringSlot = "0" enabled = "T" dcuReadoutEnabled="T" ccuAddress = "127" i2cChannel = "26" i2cAddress = "0" dcuHardId = "0" dcuTimeStamp = "0" channel0 = "0" channel1 = "0" channel2 = "0" channel3 = "0" channel4 = "0" channel5 = "0" channel6 = "0" channel7 = "0" />
+ <LASERDRIVER fecSlot = "0" ringSlot = "0" enabled = "T" ccuAddress = "127" i2cChannel = "26" i2cAddress = "96" bias0 = "24" bias1 = "24" bias2 = "24" gain0 = "0" gain1 = "0" gain2 = "0" />
+ <PLL fecSlot = "0" ringSlot = "0" enabled = "T" ccuAddress = "127" i2cChannel = "26" i2cAddress = "68" delayFine = "10" delayCoarse = "1" pllDac = "255" />
+</ROWSET>
+

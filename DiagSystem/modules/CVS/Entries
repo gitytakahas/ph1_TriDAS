@@ -1,0 +1,19 @@
+/modules.fullDemo.tar/1.1/Mon May  8 15:13:22 2006//TPIX64_V00
+D/AjaxLogReader////
+D/AjaxLogReader.withoutFileServer////
+D/AjaxLogReaderWithFileServer////
+D/DiagSentinelErrorsGrabber////
+D/DummySupervisor////
+D/DummySupervisorDiagLvlOne////
+D/ErrorDbUploader////
+D/ErrorDispatcher////
+D/FFApplication////
+D/FecSupervisorDiagLvlOne////
+D/FileServer////
+D/GlobalErrorDispatcher////
+D/LocalErrorDispatcher////
+D/LogReader////
+D/OfflineErrorDbUploader////
+D/ReconfigurationModule////
+D/SentinelSender////
+D/TkDashBoard////

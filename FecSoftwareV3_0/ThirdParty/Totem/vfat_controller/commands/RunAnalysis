@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------------------------------------
+
+# settings
+MonitorTests=("DAC" "BinPos" "BinNeg" "ScurvesHR" "Scurves" "MSLength")
+
+#----------------------------------------------------------------------------------------------------
+
+PrintUsage()
+{
+	echo "Usage: RunAnalysis <test directory>"
+}
+
+Echo()
+{
+	echo
+	echo -e "\033[00;31mRunning $1 test\033[00m"
+}
+
+#----------------------------------------------------------------------------------------------------
+
+# check number of parameters
+if [ $# -lt 1 ]
+then
+	PrintUsage
+	exit 1
+fi
+dir="$1"
+
+# check if directory exists
+if [ ! -d "$dir" ]
+then
+	echo "$dir is not a directory"
+	PrintUsage
+	exit 2
+fi
+
+# check presence of MonitorCfg.xml
+if [ ! -f "$dir/MonitorCfg.xml" ]
+then
+	echo "$dir is not a test directory"
+	PrintUsage
+	exit 3
+fi
+
+# disentangle VFAT ID
+dir=${dir/%\/}
+ID=${dir%/*}
+ID=${ID##*/}
+TestNum=${dir##*/}
+
+
+# run tests
+CWD=`pwd`
+cd "$dir"
+
+size=${#MonitorTests[*]}
+for ((i=0; i < size; i++))
+do
+	Echo "${MonitorTests[$i]}"
+        monitor TTP "${MonitorTests[$i]}" "Summary.txt" &> /dev/null
+done
+
+cd "$CWD"

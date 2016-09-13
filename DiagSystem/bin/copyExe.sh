@@ -1,0 +1,1 @@
+cp -f /exports/slc4/development/FecSoftwareV3_0/ThirdParty/DeviceFactoryTemplate/bin/linux/x86_slc4/TestDiagUploadData.exe /exports/slc4/development/opt/trackerDAQ/bin/

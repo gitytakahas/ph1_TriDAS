@@ -1,0 +1,44 @@
+# Please note that the x86 is based on the plateform you specify as XDAQ_PLATFORM during the XDAQ compilation and installation.
+# HAL, xerces libs are now embedded in $XDAQ_ROOT/$XDAQ_PLATFORM/include
+# For the RPM since the directories between the tgz files and RPM files are not the same, no support is given for the time being.
+
+######################################################################
+# Base directories
+export XDAQ_BASE=/home/XDAQ/TriDAS
+export XDAQ_ROOT=${XDAQ_BASE}
+export ENV_CMS_TK_FEC_ROOT=/home/XDAQ/FecSoftwareV3_0
+
+export ENV_CMS_TK_CAEN_ROOT=/usr/local/CAEN/CAEN-VME/Linux
+export ENV_CMS_TK_SBS_ROOT=/usr/local/SBS/1003/v2p3p0/
+
+# OS and Plateform
+XDAQ_OS=linux
+XDAQ_PLATFORM=x86_slc4
+
+# ####################################################################
+# Oracle env. (to compile with oracle lib, please add these two lines)
+# source ${ENV_CMS_TK_FEC_ROOT}/config/oracle.env.bash afs
+# export ENV_CMS_TK_ORACLE_HOME=${ENV_ORACLE_HOME}
+
+# Please note that the x86 is based on the plateform you specify as XDAQ_PLATFORM during the XDAQ compilation and installation.
+# HAL, xerces libs are now embedded in $XDAQ_ROOT/$XDAQ_PLATFORM/include
+export LD_LIBRARY_PATH=${ORACLE_HOME}/lib:${ENV_CMS_TK_FEC_ROOT}/lib:${ENV_CMS_TK_CAEN_ROOT}/lib:${XDAQ_ROOT}/${XDAQ_PLATFORM}/lib:${XDAQ_ROOT}/lib:$LD_LIBRARY_PATH
+
+# ####################################################################
+# Old version / Not anymore needed
+#export XERCESCROOT=${XDAQ_BASE}/daq/extern/xerces/linuxx86/
+#export ENV_CMS_TK_HAL_ROOT=${XDAQ_ROOT}/daq/hal/
+#export LD_LIBRARY_PATH=${ORACLE_HOME}/lib:${ENV_CMS_TK_FEC_ROOT}/lib:${ENV_CMS_TK_HAL_ROOT}/lib/linux/x86:${ENV_CMS_TK_CAEN_ROOT}/lib:${XERCESCROOT}/lib:${XDAQ_ROOT}/daq/xcept/lib/linux/x86/:$LD_LIBRARY_PATH
+
+######################################################################
+# Strip Tracker Specific
+# echo "Load Strip Tracker env. variables"
+# export ENV_CMS_TK_BASE=/exports/xdaq/development
+# export ENV_CMS_TK_FED9U_ROOT=${ENV_CMS_TK_BASE}/TrackerOnline/Fed9U/Fed9USoftware
+# export ENV_CMS_TK_COMMON=${ENV_CMS_TK_BASE}/TrackerOnline//2005/TrackerCommon/
+# export ENV_CMS_TK_ICUTILS=${ENV_CMS_TK_COMMON}/ICUtils
+# export ENV_CMS_TK_XDAQ=${ENV_CMS_TK_BASE}/opt/trackerDAQ
+
+#export LD_LIBRARY_PATH=${ENV_CMS_TK_FED9U_ROOT}/Fed9UUtils:${ENV_CMS_TK_FED9U_ROOT}/Fed9UDevice:${ENV_CMS_TK_FED9U_ROOT}/Fed9UDeviceFactory:${ROOTSYS}/lib:${ENV_CMS_TK_COMMON}/Analysis:${ENV_CMS_TK_COMMON}/ICUtils:${ENV_CMS_TK_HARDWARE_ROOT}/tracker/lib:$LD_LIBRARY_PATH
+
+

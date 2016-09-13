@@ -1,0 +1,40 @@
+##################################################################
+# START
+# are we building against the XDAQ RPM? (comment this line to use the tgz sources)
+XDAQ_RPMBUILD=yes
+# OS and Plateform
+XDAQ_OS=${XDAQ_OS}
+XDAQ_PLATFORM=${XDAQ_PLATFORM}
+# FecSoftwareV2_0 root directory
+FECSOFTWARE_ROOT=${ENV_CMS_TK_FEC_ROOT}
+# Device driver directory
+DEVICEDRIVERPATH=${FECSOFTWARE_ROOT}/FecPciDeviceDriver
+# TriDAS root directory
+# XDAQ_ROOT:=/opt/xdaq
+# HAL and SBS directories
+#HALDIR=${PREFIX}/../hardware/hal
+HALDIR=${ENV_CMS_TK_HAL_ROOT}
+# No SBS support in XDAQ RPM installation
+#SBS_DIR=${ENV_CMS_TK_SBS_ROOT}
+# CAEN directory
+CAEN_DIR=${ENV_CMS_TK_CAEN_ROOT}
+# Linux sources for PCI device driver compilation
+PCIFEC_COMPILE=yes
+# USB FEC support
+USBFEC_COMPILE=no
+# Debug messages in the applications
+DO_DEBUGFECSOFT=no
+# I2C bus speed (possible values are 100, 200, 400, 1000). Take care about this speed and use 100 KHz for your program. Higher speed need resistor for the termination of the I2C bus (for CCU 25)
+BUSI2CSPEED=100
+# PIA signal duration on strobe pad (possible values are 100, 200, 500, 1000 ns)
+# BUSPIASTROBEDURATION=0
+# Automatic scan of the ring will be performed at the beginning of the program or application. This scan is done for the CCU 25
+# An automatic scan is also possible for old CCU, you need to set DO_AUTOMATIC_SCAN=yes and remove in the corresponding makefile -DBROADCASTUSE
+DO_AUTOMATIC_SCAN=no
+# DCU base address (usefull only for stable version greater than stable0703, stable0204, and last/CVS)
+DCUADDRESS=0x0
+# For detector specificity sources and flags (See config.FecRules.linux)
+# Possible values are (for the moment) => PRESHOWER, TRACKER, TOTEM
+DETECTOR=ALL
+##################################################################
+#EOF

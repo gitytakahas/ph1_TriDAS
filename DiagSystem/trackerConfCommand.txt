@@ -1,0 +1,1 @@
+./configure --disable-compile_for_generic --enable-compile_for_tracker --enable-use_trackeronline_db --enable-parse_tracker_xtra_buffer

@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+
+ <xsd:simpleType name="chaineIPv4">
+  <xsd:restriction base="xsd:string">
+   <xsd:pattern value="([\d]{1,3}.){3}[\d]{1,3}" />
+   <xsd:minLength value="7" />
+   <xsd:maxLength value="15" />
+  </xsd:restriction>
+ </xsd:simpleType>
+
+ <xsd:element name="ROWSET">
+  <xsd:complexType>
+   <xsd:sequence>
+     <xsd:element ref="PIARESET" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="RING" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="CCU" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="APV25" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="APVMUX" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="DCU" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="LASERDRIVER" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="PHILIPS" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="PLL" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="VFAT" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="CCHIP" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="TBB" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="FedChannelConnection" minOccurs='0' maxOccurs='unbounded'/>
+   </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+
+ <xsd:element name="PIARESET">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required' />
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="piaChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="mask" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="delayActiveReset" type="xsd:unsignedInt" use='required'/>
+   <xsd:attribute name="intervalDelayReset" type="xsd:unsignedInt" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="CCU">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required' />
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="arrangement" type="xsd:unsignedShort" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="RING">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required' />
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="inputAUsed" type="xsd:string" use='optional'/>
+   <xsd:attribute name="outputAUsed" type="xsd:string" use='optional'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="ESPIARESET">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="piaChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="mask" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="delayActiveReset" type="xsd:unsignedInt" use='required'/>
+   <xsd:attribute name="intervalDelayReset" type="xsd:unsignedInt" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+ 
+
+ <xsd:element name="PLL">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="delayCoarse" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="delayFine" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="pllDac" type="xsd:unsignedByte" use='optional'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="LASERDRIVER">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="bias0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="bias1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="bias2" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="gain0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="gain1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="gain2" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+
+ <xsd:element name="PHILIPS">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="register" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+
+ <xsd:element name="APV25">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="apvError" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="apvMode" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cdrv" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="csel" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ical" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="imuxin" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ipcasc" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ipre" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ipsf" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ipsp" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="isha" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ispare" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="issf" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="latency" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="muxGain" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="vfp" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="vfs" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="vpsp" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="APVMUX">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="resistor" type="xsd:unsignedShort" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="DCU">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="dcuReadoutEnabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="channel0" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="channel1" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="channel2" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="channel3" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="channel4" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="channel5" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="channel6" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="channel7" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="dcuHardId" type="xsd:unsignedInt" use='required'/>
+   <xsd:attribute name="dcuTimeStamp" type="xsd:unsignedInt" use='required'/>
+   <xsd:attribute name="dcuType" type="xsd:string" use='optional'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="DELTA">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="CR0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="CR1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ChipID" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="CalChan" type="xsd:unsignedLong" use='required'/>
+   <xsd:attribute name="Vcal" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="VoPreamp" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="VoShaper" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Vspare" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Ipreamp" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Ishaper" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ISF" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Ispare" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="PACEAM">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="CR" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Latency" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ChipID" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="Vmemref" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Vshifter" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Voutbuf" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Ireadamp" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Ishifter" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Imuxbuf" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Ioutbuf" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Ispare" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Upset" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="KCHIP">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="Config" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="EConfig" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="KID" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="Mask_T1cmd" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Last_T1cmd" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Latency" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="EvCnt" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="BnchCnt" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="GintBUSY" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="GintIDLE" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Status0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Status1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="SeuCnt" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="CalPulseDelay" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="CalPulseWidth" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="AdcLatency" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="PfifoOvfl" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ChipID" type="xsd:unsignedShort" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="GOH">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="Control0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Control1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Control2" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Control3" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Status0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="Status1" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="VFAT">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="control0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="control1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ipreampin" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ipreampfeed" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ipreampout" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ishaper" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="ishaperfeed" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="icomp" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="chipid0" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chipid1" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="upset" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="hitcount0" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="hitcount1" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="hitcount2" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="lat" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="chanreg1" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg2" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg3" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg4" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg5" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg6" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg7" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg8" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg9" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg10" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg11" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg12" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg13" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg14" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg15" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg16" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg17" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg18" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg19" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg20" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg21" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg22" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg23" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg24" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg25" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg26" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg27" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg28" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg29" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg30" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg31" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg32" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg33" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg34" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg35" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg36" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg37" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg38" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg39" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg40" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg41" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg42" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg43" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg44" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg45" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg46" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg47" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg48" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg49" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg50" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg51" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg52" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg53" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg54" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg55" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg56" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg57" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg58" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg59" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg60" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg61" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg62" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg63" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg64" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg65" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg66" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg67" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg68" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg69" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg70" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg71" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg72" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg73" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg74" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg75" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg76" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg77" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg78" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg79" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg80" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg81" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg82" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg83" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg84" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg85" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg86" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg87" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg88" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg89" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg90" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg91" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg92" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg93" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg94" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg95" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg96" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg97" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg98" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg99" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg100" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg101" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg102" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg103" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg104" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg105" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg106" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg107" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg108" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg109" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg110" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg111" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg112" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg113" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg114" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg115" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg116" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg117" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg118" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg119" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg120" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg121" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg122" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg123" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg124" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg125" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg126" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg127" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="chanreg128" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="vcal" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="vthreshold1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="vthreshold2" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="calphase" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="control2" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="control3" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+<xsd:element name="CCHIP">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="cchipcontrol0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipcontrol1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipcontrol2" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipcontrol3" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipcontrol4" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipchipid0" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="cchipchipid1" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="cchipcounter0" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="cchipcounter1" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="cchipcounter2" type="xsd:unsignedByte" use='optional'/>
+   <xsd:attribute name="cchipmask0" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask2" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask3" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask4" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask5" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask6" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask7" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask8" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipmask9" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="cchipres" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+<xsd:element name="TBB">
+  <xsd:complexType>
+   <xsd:attribute name="supervisorIp" type="chaineIPv4" use='optional' />
+   <xsd:attribute name="xdaqId" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="className" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="fecHardwareId" type="xsd:string" use='optional' />
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+   <xsd:attribute name="ringSlot" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cChannel" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="i2cAddress" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="tbbcontrol" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="tbblatency1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="tbblatency2" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="tbbrepeats1" type="xsd:unsignedByte" use='required'/>
+   <xsd:attribute name="tbbrepeats2" type="xsd:unsignedByte" use='required'/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="FedChannelConnection">
+  <xsd:complexType>
+   <xsd:attribute name="fedId" type="xsd::unsignedInt" use='required' />
+   <xsd:attribute name="fedChannel" type="xsd::unsignedInt" use='required' />
+   <xsd:attribute name="fecHardId" type="xsd:string" use='optional' />
+   <xsd:attribute name="crateSlot" type="xsd:unsignedShort" use='optional' />
+   <xsd:attribute name="fecSlot" type="xsd:unsignedShort" use='required' />
+   <xsd:attribute name="fecRing" type="xsd:unsignedShort" use='required'/>
+   <xsd:attribute name="ccuAddress" type="xsd:unsignedShort" use='required'/>	
+   <xsd:attribute name="apvAddress" type="xsd:unsignedShort" use='required'/>	
+   <xsd:attribute name="dcuHardId" type="xsd::unsignedInt" use='required'/>	
+   <xsd:attribute name="enabled" type="xsd:string" use='optional' />
+  </xsd:complexType>
+ </xsd:element>
+
+</xsd:schema>
+
+

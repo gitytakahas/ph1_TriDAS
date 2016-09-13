@@ -1,0 +1,135 @@
+
+* TTCvi address map
+*****************************************************************************************************************
+*  key   AM  width  address  mask   read write   description
+*****************************************************************************************************************
+
+CONTROL0_0	09 4 30000000 ffffffff 1 1
+CONTROL1_0	09 4 30000004 ffffffff 1 1
+STATUS0_0	09 4 30000008 ffffffff 1 0
+STATUS1_0	09 4 3000000C ffffffff 1 0
+VERSION_SRC_0	09 4 30000010 ffffffff 1 0
+TRA_FIFO_0_R	09 4 30000020 ffffffff 1 0
+RET_FIFO_0_R	09 4 30000024 ffffffff 1 0
+REC_FIFO_0_R	09 4 30000028 ffffffff 1 0
+TRA_FIFO_0_W	09 4 30000020 ffffffff 0 1
+RET_FIFO_0_W	09 4 30000024 ffffffff 0 1
+REC_FIFO_0_W	09 4 30000028 ffffffff 0 1
+
+CONTROL0_1	09 4 30000040 ffffffff 1 1
+CONTROL1_1	09 4 30000044 ffffffff 1 1
+STATUS0_1	09 4 30000048 ffffffff 1 0
+STATUS1_1	09 4 3000004C ffffffff 1 0
+VERSION_SRC_1	09 4 30000050 ffffffff 1 0
+TRA_FIFO_1_R	09 4 30000060 ffffffff 1 0
+RET_FIFO_1_R	09 4 30000064 ffffffff 1 0
+REC_FIFO_1_R	09 4 30000068 ffffffff 1 0
+TRA_FIFO_1_W	09 4 30000060 ffffffff 0 1
+RET_FIFO_1_W	09 4 30000064 ffffffff 0 1
+REC_FIFO_1_W	09 4 30000068 ffffffff 0 1
+
+CONTROL0_2	09 4 30000080 ffffffff 1 1
+CONTROL1_2	09 4 30000084 ffffffff 1 1
+STATUS0_2	09 4 30000088 ffffffff 1 0
+STATUS1_2	09 4 3000008C ffffffff 1 0
+VERSION_SRC_2	09 4 30000090 ffffffff 1 0
+TRA_FIFO_2_R	09 4 300000a0 ffffffff 1 0
+RET_FIFO_2_R	09 4 300000a4 ffffffff 1 0
+REC_FIFO_2_R	09 4 300000a8 ffffffff 1 0
+TRA_FIFO_2_W	09 4 300000a0 ffffffff 0 1
+RET_FIFO_2_W	09 4 300000a4 ffffffff 0 1
+REC_FIFO_2_W	09 4 300000a8 ffffffff 0 1
+
+CONTROL0_3	09 4 300000C0 ffffffff 1 1
+CONTROL1_3	09 4 300000C4 ffffffff 1 1
+STATUS0_3	09 4 300000C8 ffffffff 1 0
+STATUS1_3	09 4 300000CC ffffffff 1 0
+VERSION_SRC_3	09 4 300000D0 ffffffff 1 0
+TRA_FIFO_3_R	09 4 300000E0 ffffffff 1 0
+RET_FIFO_3_R	09 4 300000E4 ffffffff 1 0
+REC_FIFO_3_R	09 4 300000E8 ffffffff 1 0
+TRA_FIFO_3_W	09 4 300000E0 ffffffff 0 1
+RET_FIFO_3_W	09 4 300000E4 ffffffff 0 1
+REC_FIFO_3_W	09 4 300000E8 ffffffff 0 1
+
+CONTROL0_4	09 4 30000100 ffffffff 1 1
+CONTROL1_4	09 4 30000104 ffffffff 1 1
+STATUS0_4	09 4 30000108 ffffffff 1 0
+STATUS1_4	09 4 3000010C ffffffff 1 0
+VERSION_SRC_4	09 4 30000110 ffffffff 1 0
+TRA_FIFO_4_R	09 4 30000120 ffffffff 1 0
+RET_FIFO_4_R	09 4 30000124 ffffffff 1 0
+REC_FIFO_4_R	09 4 30000128 ffffffff 1 0
+TRA_FIFO_4_W	09 4 30000120 ffffffff 0 1
+RET_FIFO_4_W	09 4 30000124 ffffffff 0 1
+REC_FIFO_4_W	09 4 30000128 ffffffff 0 1
+
+CONTROL0_5	09 4 30000140 ffffffff 1 1
+CONTROL1_5	09 4 30000144 ffffffff 1 1
+STATUS0_5	09 4 30000148 ffffffff 1 0
+STATUS1_5	09 4 3000014C ffffffff 1 0
+VERSION_SRC_5	09 4 30000150 ffffffff 1 0
+TRA_FIFO_5_R	09 4 30000160 ffffffff 1 0
+RET_FIFO_5_R	09 4 30000164 ffffffff 1 0
+REC_FIFO_5_R	09 4 30000168 ffffffff 1 0
+TRA_FIFO_5_W	09 4 30000160 ffffffff 0 1
+RET_FIFO_5_W	09 4 30000164 ffffffff 0 1
+REC_FIFO_5_W	09 4 30000168 ffffffff 0 1
+
+CONTROL0_6	09 4 30000180 ffffffff 1 1
+CONTROL1_6	09 4 30000184 ffffffff 1 1
+STATUS0_6	09 4 30000188 ffffffff 1 0
+STATUS1_6	09 4 3000018C ffffffff 1 0
+VERSION_SRC_6	09 4 30000190 ffffffff 1 0
+TRA_FIFO_6_R	09 4 300001A0 ffffffff 1 0
+RET_FIFO_6_R	09 4 300001A4 ffffffff 1 0
+REC_FIFO_6_R	09 4 300001A8 ffffffff 1 0
+TRA_FIFO_6_W	09 4 300001A0 ffffffff 0 1
+RET_FIFO_6_W	09 4 300001A4 ffffffff 0 1
+REC_FIFO_6_W	09 4 300001A8 ffffffff 0 1
+
+CONTROL0_7	09 4 300001C0 ffffffff 1 1
+CONTROL1_7	09 4 300001C4 ffffffff 1 1
+STATUS0_7	09 4 300001C8 ffffffff 1 0
+STATUS1_7	09 4 300001CC ffffffff 1 0
+VERSION_SRC_7	09 4 300001D0 ffffffff 1 0
+TRA_FIFO_7_R	09 4 300001E0 ffffffff 1 0
+RET_FIFO_7_R	09 4 300001E4 ffffffff 1 0
+REC_FIFO_7_R	09 4 300001E8 ffffffff 1 0
+TRA_FIFO_7_W	09 4 300001E0 ffffffff 0 1
+RET_FIFO_7_W	09 4 300001E4 ffffffff 0 1
+REC_FIFO_7_W	09 4 300001E8 ffffffff 0 1
+
+
+
+
+
+CNF_0		2f 1 00300000 ffffffff 1 1
+CNF_1		2f 1 00300001 ffffffff 1 1
+CNF_2		2f 1 00300002 ffffffff 1 1
+CNF_3		2f 1 00300003 ffffffff 1 1
+CNF_4		2f 1 00300004 ffffffff 1 1
+CNF_5		2f 1 00300005 ffffffff 1 1
+
+CONF6		2f 1 00300000 ffffffff 1 1
+CSR6		2f 1 0037fc00 ffffffff 1 1
+
+CONF10		2f 1 00500000 ffffffff 1 1
+CSR10		2f 1 0057fc00 ffffffff 1 1
+
+CONFX		2f 1 00F00000 ffffffff 1 1
+CSRX		2f 1 00F7fc00 ffffffff 1 1
+
+FUNC0_0	 	2f 1 0037fec6 ffffffff 1 1 
+FUNC0_1	 	2f 1 0037fece ffffffff 1 1 
+FUNC0_2	 	2f 1 0037fed6 ffffffff 1 1 
+FUNC0_3	 	2f 1 0037fede ffffffff 1 1 
+
+INT_MASK6	2f 1 0037FFE7 ffffffff 1 1 
+INT_LEVEL6	2f 1 0037FFE3 ffffffff 1 1
+
+* INT_MASK bit[7] = FEC7; INT_MASK[0] = FEC0; "1" DISABLES FEC INT
+* INT_LEVEL bit[3] = IRQ ENABLE
+* INT_LEVEL bit[2:0] = IRQ LEVEL; 001 = IRQ[1]; 111 = IRQ[7]
++ INTERRUPT VECTOR[7:0] = {SLOT_NUMBER[4:0], FEC_NUMBER[2:0]}; 7'h32 = SLOT6 FEC_2
+*

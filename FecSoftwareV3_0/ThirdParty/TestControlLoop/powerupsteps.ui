@@ -1,0 +1,157 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>PowerUpSteps</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>PowerUpSteps</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>318</width>
+            <height>180</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Power Up Steps</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QPushButton" row="0" column="1" rowspan="2" colspan="1">
+            <property name="name">
+                <cstring>step1Button</cstring>
+            </property>
+            <property name="enabled">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Done</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="4" column="0">
+            <property name="name">
+                <cstring>step4Label</cstring>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>210</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="text">
+                <string>&lt;b&gt;4/&lt;/font&gt;&lt;/b&gt; &lt;font color="#000000"&gt;Start tests&lt;/font&gt;</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="3" column="1">
+            <property name="name">
+                <cstring>step3Button</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="text">
+                <string>Done</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>step1Label</cstring>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>210</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="text">
+                <string>&lt;b&gt;1/&lt;/b&gt; &lt;font color="#ff0000"&gt;Switch on Control Power Supply&lt;/font&gt;</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="3" column="0">
+            <property name="name">
+                <cstring>step3Label</cstring>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>210</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="text">
+                <string>&lt;b&gt;3/&lt;/font&gt;&lt;/b&gt; &lt;font color="#000000"&gt;Switch on Readout Power Supply&lt;/font&gt;</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="4" column="1">
+            <property name="name">
+                <cstring>step4Button</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="text">
+                <string>Let's Go !</string>
+            </property>
+        </widget>
+        <spacer row="2" column="1">
+            <property name="name">
+                <cstring>spacer18</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>44</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLabel" row="1" column="0" rowspan="2" colspan="1">
+            <property name="name">
+                <cstring>step2Label</cstring>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>210</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="text">
+                <string>&lt;b&gt;2/&lt;/font&gt;&lt;/b&gt; &lt;font color="#000000"&gt;Store the Power Supply currents&lt;/font&gt;</string>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>step1Button</sender>
+        <signal>released()</signal>
+        <receiver>PowerUpSteps</receiver>
+        <slot>nextStep()</slot>
+    </connection>
+    <connection>
+        <sender>step3Button</sender>
+        <signal>released()</signal>
+        <receiver>PowerUpSteps</receiver>
+        <slot>nextStep()</slot>
+    </connection>
+    <connection>
+        <sender>step4Button</sender>
+        <signal>released()</signal>
+        <receiver>PowerUpSteps</receiver>
+        <slot>nextStep()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in implementation">powerupsteps.ui.h</include>
+</includes>
+<slots>
+    <slot>nextStep()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

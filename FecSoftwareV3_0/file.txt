@@ -1,0 +1,172 @@
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/generic/lib/linux/x86_64_slc5/libDeviceAccess.so: undefined reference to `FecVmeRingDevice::mutexBusAdapter'
+collect2: ld returned 1 exit status
+make[3]: *** [/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/ThirdParty/I2CTemplate/src/linux/x86_64_slc5/I2CTemplate.exe] Error 1
+make[2]: *** [/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/ThirdParty/I2CTemplate/.loop] Error 2
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/generic/lib/linux/x86_64_slc5/libDeviceAccess.so: undefined reference to `FecVmeRingDevice::mutexBusAdapter'
+collect2: ld returned 1 exit status
+make[3]: *** [/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/ThirdParty/APIConsoleDebugger/src/linux/x86_64_slc5/ProgramTest.exe] Error 1
+make[2]: *** [/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/ThirdParty/APIConsoleDebugger/.loop] Error 2
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/generic/lib/linux/x86_64_slc5/libDeviceAccess.so: undefined reference to `FecVmeRingDevice::mutexBusAdapter'
+collect2: ld returned 1 exit status
+make[3]: *** [/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/ThirdParty/APIXMLDebugger/src/linux/x86_64_slc5/FecProfiler.exe] Error 1
+make[2]: *** [/raid/development/trackerDAQ-3.1/FecSoftwareV3_0/ThirdParty/APIXMLDebugger/.loop] Error 2
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In file included from src/main.cc:13:
+src/vfat_controller.h:37:30: error: MultiBusAdapter.hh: No such file or directory
+src/vfat_controller.h:38:20: error: TTCci.hh: No such file or directory
+src/vfat_controller.h:42:21: error: TOTFED.hh: No such file or directory
+src/vfat_controller.h:110: error: ‘ttc’ has not been declared
+src/vfat_controller.h:110: error: ISO C++ forbids declaration of ‘TTCci’ with no type
+src/vfat_controller.h:110: error: expected ‘;’ before ‘*’ token
+src/vfat_controller.h:116: error: ISO C++ forbids declaration of ‘TOTFED’ with no type
+src/vfat_controller.h:116: error: expected ‘;’ before ‘*’ token
+make[2]: *** [bin/main.o] Error 1
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"
+In Makefile.fallbacks: guessing/checking values
+XDAQ_ROOT="/opt/xdaq"
+XDAQ_OS already set to "linux"
+XDAQ_PLATFORM already set to "x86_64_slc5"
+Guessed undefined XDAQ_PLATFORM to "x86_64_slc5"

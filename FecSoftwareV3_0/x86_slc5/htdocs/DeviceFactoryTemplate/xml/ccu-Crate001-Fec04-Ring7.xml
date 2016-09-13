@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ROWSET xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation='http://cmsdoc.cern.ch/cms/cmt/System_aspects/FecControl/binaries/misc/schema.xsd'>
+	<RING crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" enabled="T" inputAUsed="T" outputAUsed="T" />
+	<CCU crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" ccuAddress="10" enabled="T" arrangement="1" />
+	<CCU crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" ccuAddress="20" enabled="T" arrangement="2" />
+	<CCU crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" ccuAddress="30" enabled="T" arrangement="3" />
+	<CCU crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" ccuAddress="40" enabled="T" arrangement="4" />
+	<CCU crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" ccuAddress="50" enabled="T" arrangement="5" />
+	<CCU crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" ccuAddress="60" enabled="T" arrangement="6" />
+	<CCU crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" ccuAddress="70" enabled="T" arrangement="7" />
+	<CCU crateSlot="1" fecSlot="4" fecHardwareId="3020140B35928A" ringSlot="7" ccuAddress="126" enabled="F" arrangement="127" />
+</ROWSET>

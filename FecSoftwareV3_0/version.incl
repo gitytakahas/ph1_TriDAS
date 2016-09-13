@@ -1,0 +1,15 @@
+# This file relfect the version of the FEC software
+# To use it, you can directly in your makefile add the following line
+#    include ${ENV_CMS_TK_FEC_ROOT}/version.incl
+#    ifeq ($(FECSOFTWARE_VERSION),FecSoftwareV13_3_1)
+#       MYOWNVARIABLE=-DMYTAG
+#    else
+#       MYOWNVARIALE=-DNOMYTAG
+#    endif
+# 
+# This file define two variables, one defining the version, 
+#         FECSOFTWARE_VERSION=FecSoftwavreV3_12_0
+# the other defining is the version is stable or not
+#         FECSOFTWARE_STABLE=yes
+FECSOFTWARE_VERSION=FecSoftwareV3_22_2
+FECSOFTWARE_STABLE=no

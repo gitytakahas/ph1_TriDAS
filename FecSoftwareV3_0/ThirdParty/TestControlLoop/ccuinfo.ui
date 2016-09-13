@@ -1,0 +1,600 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>CCUInfo</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>CCUInfo</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>766</width>
+            <height>375</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>CCU Info</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout46</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout18</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>FEC-Ring :</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox">
+                            <property name="name">
+                                <cstring>fecRingCB</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout17</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                    </hbox>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer39</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>291</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget" row="5" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout38</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>clearButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Clear</string>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer7</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>90</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>okButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Ok</string>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer7_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>90</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>sameConfigChB</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Same configuration for all rings</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="Line" row="4" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>line3</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>HLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout56</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer42</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>195</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>dcuThrButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Set DCU Thresholds for comparison</string>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer42_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>194</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+            </hbox>
+        </widget>
+        <widget class="QButtonGroup" row="2" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>buttonGroup23</cstring>
+            </property>
+            <property name="title">
+                <string></string>
+            </property>
+            <widget class="QCheckBox">
+                <property name="name">
+                    <cstring>allExceptChB</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>180</x>
+                        <y>10</y>
+                        <width>270</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>All CCU except dummy CCU have DCU</string>
+                </property>
+            </widget>
+            <widget class="QCheckBox">
+                <property name="name">
+                    <cstring>allChB</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>10</y>
+                        <width>140</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>All CCU have DCU</string>
+                </property>
+            </widget>
+            <widget class="QCheckBox">
+                <property name="name">
+                    <cstring>noChB</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>470</x>
+                        <y>10</y>
+                        <width>130</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>No DCU on CCU</string>
+                </property>
+                <property name="checked">
+                    <bool>true</bool>
+                </property>
+            </widget>
+        </widget>
+        <widget class="QTable" row="1" column="1">
+            <column>
+                <property name="text">
+                    <string>Place on ring</string>
+                </property>
+                <property name="pixmap">
+                    <pixmap></pixmap>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Address</string>
+                </property>
+                <property name="pixmap">
+                    <pixmap></pixmap>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>DCU on CCU ?</string>
+                </property>
+                <property name="pixmap">
+                    <pixmap></pixmap>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Dcu Hard Id</string>
+                </property>
+                <property name="pixmap">
+                    <pixmap></pixmap>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>ccuTable</cstring>
+            </property>
+            <property name="numRows">
+                <number>0</number>
+            </property>
+            <property name="numCols">
+                <number>4</number>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget" row="1" column="0">
+            <property name="name">
+                <cstring>layout31</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout173</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Nb CCU :</string>
+                            </property>
+                        </widget>
+                        <widget class="QLineEdit">
+                            <property name="name">
+                                <cstring>nbCCULineEdit</cstring>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>60</width>
+                                    <height>32767</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="maxLength">
+                                <number>5</number>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel4_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>(without the dummy CCU)</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout30</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox" row="0" column="2">
+                            <property name="name">
+                                <cstring>dcuCB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>dcu</string>
+                            </property>
+                        </widget>
+                        <widget class="QLineEdit" row="1" column="1">
+                            <property name="name">
+                                <cstring>addressLineEdit</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="2" column="0">
+                            <property name="name">
+                                <cstring>textLabel4_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Dcu Hard ID :</string>
+                            </property>
+                        </widget>
+                        <widget class="QLineEdit" row="2" column="1">
+                            <property name="name">
+                                <cstring>dcuHardIdLineEdit</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="0" column="0">
+                            <property name="name">
+                                <cstring>textLabel3_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>position :</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="1" column="0">
+                            <property name="name">
+                                <cstring>textLabel4</cstring>
+                            </property>
+                            <property name="text">
+                                <string>address :</string>
+                            </property>
+                        </widget>
+                        <widget class="QLineEdit" row="0" column="1">
+                            <property name="name">
+                                <cstring>positionLineEdit</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton" row="1" column="2">
+                            <property name="name">
+                                <cstring>addCCUButton</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Add CCU</string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+                <widget class="Line">
+                    <property name="name">
+                        <cstring>line3_2</cstring>
+                    </property>
+                    <property name="frameShape">
+                        <enum>HLine</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Sunken</enum>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout67</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer52_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>deleteCCUButton</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Delete selected CCU</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer52</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>clearButton</sender>
+        <signal>released()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>clearPage()</slot>
+    </connection>
+    <connection>
+        <sender>addCCUButton</sender>
+        <signal>released()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>addCCU()</slot>
+    </connection>
+    <connection>
+        <sender>deleteCCUButton</sender>
+        <signal>released()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>deleteCCU()</slot>
+    </connection>
+    <connection>
+        <sender>allChB</sender>
+        <signal>clicked()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>allHaveDcu()</slot>
+    </connection>
+    <connection>
+        <sender>allExceptChB</sender>
+        <signal>clicked()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>allExceptHaveDcu()</slot>
+    </connection>
+    <connection>
+        <sender>noChB</sender>
+        <signal>clicked()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>noDcu()</slot>
+    </connection>
+    <connection>
+        <sender>dcuThrButton</sender>
+        <signal>released()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>setDcuThreshold()</slot>
+    </connection>
+    <connection>
+        <sender>fecRingCB</sender>
+        <signal>activated(const QString&amp;)</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>changePage()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>released()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>back()</slot>
+    </connection>
+    <connection>
+        <sender>sameConfigChB</sender>
+        <signal>clicked()</signal>
+        <receiver>CCUInfo</receiver>
+        <slot>warning()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>fecRingCB</tabstop>
+    <tabstop>nbCCULineEdit</tabstop>
+    <tabstop>positionLineEdit</tabstop>
+    <tabstop>addressLineEdit</tabstop>
+    <tabstop>addCCUButton</tabstop>
+    <tabstop>deleteCCUButton</tabstop>
+    <tabstop>allChB</tabstop>
+    <tabstop>allExceptChB</tabstop>
+    <tabstop>noChB</tabstop>
+    <tabstop>dcuThrButton</tabstop>
+    <tabstop>clearButton</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>sameConfigChB</tabstop>
+    <tabstop>ccuTable</tabstop>
+    <tabstop>dcuCB</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">ccuinfo.ui.h</include>
+</includes>
+<slots>
+    <slot>clearPage()</slot>
+    <slot>deleteCCU()</slot>
+    <slot>setDcuThreshold()</slot>
+    <slot>sameConfigForAll()</slot>
+    <slot>changePage()</slot>
+    <slot>noDcu()</slot>
+    <slot>addCCU()</slot>
+    <slot>back()</slot>
+    <slot>allHaveDcu()</slot>
+    <slot>allExceptHaveDcu()</slot>
+    <slot>warning()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

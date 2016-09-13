@@ -1,0 +1,68 @@
+## to insert a comment line in this file always begin the line per two '#' plus a blank space
+
+## ------------------------------------------------------
+## ------------------------------------------------------
+## GLOBAL ERROR DISPATCHER APPLICATION CONFIGURATION FILE
+## ------------------------------------------------------
+## ------------------------------------------------------
+## Available LOGLEVELS are : TRACE DEBUG INFO WARN USERINFO ERROR FATAL
+
+
+## --------------------------------
+## default LOG4C+ appender settings
+## --------------------------------
+## do we want to use the LOG4C+ appender for console outputs ? TRUE/FALSE
+UseDefaultAppender			TRUE
+
+## messages of criticity at least equal to XXX (here INFO) must be routed to the LOG4C+ appender
+DefaultAppenderLogLevel 	INFO
+
+
+## --------------------------------
+## Global Error Dispatcher settings
+## --------------------------------
+## do we want to send the emitted messages to the GlobalErrorDispatcher process ? TRUE/FALSE
+UseGlbErrorDispatcher		FALSE
+
+## messages of criticity at least equal to XXX (here INFO) will be routed to the GlobalErrorDispatcher
+GlbErrorDispatcherLogLevel	TRACE
+
+## What's the class name of the XDAQ module acting as GlobalErrorDsipatcher ?
+GlbErrorDispatcherName		GlobalErrorDispatcher
+
+## What's the instance of the XDAQ module acting as GlobalErrorDsipatcher ?
+GlbErrorDispatcherInstance	0
+
+
+
+## --------------------------------
+## Chainsaw settings
+## --------------------------------
+## Do we want to use Chainsaw as log reader? TRUE/FALSE
+UseChainsaw 				FALSE
+
+## What's the IP or machine name on which Chainsaw is running?
+ChainsawServerHost			cmstkint11.cern.ch
+
+## On which port of this machine is Chainsaw listening?
+ChainsawServerPort			4448
+
+## On which Chainsaw receiver do we have to send the logs?
+ChainsawReceiverName			myReceiver
+
+## messages of criticity at least equal to XXX (here WARN) must be routed to Chainsaw
+ChainsawLogLevel			TRACE
+
+
+
+## --------------------------------
+## Log FILE Output Settings
+## --------------------------------
+## Default Path prefix to log file to use as $PATH to logfile
+## This value WILL override a one given as fireitem parameter in case of tuned configuration
+## LOGFILEPATH should be declared in shell as : export LOGFILEPATH=/tmp/logRepository/
+## LogFilePath 		/tmp/
+
+## messages of criticity at least equal to XXX (here TRACE) must be logged into errors logFile
+FileLogLevel	DIAGTRACE
+

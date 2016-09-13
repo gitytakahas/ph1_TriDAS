@@ -1,0 +1,28 @@
+#FileName : 	DiagHeader.linux
+#Content :		shell properties of DiagSystem package
+#Programmer :	Laurent GROSS
+#Version : 		TDS 4.0
+#Last modification date	19/12/2006
+#Support : 		mail to : laurent.gross@ires.in2p3.fr
+#online help : https://uimon.cern.ch/twiki/bin/view/CMS/DiagnosticSystem
+
+XDAQ_RPMBUILD:=@xdaq_rpmbuild@
+XDAQ_OS:=@xdaq_os@
+XDAQ_PLATFORM:=@xdaq_platform@
+XDAQ_ROOT:=@xdaq_root@
+XDAQ_BASE:=@xdaq_root@
+#DIAG_HOME:=DiagSystem
+ENV_CMS_TK_DIAG_ROOT=@diag_home@
+ENV_CMS_TK_FEC_ROOT=@fec_root@
+#ENV_CMS_TK_XDAQ:=@tk_xdaq@
+DIAG_LOGREADER_USES_DB:=@use_trackeronline_db@
+DIAG_WILL_COMPILE_FOR_TRACKER:=@compile_for_tracker@
+DIAG_WILL_COMPILE_FOR_PIXELS:=@compile_for_pixels@
+DIAG_WILL_COMPILE_FOR_GENERIC:=@compile_for_generic@
+DIAG_PARSE_XTRA_BUFFER:=@parse_tracker_xtra_buffer@
+DIAG_PATH_TO_GWT_APPLETS_ROOT:=@gwtapplets_root@
+DIAG_WILL_USE_PIXELS_ERRDB:=@store_logs_to_pixelsdb@
+DIAG_WILL_USE_TRACKER_ERRDB:=@store_logs_to_trackerdb@
+DIAG_WILL_USE_GWT_FIREITEMS_VIEWER:=@use_gwtapplet_fireitems_viewer@
+DIAG_WILL_COMPILE_WITH_PACKAGE_INFOS:=@compilewith_package_infos@
+

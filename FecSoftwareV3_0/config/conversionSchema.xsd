@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+
+ <xsd:element name="ROWSET">
+  <xsd:complexType>
+   <xsd:sequence>
+     <xsd:element ref="DCUCONVERSION" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="DCUINFO" minOccurs='0' maxOccurs='unbounded'/>
+     <xsd:element ref="RAWIDVSHOSTNAME" minOccurs='0' maxOccurs='unbounded'/>
+   </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+
+ <xsd:element name="DCUCONVERSION">
+  <xsd:complexType>
+   <xsd:attribute name="dcuHardId" type="xsd:unsignedLong" />
+   <xsd:attribute name="subDetector" type="xsd:string" />
+   <xsd:attribute name="dcuType" type="xsd:string" />
+   <xsd:attribute name="structureId" type="xsd:string" />
+   <xsd:attribute name="containerId" type="xsd:string" />
+   <xsd:attribute name="detId" type="xsd:unsignedLong" />
+   <xsd:attribute name="adcGain0" type="xsd:double" />
+   <xsd:attribute name="adcOffset0" type="xsd:double" />
+   <xsd:attribute name="adcInl0" type="xsd:double" />
+   <xsd:attribute name="adcInl0OW" type="xsd:string" />
+   <xsd:attribute name="adcCal0" type="xsd:string" />
+   <xsd:attribute name="i20" type="xsd:double" />
+   <xsd:attribute name="i10" type="xsd:double" />
+   <xsd:attribute name="iCal" type="xsd:string" />
+   <xsd:attribute name="kDiv" type="xsd:double" />
+   <xsd:attribute name="kCal" type="xsd:string" />
+   <xsd:attribute name="tsGain" type="xsd:double" />
+   <xsd:attribute name="tsOffset" type="xsd:double" />
+   <xsd:attribute name="tsCal" type="xsd:string" />
+   <xsd:attribute name="r68" type="xsd:double" />
+   <xsd:attribute name="r68Cal" type="xsd:string" />
+   <xsd:attribute name="adcGain2" type="xsd:double" />
+   <xsd:attribute name="adcOffset2" type="xsd:double" />
+   <xsd:attribute name="adcCal2" type="xsd:string" />
+   <xsd:attribute name="adcGain3" type="xsd:double" />
+   <xsd:attribute name="adcOffset3" type="xsd:double" />
+   <xsd:attribute name="adcCal3" type="xsd:string" />
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="DCUINFO">
+  <xsd:complexType>
+   <xsd:attribute name="dcuHardId" type="xsd:unsignedLong" />
+   <xsd:attribute name="detId" type="xsd:unsignedLong" />
+   <xsd:attribute name="fibreLength" type="xsd:double" />
+   <xsd:attribute name="apvNumber" type="xsd:int" />
+   <xsd:attribute name="timeOfFlight" type="xsd:double" />
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:element name="RAWIDVSHOSTNAME">
+  <xsd:complexType>
+   <xsd:attribute name="SUBDETECTOR" type="xsd:string" />
+   <xsd:attribute name="CRATEID" type="xsd:string" />
+   <xsd:attribute name="HOSTNAME" type="xsd:string" />
+   <xsd:attribute name="SLOT" type="xsd:unsignedLong" />
+   <xsd:attribute name="ID" type="xsd:string" />
+  </xsd:complexType>
+ </xsd:element>
+
+
+
+</xsd:schema>

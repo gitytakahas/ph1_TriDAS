@@ -1,0 +1,204 @@
+<xc:Partition xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+    <xc:Context url="http://cmstkint02.cern.ch:40000">
+        <xc:Application class="ErrorDispatcher" id="113" instance="0" network="tcp1">
+            <properties xmlns="urn:xdaq-application:ErrorDispatcher" xsi:type="soapenc:Struct">	
+                <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+                <DefaultAppenderLogLevel xsi:type="xsd:string">TRACE</DefaultAppenderLogLevel>
+
+                <UseSentinel xsi:type="xsd:boolean">false</UseSentinel>
+                <SentinelAppenderLogLevel xsi:type="xsd:string">TRACE</SentinelAppenderLogLevel>
+                <PushErrorsToContext xsi:type="xsd:string">TkErrorsPool</PushErrorsToContext>
+	
+                <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+                <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+                <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+                <ErrorDispatcherInstance xsi:type="xsd:string">0</ErrorDispatcherInstance>
+                <ErrorDispatcherLID xsi:type="xsd:string">113</ErrorDispatcherLID>
+                <ErrorDispatcherIP xsi:type="xsd:string">cmstkint02</ErrorDispatcherIP>
+                <ErrorDispatcherPort xsi:type="xsd:string">40000</ErrorDispatcherPort>
+
+                <UseGlbErrorDispatcher xsi:type="xsd:boolean">true</UseGlbErrorDispatcher>
+                <GlbErrorDispatcherLogLevel xsi:type="xsd:string">ERROR</GlbErrorDispatcherLogLevel>
+                <GlbErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</GlbErrorDispatcherName>
+                <GlbErrorDispatcherInstance xsi:type="xsd:string">2</GlbErrorDispatcherInstance>
+                <GlbErrorDispatcherLID xsi:type="xsd:string">133</GlbErrorDispatcherLID>
+                <GlbErrorDispatcherIP xsi:type="xsd:string">cmstkint02</GlbErrorDispatcherIP>
+                <GlbErrorDispatcherPort xsi:type="xsd:string">42000</GlbErrorDispatcherPort>
+
+                <UseChainsaw xsi:type="xsd:boolean">false</UseChainsaw>
+                <ChainsawServerHost xsi:type="xsd:string">cmstkint02</ChainsawServerHost>
+                <ChainsawServerPort xsi:type="xsd:string">4448</ChainsawServerPort>
+                <ChainsawReceiverName xsi:type="xsd:string">test</ChainsawReceiverName>
+                <ChainsawLogLevel xsi:type="xsd:string">INFO</ChainsawLogLevel>
+	
+                <UseConsoleLogging xsi:type="xsd:boolean">false</UseConsoleLogging>
+                <ConsoleLogLevel xsi:type="xsd:string">TRACE</ConsoleLogLevel>
+	
+                <UseDbLogging xsi:type="xsd:boolean">false</UseDbLogging>
+                <DbLogLevel xsi:type="xsd:string">TRACE</DbLogLevel>
+	
+                <UseFileLogging xsi:type="xsd:boolean">true</UseFileLogging>
+                <FileLogLevel xsi:type="xsd:string">TRACE</FileLogLevel>
+                <FilePathAndName xsi:type="xsd:string">/tmp/toto.txt</FilePathAndName>
+            </properties>
+        </xc:Application>
+        <xc:Module>/exports/xdaq/tifdev/DiagSystem/modules/ErrorDispatcher/lib/linux/x86/libErrorDispatcher.so</xc:Module>
+
+
+        <xc:Application class="TrackerSupervisor" id="23" instance="0" network="tcp1">
+            <properties xmlns="urn:xdaq-application:TrackerSupervisor" xsi:type="soapenc:Struct">
+                <!-- ERROR DISPATCHER Parameters for this application -->
+                <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+                <DefaultAppenderLogLevel xsi:type="xsd:string">ERROR</DefaultAppenderLogLevel>
+
+                <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+                <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+                <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+                <ErrorDispatcherInstance xsi:type="xsd:string">0</ErrorDispatcherInstance>
+                <ErrorDispatcherLID xsi:type="xsd:string">113</ErrorDispatcherLID>
+                <ErrorDispatcherIP xsi:type="xsd:string">cmstkint02</ErrorDispatcherIP>
+                <ErrorDispatcherPort xsi:type="xsd:string">40000</ErrorDispatcherPort>
+
+                <UseGlbErrorDispatcher xsi:type="xsd:boolean">true</UseGlbErrorDispatcher>
+                <GlbErrorDispatcherLogLevel xsi:type="xsd:string">ERROR</GlbErrorDispatcherLogLevel>
+                <GlbErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</GlbErrorDispatcherName>
+                <GlbErrorDispatcherInstance xsi:type="xsd:string">2</GlbErrorDispatcherInstance>
+                <GlbErrorDispatcherLID xsi:type="xsd:string">133</GlbErrorDispatcherLID>
+                <GlbErrorDispatcherIP xsi:type="xsd:string">cmstkint02</GlbErrorDispatcherIP>
+                <GlbErrorDispatcherPort xsi:type="xsd:string">42000</GlbErrorDispatcherPort>
+
+                <!-- TrackerSupervisor Other Parameters-->
+                .............................
+                .............................
+            </properties>
+        </xc:Application>
+        <xc:Module>/exports/xdaq/tifdev/TrackerOnline//2005/TrackerXdaq//lib/linux/x86/libTrackerSupervisor.so</xc:Module>
+    </xc:Context>
+
+
+
+
+    <xc:Context url="http://cmstkint02.cern.ch:41000">
+        <xc:Application class="ErrorDispatcher" id="123" instance="1" network="tcp1">
+            <properties xmlns="urn:xdaq-application:ErrorDispatcher" xsi:type="soapenc:Struct">
+	
+                <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+                <DefaultAppenderLogLevel xsi:type="xsd:string">TRACE</DefaultAppenderLogLevel>
+	
+                <UseSentinel xsi:type="xsd:boolean">false</UseSentinel>
+                <SentinelAppenderLogLevel xsi:type="xsd:string">TRACE</SentinelAppenderLogLevel>
+                <PushErrorsToContext xsi:type="xsd:string">TkErrorsPool</PushErrorsToContext>
+	
+                <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+                <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+                <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+                <ErrorDispatcherInstance xsi:type="xsd:string">1</ErrorDispatcherInstance>
+                <ErrorDispatcherLID xsi:type="xsd:string">123</ErrorDispatcherLID>
+                <ErrorDispatcherIP xsi:type="xsd:string">cmstkint02</ErrorDispatcherIP>
+                <ErrorDispatcherPort xsi:type="xsd:string">41000</ErrorDispatcherPort>
+
+                <UseGlbErrorDispatcher xsi:type="xsd:boolean">true</UseGlbErrorDispatcher>
+                <GlbErrorDispatcherLogLevel xsi:type="xsd:string">ERROR</GlbErrorDispatcherLogLevel>
+                <GlbErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</GlbErrorDispatcherName>
+                <GlbErrorDispatcherInstance xsi:type="xsd:string">2</GlbErrorDispatcherInstance>
+                <GlbErrorDispatcherLID xsi:type="xsd:string">133</GlbErrorDispatcherLID>
+                <GlbErrorDispatcherIP xsi:type="xsd:string">cmstkint02</GlbErrorDispatcherIP>
+                <GlbErrorDispatcherPort xsi:type="xsd:string">42000</GlbErrorDispatcherPort>
+
+                <UseChainsaw xsi:type="xsd:boolean">false</UseChainsaw>
+                <ChainsawServerHost xsi:type="xsd:string">cmstkint02</ChainsawServerHost>
+                <ChainsawServerPort xsi:type="xsd:string">4448</ChainsawServerPort>
+                <ChainsawReceiverName xsi:type="xsd:string">test</ChainsawReceiverName>
+                <ChainsawLogLevel xsi:type="xsd:string">INFO</ChainsawLogLevel>
+	
+                <UseConsoleLogging xsi:type="xsd:boolean">false</UseConsoleLogging>
+                <ConsoleLogLevel xsi:type="xsd:string">TRACE</ConsoleLogLevel>
+	
+                <UseDbLogging xsi:type="xsd:boolean">false</UseDbLogging>
+                <DbLogLevel xsi:type="xsd:string">TRACE</DbLogLevel>
+	
+                <UseFileLogging xsi:type="xsd:boolean">true</UseFileLogging>
+                <FileLogLevel xsi:type="xsd:string">TRACE</FileLogLevel>
+                <FilePathAndName xsi:type="xsd:string">/tmp/toto.txt</FilePathAndName>
+            </properties>
+        </xc:Application>
+        <xc:Module>/exports/xdaq/tifdev/DiagSystem/modules/ErrorDispatcher/lib/linux/x86/libErrorDispatcher.so</xc:Module>
+
+
+        <xc:Application class="FecSupervisor" id="30" instance="0" network="tcp1">
+            <properties xmlns="urn:xdaq-application:FecSupervisor" xsi:type="soapenc:Struct">
+                <!-- ERROR DISPATCHER Parameters for this application -->
+                <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+                <DefaultAppenderLogLevel xsi:type="xsd:string">ERROR</DefaultAppenderLogLevel>
+            
+                <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+                <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+                <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+                <ErrorDispatcherInstance xsi:type="xsd:string">1</ErrorDispatcherInstance>
+                <ErrorDispatcherLID xsi:type="xsd:string">123</ErrorDispatcherLID>
+                <ErrorDispatcherIP xsi:type="xsd:string">cmstkint02</ErrorDispatcherIP>
+                <ErrorDispatcherPort xsi:type="xsd:string">42000</ErrorDispatcherPort>
+
+                <UseGlbErrorDispatcher xsi:type="xsd:boolean">true</UseGlbErrorDispatcher>
+                <GlbErrorDispatcherLogLevel xsi:type="xsd:string">ERROR</GlbErrorDispatcherLogLevel>
+                <GlbErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</GlbErrorDispatcherName>
+                <GlbErrorDispatcherInstance xsi:type="xsd:string">2</GlbErrorDispatcherInstance>
+                <GlbErrorDispatcherLID xsi:type="xsd:string">133</GlbErrorDispatcherLID>
+                <GlbErrorDispatcherIP xsi:type="xsd:string">cmstkint02</GlbErrorDispatcherIP>
+                <GlbErrorDispatcherPort xsi:type="xsd:string">42000</GlbErrorDispatcherPort>
+
+                <!-- FecSupervisor Other Parameters-->
+                ............................
+                ............................
+            </properties>
+        </xc:Application>
+        <xc:Module>/exports/xdaq/tifdev/FecSoftwareV3_0/xdaqLib/libFecSupervisor.so</xc:Module>
+    </xc:Context>
+
+
+
+
+    <xc:Context url="http://cmstkint02.cern.ch:42000">
+        <xc:Application class="ErrorDispatcher" id="133" instance="2" network="tcp1">
+            <properties xmlns="urn:xdaq-application:ErrorDispatcher" xsi:type="soapenc:Struct">
+	
+                <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+                <DefaultAppenderLogLevel xsi:type="xsd:string">TRACE</DefaultAppenderLogLevel>
+	
+                <UseSentinel xsi:type="xsd:boolean">true</UseSentinel>
+                <SentinelAppenderLogLevel xsi:type="xsd:string">ERROR</SentinelAppenderLogLevel>
+                <PushErrorsToContext xsi:type="xsd:string">TestErrorsPool</PushErrorsToContext>
+	
+                <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+                <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+                <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+                <ErrorDispatcherInstance xsi:type="xsd:string">2</ErrorDispatcherInstance>
+                <ErrorDispatcherLID xsi:type="xsd:string">133</ErrorDispatcherLID>
+                <ErrorDispatcherIP xsi:type="xsd:string">cmstkint02</ErrorDispatcherIP>
+                <ErrorDispatcherPort xsi:type="xsd:string">42000</ErrorDispatcherPort>
+	
+                <UseChainsaw xsi:type="xsd:boolean">false</UseChainsaw>
+                <ChainsawServerHost xsi:type="xsd:string">cmstkint02</ChainsawServerHost>
+                <ChainsawServerPort xsi:type="xsd:string">4448</ChainsawServerPort>
+                <ChainsawReceiverName xsi:type="xsd:string">testReceiver</ChainsawReceiverName>
+                <ChainsawLogLevel xsi:type="xsd:string">TRACE</ChainsawLogLevel>
+	
+                <UseConsoleLogging xsi:type="xsd:boolean">false</UseConsoleLogging>
+                <ConsoleLogLevel xsi:type="xsd:string">TRACE</ConsoleLogLevel>
+	
+                <UseDbLogging xsi:type="xsd:boolean">false</UseDbLogging>
+                <DbLogLevel xsi:type="xsd:string">TRACE</DbLogLevel>
+	
+                <UseFileLogging xsi:type="xsd:boolean">false</UseFileLogging>
+                <FileLogLevel xsi:type="xsd:string">ERROR</FileLogLevel>
+                <FilePathAndName xsi:type="xsd:string">/tmp/toto.txt</FilePathAndName>
+            </properties>
+        </xc:Application>
+        <xc:Module>/exports/xdaq/tifdev/DiagSystem/modules/ErrorDispatcher/lib/linux/x86/libErrorDispatcher.so</xc:Module>
+    </xc:Context>
+
+</xc:Partition>

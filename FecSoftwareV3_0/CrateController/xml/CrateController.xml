@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+
+<!-- 
+     #####################################################################
+     This example shows how you can avoid havein an additional 
+     configuration file by replacing "[file=...]" in the <Configuration> 
+     variablewith the actual configuration itself 
+     #####################################################################
+-->
+
+<xc:Partition xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<i2o:protocol xmlns:i2o="http://xdaq.web.cern.ch/xdaq/xsd/2004/I2OConfiguration-30">
+  <i2o:target class="CrateController"  instance="0" tid="14"/>
+</i2o:protocol>
+
+<!-- Declare a context that contain the CrateController application -->
+<xc:Context url="http://cmstkint04:13000">
+
+  <!-- Declare a CrateController application -->
+  <xc:Application class="CrateController" id="14" instance="0" network="local">
+    <properties xmlns="urn:xdaq-application:CrateController" xsi:type="soapenc:Struct">
+       <FecBusType xsi:type="xsd:string">VME_FEC</FecBusType>
+       <StrBusAdapter xsi:type="xsd:string">CAENPCI</StrBusAdapter>
+    </properties>                     
+  </xc:Application>
+
+  <xc:Module>/exports/xdaq/dev35/FecSoftwareV3_0/CrateController/lib/linux/x86/libCrateController.so</xc:Module>
+  <xc:Module>/exports/xdaq/dev35/FecSoftwareV3_0/FecSupervisor/lib/linux/x86/libFecSupervisor.so</xc:Module>
+  
+</xc:Context>
+
+</xc:Partition>

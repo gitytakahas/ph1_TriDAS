@@ -1,0 +1,515 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>TestConfiguration</class>
+<widget class="QMainWindow">
+    <property name="name">
+        <cstring>TestConfiguration</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>352</width>
+            <height>484</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Test configuration</string>
+    </property>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>47</y>
+                <width>330</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&lt;b&gt;Please select tests to perform :&lt;p align="center"&gt;&lt;/p&gt;&lt;/b&gt;</string>
+        </property>
+        <property name="textFormat">
+            <enum>AutoText</enum>
+        </property>
+        <property name="alignment">
+            <set>WordBreak|AlignCenter</set>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>resDirButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>215</x>
+                <y>11</y>
+                <width>126</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Choose Results Dir</string>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>prefDirButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>11</y>
+                <width>152</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Choose Preferences Dir</string>
+        </property>
+    </widget>
+    <spacer>
+        <property name="name">
+            <cstring>spacer5_2</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>90</width>
+                <height>20</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>169</x>
+                <y>16</y>
+                <width>40</width>
+                <height>20</height>
+            </rect>
+        </property>
+    </spacer>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>uploadButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>214</x>
+                <y>426</y>
+                <width>126</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Upload Results</string>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>startButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>426</y>
+                <width>76</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Start</string>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>loadPrefButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>390</y>
+                <width>198</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Load preferences</string>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>savePrefButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>214</x>
+                <y>390</y>
+                <width>126</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Save preferences</string>
+        </property>
+    </widget>
+    <spacer>
+        <property name="name">
+            <cstring>spacer5</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>50</width>
+                <height>20</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>92</x>
+                <y>431</y>
+                <width>116</width>
+                <height>20</height>
+            </rect>
+        </property>
+    </spacer>
+    <widget class="QButtonGroup">
+        <property name="name">
+            <cstring>buttonGroup2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>70</y>
+                <width>330</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>Tests selection</string>
+        </property>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>ccuInfoButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>230</x>
+                    <y>60</y>
+                    <width>90</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>CCU infos</string>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>fecSelectionButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>230</x>
+                    <y>30</y>
+                    <width>90</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>FEC selection</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>ccuTestCB</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>60</y>
+                    <width>180</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>CCU test</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>fecTestCB</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>30</y>
+                    <width>180</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>FEC test</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>redundancyTestCB</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>90</y>
+                    <width>180</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Redundancy test</string>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>modulesInfoButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>230</x>
+                    <y>120</y>
+                    <width>90</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Modules infos</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>psCurrentsRecordCB</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>270</y>
+                    <width>200</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Power Supply currents record</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>dohCalibrationCB</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>210</y>
+                    <width>180</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>DOH calibration</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>modulesDevicesTestCB</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>120</y>
+                    <width>180</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Modules/devices test</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>i2cSpeedTestCB</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>40</x>
+                    <y>150</y>
+                    <width>120</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>I2C Speed test</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>i2cSpecialCommandTestCB</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>180</y>
+                    <width>200</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>I2C Special Command test</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>configurationTestCB</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>240</y>
+                    <width>240</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Configuration test (nb loop to perform):</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>nbLoopOnModuleLineEdit</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>260</x>
+                    <y>240</y>
+                    <width>60</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>1</string>
+            </property>
+            <property name="alignment">
+                <set>AlignRight</set>
+            </property>
+        </widget>
+    </widget>
+</widget>
+<toolbars>
+</toolbars>
+<connections>
+    <connection>
+        <sender>startButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>launchPowerUpStep()</slot>
+    </connection>
+    <connection>
+        <sender>ccuInfoButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>launchCCUInfo()</slot>
+    </connection>
+    <connection>
+        <sender>loadPrefButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>loadPref()</slot>
+    </connection>
+    <connection>
+        <sender>savePrefButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>savePref()</slot>
+    </connection>
+    <connection>
+        <sender>modulesInfoButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>launchModuleInfo()</slot>
+    </connection>
+    <connection>
+        <sender>fecSelectionButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>fecSelection()</slot>
+    </connection>
+    <connection>
+        <sender>uploadButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>uploadResults()</slot>
+    </connection>
+    <connection>
+        <sender>prefDirButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>prefDirChoice()</slot>
+    </connection>
+    <connection>
+        <sender>resDirButton</sender>
+        <signal>released()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>resDirChoice()</slot>
+    </connection>
+    <connection>
+        <sender>configurationTestCB</sender>
+        <signal>clicked()</signal>
+        <receiver>TestConfiguration</receiver>
+        <slot>configTestChanged()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>fecTestCB</tabstop>
+    <tabstop>fecSelectionButton</tabstop>
+    <tabstop>ccuTestCB</tabstop>
+    <tabstop>ccuInfoButton</tabstop>
+    <tabstop>redundancyTestCB</tabstop>
+    <tabstop>modulesDevicesTestCB</tabstop>
+    <tabstop>modulesInfoButton</tabstop>
+    <tabstop>dohCalibrationCB</tabstop>
+    <tabstop>configurationTestCB</tabstop>
+    <tabstop>psCurrentsRecordCB</tabstop>
+    <tabstop>loadPrefButton</tabstop>
+    <tabstop>savePrefButton</tabstop>
+    <tabstop>startButton</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">testconfiguration.ui.h</include>
+</includes>
+<slots>
+    <slot>launchPowerUpStep()</slot>
+    <slot>launchCCUInfo()</slot>
+    <slot>launchModuleInfo()</slot>
+    <slot>loadPref()</slot>
+    <slot>savePref()</slot>
+    <slot>fecSelection()</slot>
+    <slot>uploadResults()</slot>
+    <slot>resDirChoice()</slot>
+    <slot>prefDirChoice()</slot>
+    <slot>configTestChanged()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

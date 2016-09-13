@@ -1,0 +1,214 @@
+<?xml version='1.0'?>
+<xc:Partition
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30">
+
+	<!-- Declare a context that contain applcation -->
+    	<xc:Context id = "0" url="http://127.0.0.1:13000">
+
+		<!--xc:Application class="Sentinel" id="21"  network="local" watchover="TkDiagErrorsPool,FFErrorsPool,TestErrorsPool">
+		</xc:Application>
+		<xc:Module>/home/lgross/TriDAS/daq/sentinel/lib/linux/x86/libsentinel.so</xc:Module-->
+	
+		
+		<!--xc:Application class="DiagSentinelErrorsGrabber" id="23" instance="0" network="local" >
+		    <properties xmlns="urn:xdaq-application:DiagSentinelErrorsGrabber" xsi:type="soapenc:Struct">
+
+		       <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+		       <DefaultAppenderLogLevel xsi:type="xsd:string">TRACE</DefaultAppenderLogLevel>
+		       <DuplicateMsgToLocalConsole xsi:type="xsd:boolean">true</DuplicateMsgToLocalConsole>
+
+		       <UseSentinel xsi:type="xsd:boolean">false</UseSentinel>
+		       <SentinelAppenderLogLevel xsi:type="xsd:string">TRACE</SentinelAppenderLogLevel>
+		       <PushErrorsToContext xsi:type="xsd:string">UpperLevelErrorsPool</PushErrorsToContext>
+
+		       <ListenSentinel xsi:type="xsd:boolean">false</ListenSentinel>
+		       <ListenContext xsi:type="xsd:string">TestErrorsPool</ListenContext>
+
+		       <UseErrorDispatcher xsi:type="xsd:boolean">false</UseErrorDispatcher>
+		       <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+		       <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+		       <ErrorDispatcherInstance xsi:type="xsd:string">0</ErrorDispatcherInstance>
+		       <ErrorDispatcherLID xsi:type="xsd:string">31</ErrorDispatcherLID>
+		       <ErrorDispatcherIP xsi:type="xsd:string">127.0.0.1</ErrorDispatcherIP>
+		       <ErrorDispatcherPort xsi:type="xsd:string">13000</ErrorDispatcherPort>
+		    </properties>
+		</xc:Application>
+		<xc:Module>/home/lgross/DiagSystem/modules/DiagSentinelErrorsGrabber/lib/linux/x86/libDiagSentinelErrorsGrabber.so</xc:Module-->
+
+		<!-- Declare the ErrorDispatcher first -->
+                <xc:Application class="ErrorDispatcher" id="30" instance="0" network="local">
+		    <properties xmlns="urn:xdaq-application:ErrorDispatcher" xsi:type="soapenc:Struct">
+
+		       <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+		       <DefaultAppenderLogLevel xsi:type="xsd:string">TRACE</DefaultAppenderLogLevel>
+
+		       <UseSentinel xsi:type="xsd:boolean">false</UseSentinel>
+		       <SentinelAppenderLogLevel xsi:type="xsd:string">ERROR</SentinelAppenderLogLevel>
+		       <PushErrorsToContext xsi:type="xsd:string">TestErrorsPool</PushErrorsToContext>
+
+		       <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+		       <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+		       <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+		       <ErrorDispatcherInstance xsi:type="xsd:string">0</ErrorDispatcherInstance>
+		       <ErrorDispatcherLID xsi:type="xsd:string">30</ErrorDispatcherLID>
+		       <ErrorDispatcherIP xsi:type="xsd:string">127.0.0.1</ErrorDispatcherIP>
+		       <ErrorDispatcherPort xsi:type="xsd:string">13000</ErrorDispatcherPort>
+
+		       <UseChainsaw xsi:type="xsd:boolean">false</UseChainsaw>
+		       <ChainsawServerHost xsi:type="xsd:string">127.0.0.1</ChainsawServerHost>
+		       <ChainsawServerPort xsi:type="xsd:string">4448</ChainsawServerPort>
+		       <ChainsawReceiverName xsi:type="xsd:string">testReceiver</ChainsawReceiverName>
+		       <ChainsawLogLevel xsi:type="xsd:string">TRACE</ChainsawLogLevel>
+
+		       <UseConsoleLogging xsi:type="xsd:boolean">true</UseConsoleLogging>
+		       <ConsoleLogLevel xsi:type="xsd:string">TRACE</ConsoleLogLevel>
+
+		       <UseDbLogging xsi:type="xsd:boolean">false</UseDbLogging>
+		       <DbLogLevel xsi:type="xsd:string">TRACE</DbLogLevel>
+
+		       <UseFileLogging xsi:type="xsd:boolean">false</UseFileLogging>
+		       <FileLogLevel xsi:type="xsd:string">TRACE</FileLogLevel>
+		       <FilePathAndName xsi:type="xsd:string">/tmp/toto.txt</FilePathAndName>
+		    </properties>
+		</xc:Application>
+
+		<xc:Module>/home/lgross/DiagSystem/modules/ErrorDispatcher/lib/linux/x86/libErrorDispatcher.so</xc:Module>
+
+
+
+
+		<!-- Declare the ErrorDispatcher first -->
+                <!--xc:Application class="ErrorDispatcher" id="31" instance="1" network="local">
+		    <properties xmlns="urn:xdaq-application:ErrorDispatcher" xsi:type="soapenc:Struct">
+
+		       <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+		       <DefaultAppenderLogLevel xsi:type="xsd:string">TRACE</DefaultAppenderLogLevel>
+
+		       <UseSentinel xsi:type="xsd:boolean">false</UseSentinel>
+		       <SentinelAppenderLogLevel xsi:type="xsd:string">ERROR</SentinelAppenderLogLevel>
+		       <PushErrorsToContext xsi:type="xsd:string">TestErrorsPool</PushErrorsToContext>
+
+		       <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+		       <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+		       <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+		       <ErrorDispatcherInstance xsi:type="xsd:string">1</ErrorDispatcherInstance>
+		       <ErrorDispatcherLID xsi:type="xsd:string">31</ErrorDispatcherLID>
+		       <ErrorDispatcherIP xsi:type="xsd:string">127.0.0.1</ErrorDispatcherIP>
+		       <ErrorDispatcherPort xsi:type="xsd:string">13000</ErrorDispatcherPort>
+
+		       <UseChainsaw xsi:type="xsd:boolean">false</UseChainsaw>
+		       <ChainsawServerHost xsi:type="xsd:string">127.0.0.1</ChainsawServerHost>
+		       <ChainsawServerPort xsi:type="xsd:string">4448</ChainsawServerPort>
+		       <ChainsawReceiverName xsi:type="xsd:string">testReceiver</ChainsawReceiverName>
+		       <ChainsawLogLevel xsi:type="xsd:string">TRACE</ChainsawLogLevel>
+
+		       <UseConsoleLogging xsi:type="xsd:boolean">true</UseConsoleLogging>
+		       <ConsoleLogLevel xsi:type="xsd:string">TRACE</ConsoleLogLevel>
+
+		       <UseDbLogging xsi:type="xsd:boolean">false</UseDbLogging>
+		       <DbLogLevel xsi:type="xsd:string">TRACE</DbLogLevel>
+
+		       <UseFileLogging xsi:type="xsd:boolean">false</UseFileLogging>
+		       <FileLogLevel xsi:type="xsd:string">TRACE</FileLogLevel>
+		       <FilePathAndName xsi:type="xsd:string">/tmp/toto.txt</FilePathAndName>
+		    </properties>
+		</xc:Application>
+
+		<xc:Module>/home/lgross/DiagSystem/modules/ErrorDispatcher/lib/linux/x86/libErrorDispatcher.so</xc:Module-->
+
+
+
+		<!-- Declare a DummySupervisor application -->
+                <xc:Application class="DummySupervisor" id="40" instance="0" network="local">
+		    <properties xmlns="urn:xdaq-application:DummySupervisor" xsi:type="soapenc:Struct">
+		       <!-- DEFAULT Appender Parameters -->
+		       <UseDefaultAppender xsi:type="xsd:boolean">true</UseDefaultAppender>
+               <DefaultAppenderLogLevel xsi:type="xsd:string">TRACE</DefaultAppenderLogLevel>
+               <DuplicateMsgToLocalConsole xsi:type="xsd:boolean">true</DuplicateMsgToLocalConsole>
+		       <!-- LOCAL ERROR DISPATCHER Parameters -->
+		       <UseErrorDispatcher xsi:type="xsd:boolean">false</UseErrorDispatcher>
+		       <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+		       <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+		       <ErrorDispatcherInstance xsi:type="xsd:string">0</ErrorDispatcherInstance>
+		       <ErrorDispatcherLID xsi:type="xsd:string">30</ErrorDispatcherLID>
+		       <ErrorDispatcherIP xsi:type="xsd:string">127.0.0.1</ErrorDispatcherIP>
+		       <ErrorDispatcherPort xsi:type="xsd:string">13000</ErrorDispatcherPort>
+		       <!-- LVL1 ERROR DISPATCHER Parameters -->
+		       <UseGlbErrorDispatcher xsi:type="xsd:boolean">false</UseGlbErrorDispatcher>
+		       <GlbErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</GlbErrorDispatcherLogLevel>
+		       <GlbErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</GlbErrorDispatcherName>
+		       <GlbErrorDispatcherInstance xsi:type="xsd:string">1</GlbErrorDispatcherInstance>
+		       <GlbErrorDispatcherLID xsi:type="xsd:string">31</GlbErrorDispatcherLID>
+		       <GlbErrorDispatcherIP xsi:type="xsd:string">127.0.0.1</GlbErrorDispatcherIP>
+		       <GlbErrorDispatcherPort xsi:type="xsd:string">13000</GlbErrorDispatcherPort>
+		    </properties>
+		</xc:Application>
+		<!-- Shared object library that contains the DummySupervisor inplementation -->		
+		<xc:Module>/home/lgross/DiagSystem/modules/DummySupervisor/lib/linux/x86/libDummySupervisor.so</xc:Module>
+
+
+
+
+
+		<!-- Declare a DummySupervisor application -->
+                <!--xc:Application class="DummySupervisor" id="41" instance="1" network="local">
+		    <properties xmlns="urn:xdaq-application:DummySupervisor" xsi:type="soapenc:Struct">
+
+		       <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+
+		       <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+		       <ErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</ErrorDispatcherLogLevel>
+		       <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+		       <ErrorDispatcherInstance xsi:type="xsd:string">0</ErrorDispatcherInstance>
+		       <ErrorDispatcherLID xsi:type="xsd:string">30</ErrorDispatcherLID>
+		       <ErrorDispatcherIP xsi:type="xsd:string">127.0.0.1</ErrorDispatcherIP>
+		       <ErrorDispatcherPort xsi:type="xsd:string">13000</ErrorDispatcherPort>
+
+		       <UseGlbErrorDispatcher xsi:type="xsd:boolean">true</UseGlbErrorDispatcher>
+		       <GlbErrorDispatcherLogLevel xsi:type="xsd:string">TRACE</GlbErrorDispatcherLogLevel>
+		       <GlbErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</GlbErrorDispatcherName>
+		       <GlbErrorDispatcherInstance xsi:type="xsd:string">1</GlbErrorDispatcherInstance>
+		       <GlbErrorDispatcherLID xsi:type="xsd:string">31</GlbErrorDispatcherLID>
+		       <GlbErrorDispatcherIP xsi:type="xsd:string">127.0.0.1</GlbErrorDispatcherIP>
+		       <GlbErrorDispatcherPort xsi:type="xsd:string">13000</GlbErrorDispatcherPort>
+		    </properties>
+		</xc:Application>
+
+		<xc:Module>/home/lgross/DiagSystem/modules/DummySupervisor/lib/linux/x86/libDummySupervisor.so</xc:Module-->
+
+		<!-- Declare a DummySupervisorDiagLvlOne application -->
+                <!--xc:Application class="DummySupervisorDiagLvlOne" id="32" instance="0" network="local">
+		    <properties xmlns="urn:xdaq-application:DummySupervisorDiagLvlOne" xsi:type="soapenc:Struct">
+
+		       <UseDefaultAppender xsi:type="xsd:boolean">false</UseDefaultAppender>
+		       <DefaultAppenderLogLevel xsi:type="xsd:string">WARN</DefaultAppenderLogLevel>
+		       <DuplicateMsgToLocalConsole xsi:type="xsd:boolean">true</DuplicateMsgToLocalConsole>
+
+		       <UseSentinel xsi:type="xsd:boolean">false</UseSentinel>
+		       <SentinelAppenderLogLevel xsi:type="xsd:string">ERROR</SentinelAppenderLogLevel>
+		       <PushErrorsToContext xsi:type="xsd:string">TestErrorsPool</PushErrorsToContext>
+
+		       <UseErrorDispatcher xsi:type="xsd:boolean">true</UseErrorDispatcher>
+		       <ErrorDispatcherLogLevel xsi:type="xsd:string">DEBUG</ErrorDispatcherLogLevel>
+		       <ErrorDispatcherName xsi:type="xsd:string">ErrorDispatcher</ErrorDispatcherName>
+		       <ErrorDispatcherInstance xsi:type="xsd:string">0</ErrorDispatcherInstance>
+		       <ErrorDispatcherLID xsi:type="xsd:string">31</ErrorDispatcherLID>
+		       <ErrorDispatcherIP xsi:type="xsd:string">cmstkint02.cern.ch</ErrorDispatcherIP>
+		       <ErrorDispatcherPort xsi:type="xsd:string">13000</ErrorDispatcherPort>
+
+		       <CloseReconfLoop xsi:type="xsd:boolean">false</CloseReconfLoop>
+		       <ReconfProcessName xsi:type="xsd:string">DummySupervisorReconfigurator</ReconfProcessName>
+		       <ReconfProcessInstance xsi:type="xsd:string">0</ReconfProcessInstance>
+		       <ReconfProcessLID xsi:type="xsd:string">32</ReconfProcessLID>
+		       <ReconfProcessIP xsi:type="xsd:string">cmstkint02.cern.ch</ReconfProcessIP>
+		       <ReconfProcessPort xsi:type="xsd:string">13000</ReconfProcessPort>
+		    </properties>
+		</xc:Application>
+
+		<xc:Module>/home/lgross/DiagSystem/modules/DummySupervisorDiagLvlOne/lib/linux/x86/libDummySupervisorDiagLvlOne.so</xc:Module-->
+
+        </xc:Context>
+
+</xc:Partition>

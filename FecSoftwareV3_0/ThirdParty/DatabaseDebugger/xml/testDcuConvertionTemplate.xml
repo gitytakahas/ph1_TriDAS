@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ROWSET xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <DCUCONVERSION dcuHardId="123" subDetector="TIB" dcuType="CCU" structureId="30254125874589" containerId="65874521548756" adcGain0="2.0" adcOffset0="52" adcCal0="T" i20="18.0" i10="9.0" iCal="T" tsGain="9.3" tsOffset="2600" tsCal="T" adcGain2="0.77" adcOffset2="-8" adcCal2="T" adcGain3="1.6" adcOffset3="5" adcCal3="T" />
+ <DCUCONVERSION dcuHardId="3456789" subDetector="TEC" dcuType="CCU" structureId="30254125874589" containerId="65874521548756" adcGain0="2.0" adcOffset0="52" adcCal0="T" i20="18.0" i10="9.0" iCal="T" tsGain="9.3" tsOffset="2600" tsCal="T" adcGain2="0.80" adcOffset2="-2" adcCal2="T" adcGain3="1.5" adcOffset3="5" adcCal3="T" />
+ <DCUCONVERSION dcuHardId="123789" subDetector="TIB" dcuType="FEH" structureId="30254125874589" containerId="65874521548756" adcGain0="2.0" adcOffset0="52" adcInl0="4" adcInl0OW="T" adcCal0="T" i20="18.0" i10="9.0" iCal="T" kDiv="0.5" kCal="T" tsGain="9.3" tsOffset="2600" tsCal="T" />
+ <DCUCONVERSION dcuHardId="127897346" subDetector="TOB" dcuType="CCU" structureId="30254125874589" containerId="65874521548756" adcGain0="2.0" adcOffset0="52" adcCal0="T" i20="18.0" i10="9.0" iCal="T" tsGain="9.3" tsOffset="2600" tsCal="T" r68= "22" r68Cal="T" adcGain2="0.90" adcOffset2="5" adcCal2="T" adcGain3="1.55" adcOffset3="2" adcCal3="T" />
+</ROWSET>

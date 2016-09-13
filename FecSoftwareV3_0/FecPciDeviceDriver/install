@@ -1,0 +1,100 @@
+#FileName : 		install
+#Content :		Installation script for the PCI FEC Device Driver
+#Programmer : 		Laurent GROSS
+#Version : 		Unified-6.0
+#Support : 		mail to : fec-support@ires.in2p3.fr
+#Remarks :		you MUST be ROOT to run this script
+#			This script has to be called by Makefile
+#Last modif. date	03/05/2005
+
+
+#Given as command line parameters when this script is called 
+MINOR=$1
+DEVICE=$2
+MODULE=$3
+MAJOR=$4
+KERNVER=$5
+
+#echo Detected kernel version $KERNVER
+#exit
+
+
+
+if
+	[ "$MINOR" = "" ] || [ "$DEVICE" = "" ] || [ "$MODULE" = "" ] || [ "$MAJOR" = "" ] || [ "$KERNVER" = "" ]
+then
+	echo This script is not intended to be launched by users.
+	echo Is is called by Makefile when installing the driver.
+	echo Please use the -make load- command in a root session to install the FEC driver on your system.
+	exit
+fi
+
+
+if
+	[ "$KERNVER" = "2.6.X" ]
+then
+	MODULEFULL=$MODULE.ko
+else
+	MODULEFULL=$MODULE.o
+fi
+#echo Full module name will be : $MODULEFULL
+#exit
+
+
+#check if the driver exists on local
+if
+	! test -e ./$MODULEFULL
+then
+	echo You must compile a driver before trying to install it.
+	echo Type -make help- for more informations about fec driver compilation.
+	echo
+	exit
+else
+	echo Installing driver ./$MODULEFULL ...
+fi
+
+
+
+#check if the driver can be installed in the proper directory
+if
+	! test -d /lib/modules/`uname -r`/misc/
+then
+	echo creating directory /lib/modules/`uname -r`/misc/
+	/bin/mkdir /lib/modules/`uname -r`/misc
+	/bin/chmod 755 /lib/modules/`uname -r`/misc
+fi
+
+
+#Copy local module to general modules directory
+echo copying module to target : /lib/modules/`uname -r`/misc/$MODULEFULL
+/bin/cp -f $MODULE.o /lib/modules/`uname -r`/misc/$MODULEFULL
+
+
+#give correct permissions to the module
+/bin/chmod 644 /lib/modules/`uname -r`/misc/$MODULEFULL
+
+
+#Unload old device driver, if needed
+echo Unloading old device drivers
+/sbin/rmmod $MODULE
+
+
+#Load new device driver
+echo Loading new device driver
+/sbin/insmod $MODULEFULL
+
+
+#Read back the major used for the driver
+#Uncomment next line if you work with Auto-attributed majors
+#MAJOR=`cat /proc/devices | awk "\\$2==\"$MODULE\" {print \\$1}"`
+
+
+#Delete old device, if needed
+/bin/rm -f /dev/$DEVICE
+
+
+#Create new device
+echo creating device file /dev/$MODULE with MAJOR=$MAJOR and MINOR=$MINOR
+/bin/mknod /dev/$MODULE c $MAJOR $MINOR
+/bin/chmod 777 /dev/$DEVICE
+

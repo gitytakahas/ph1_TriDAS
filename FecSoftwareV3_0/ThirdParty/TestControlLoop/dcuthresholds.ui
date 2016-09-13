@@ -1,0 +1,769 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>DCUThresholds</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>DCUThresholds</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>497</width>
+            <height>535</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>DCU (on modules) Thresholds</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="5">
+            <property name="name">
+                <cstring>layout85</cstring>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel" row="0" column="3">
+                    <property name="name">
+                        <cstring>textLabel22</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Comparison :</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="3" column="2">
+                    <property name="name">
+                        <cstring>ch1MaxLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>4095</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="5" column="1">
+                    <property name="name">
+                        <cstring>ch3MinLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0</string>
+                    </property>
+                </widget>
+                <widget class="QButtonGroup" row="5" column="3">
+                    <property name="name">
+                        <cstring>ch3ButtonGrp</cstring>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch3YButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>yes</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch3NButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>90</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>no</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </widget>
+                <widget class="QLineEdit" row="4" column="2">
+                    <property name="name">
+                        <cstring>ch2MaxLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>4095</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>textLabel14</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0x0</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel23</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Channel :</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="6" column="2">
+                    <property name="name">
+                        <cstring>ch4MaxLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>4095</string>
+                    </property>
+                </widget>
+                <widget class="QButtonGroup" row="2" column="3">
+                    <property name="name">
+                        <cstring>ch0ButtonGrp</cstring>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch0YButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>yes</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch0NButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>90</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>no</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </widget>
+                <widget class="QLabel" row="7" column="0">
+                    <property name="name">
+                        <cstring>textLabel19</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0x5</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="6" column="1">
+                    <property name="name">
+                        <cstring>ch4MinLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="5" column="0">
+                    <property name="name">
+                        <cstring>textLabel17</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0x3</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QButtonGroup" row="4" column="3">
+                    <property name="name">
+                        <cstring>ch2ButtonGrp</cstring>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch2YButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>yes</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch2NButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>90</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>no</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </widget>
+                <widget class="QButtonGroup" row="8" column="3">
+                    <property name="name">
+                        <cstring>ch6ButtonGrp</cstring>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch6YButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>yes</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch6NButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>90</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>no</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </widget>
+                <widget class="Line" row="1" column="0" rowspan="1" colspan="4">
+                    <property name="name">
+                        <cstring>line8</cstring>
+                    </property>
+                    <property name="frameShape">
+                        <enum>HLine</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Sunken</enum>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="1">
+                    <property name="name">
+                        <cstring>textLabel24</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Max. Value :</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="9" column="2">
+                    <property name="name">
+                        <cstring>ch7MaxLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>4095</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="4" column="0">
+                    <property name="name">
+                        <cstring>textLabel16</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0x2</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="7" column="2">
+                    <property name="name">
+                        <cstring>ch5MaxLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>4095</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="6" column="0">
+                    <property name="name">
+                        <cstring>textLabel18</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0x4</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>textLabel15</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0x1</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QButtonGroup" row="6" column="3">
+                    <property name="name">
+                        <cstring>ch4ButtonGrp</cstring>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch4YButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>yes</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch4NButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>90</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>no</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </widget>
+                <widget class="QButtonGroup" row="7" column="3">
+                    <property name="name">
+                        <cstring>ch5ButtonGrp</cstring>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch5YButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>yes</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch5NButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>90</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>no</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </widget>
+                <widget class="QLineEdit" row="2" column="1">
+                    <property name="name">
+                        <cstring>ch0MinLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="5" column="2">
+                    <property name="name">
+                        <cstring>ch3MaxLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>4095</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="3" column="1">
+                    <property name="name">
+                        <cstring>ch1MinLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0</string>
+                    </property>
+                </widget>
+                <widget class="QButtonGroup" row="3" column="3">
+                    <property name="name">
+                        <cstring>ch1ButtonGrp</cstring>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch1YButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>yes</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch1NButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>90</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>no</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </widget>
+                <widget class="QLabel" row="9" column="0">
+                    <property name="name">
+                        <cstring>textLabel21</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0x7</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="8" column="0">
+                    <property name="name">
+                        <cstring>textLabel20</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0x6</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="7" column="1">
+                    <property name="name">
+                        <cstring>ch5MinLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="2">
+                    <property name="name">
+                        <cstring>textLabel24_2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Min. Value :</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QButtonGroup" row="9" column="3">
+                    <property name="name">
+                        <cstring>ch7ButtonGrp</cstring>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch7YButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>yes</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>ch7NButton</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>90</x>
+                                <y>10</y>
+                                <width>50</width>
+                                <height>21</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>no</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </widget>
+                <widget class="QLineEdit" row="4" column="1">
+                    <property name="name">
+                        <cstring>ch2MinLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="9" column="1">
+                    <property name="name">
+                        <cstring>ch7MinLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="2" column="2">
+                    <property name="name">
+                        <cstring>ch0MaxLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>4095</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="8" column="2">
+                    <property name="name">
+                        <cstring>ch6MaxLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>4095</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="8" column="1">
+                    <property name="name">
+                        <cstring>ch6MinLineEdit</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <spacer row="1" column="0">
+            <property name="name">
+                <cstring>spacer46_2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>90</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QPushButton" row="1" column="1">
+            <property name="name">
+                <cstring>okButton</cstring>
+            </property>
+            <property name="text">
+                <string>Ok</string>
+            </property>
+        </widget>
+        <spacer row="1" column="2">
+            <property name="name">
+                <cstring>spacer46</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>80</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <spacer row="1" column="4">
+            <property name="name">
+                <cstring>spacer46_3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>80</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QPushButton" row="1" column="3">
+            <property name="name">
+                <cstring>clearButton</cstring>
+            </property>
+            <property name="text">
+                <string>Clear</string>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>clearButton</sender>
+        <signal>released()</signal>
+        <receiver>DCUThresholds</receiver>
+        <slot>clearPage()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>released()</signal>
+        <receiver>DCUThresholds</receiver>
+        <slot>saveThr()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>ch0MinLineEdit</tabstop>
+    <tabstop>ch0MaxLineEdit</tabstop>
+    <tabstop>ch0NButton</tabstop>
+    <tabstop>ch1MinLineEdit</tabstop>
+    <tabstop>ch1MaxLineEdit</tabstop>
+    <tabstop>ch1NButton</tabstop>
+    <tabstop>ch2MinLineEdit</tabstop>
+    <tabstop>ch2MaxLineEdit</tabstop>
+    <tabstop>ch2NButton</tabstop>
+    <tabstop>ch3MinLineEdit</tabstop>
+    <tabstop>ch3MaxLineEdit</tabstop>
+    <tabstop>ch3NButton</tabstop>
+    <tabstop>ch4MinLineEdit</tabstop>
+    <tabstop>ch4MaxLineEdit</tabstop>
+    <tabstop>ch4NButton</tabstop>
+    <tabstop>ch5MinLineEdit</tabstop>
+    <tabstop>ch5MaxLineEdit</tabstop>
+    <tabstop>ch5NButton</tabstop>
+    <tabstop>ch6MinLineEdit</tabstop>
+    <tabstop>ch6MaxLineEdit</tabstop>
+    <tabstop>ch6NButton</tabstop>
+    <tabstop>ch7MinLineEdit</tabstop>
+    <tabstop>ch7MaxLineEdit</tabstop>
+    <tabstop>ch7NButton</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>clearButton</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">dcuthresholds.ui.h</include>
+</includes>
+<slots>
+    <slot>clearPage()</slot>
+    <slot>saveThr()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

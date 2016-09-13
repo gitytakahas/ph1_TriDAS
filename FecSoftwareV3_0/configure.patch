@@ -1,0 +1,12 @@
+--- configure.save	2007-10-09 02:10:37.000000000 +0200
++++ configure	2007-10-09 02:12:48.000000000 +0200
+@@ -392,7 +392,8 @@
+     with_gas=yes ;;
+ 
+   -help | --help | --hel | --he | -h)
+-    ac_init_help=long ;;
++    ac_init_help=short
++ ;;
+   -help=r* | --help=r* | --hel=r* | --he=r* | -hr*)
+     ac_init_help=recursive ;;
+   -help=s* | --help=s* | --hel=s* | --he=s* | -hs*)

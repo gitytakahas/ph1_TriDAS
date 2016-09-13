@@ -1,0 +1,36 @@
+%{
+#include "CommandLineOptions.h"
+#include <string.h>
+typedef struct CommandLineOptionCode CommandLineOptionCode;
+%}
+struct CommandLineOption
+  {
+  const char *Option;
+  int OptionCode;
+  };
+%%
+-h, CommandLineOptionCode::HELP
+--help, CommandLineOptionCode::HELP
+-dd, CommandLineOptionCode::DOWNLOAD_DESCRIPTION
+--download-description, CommandLineOptionCode::DOWNLOAD_DESCRIPTION
+-dh, CommandLineOptionCode::DOWNLOAD_HISTORY
+--download-history, CommandLineOptionCode::DOWNLOAD_HISTORY
+-t, CommandLineOptionCode::ANALYSIS_TYPE
+--analysis-type, CommandLineOptionCode::ANALYSIS_TYPE
+-p, CommandLineOptionCode::PARTITION
+--partition, CommandLineOptionCode::PARTITION
+-r, CommandLineOptionCode::RUNNUMBER
+--run, CommandLineOptionCode::RUNNUMBER
+-v, CommandLineOptionCode::VERSION
+--version, CommandLineOptionCode::VERSION
+-gct, CommandLineOptionCode::GET_ANALYSIS_TYPE
+--get-analysis-type, CommandLineOptionCode::GET_ANALYSIS_TYPE
+-i, CommandLineOptionCode::INPUT
+--input, CommandLineOptionCode::INPUT
+-o, CommandLineOptionCode::OUTPUT
+--output, CommandLineOptionCode::OUTPUT
+-rn, CommandLineOptionCode::PRINTED_ROWS_NUMBER
+--printed_rows_number, CommandLineOptionCode::PRINTED_ROWS_NUMBER
+-dv, CommandLineOptionCode::DOWNLOAD_ANALYSISVERSIONS
+-download-versions, CommandLineOptionCode::DOWNLOAD_ANALYSISVERSIONS
+%%

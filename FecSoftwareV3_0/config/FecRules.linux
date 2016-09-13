@@ -1,0 +1,385 @@
+##
+#
+# This is the rules for the FEC software for XDAQ version 1.3
+#
+##
+
+##################################################################
+# Modifications
+
+##################################################################
+# FecHeader.linux defines all the options for the compilation
+# of the FecSoftware.
+# It must be added before this file.
+
+##################################################################
+# FEC software parts, use the FecHeader in order to find correct
+# parameters for the FecSoftware API
+#
+# For the debugging code and differents DEFINE
+#
+# Mandatory => cannot be set to no !
+DO_FECSOFT=yes
+
+##################################################################
+# Diagnostic system
+#ifeq (${ENV_CMS_TK_DIAG_ROOT},)
+ifdef ENV_CMS_TK_DIAG_ROOT
+       DIAG_INCLUDE  = ${ENV_CMS_TK_DIAG_ROOT}/tools/diagbag/include ${ENV_CMS_TK_DIAG_ROOT}/tools/soapdiagappender/include ${ENV_CMS_TK_DIAG_ROOT}/tools/xmldiagappender/include ${ENV_CMS_TK_DIAG_ROOT}
+       DIAG_C++FLAGS = -DTKDIAG
+       DIAG_LIBDIR   = ${ENV_CMS_TK_DIAG_ROOT}/tools/lib
+       DIAG_LIB      = TkDiagBag
+       DIAG_XLIB     = TkDiagBagXdaq TkDiagBagWizard soapdiagappender xmldiagappender
+       DIAG_LIBL     = -lTkDiagBag
+       DIAG_XLIBL    = -lTkDiagBagXdaq -lTkDiagBagWizard -lsoapdiagappender -lxmldiagappender
+else
+       DIAG_INCLUDE  =
+       DIAG_C++FLAGS = 
+       DIAG_LIBDIR   = 
+       DIAG_LIB      =
+       DIAG_XLIB     = 
+       DIAG_LIBL     =
+       DIAG_XLIBL    = 
+endif
+
+##################################################################
+# FED support
+# Use only for the DeviceFactory class that will be included in 
+# libDeviceDescriptions
+#
+ifdef ENV_CMS_TK_FED9U_ROOT
+        FED_C++FLAGS   = 
+        FED_INCLUDE    = ${ENV_CMS_TK_FED9U_ROOT}/Fed9UDeviceFactory/include ${ENV_CMS_TK_FED9U_ROOT}/Fed9UUtils/include ${ENV_CMS_TK_ICUTILS}/include ${ENV_CMS_TK_FED9U_ROOT}/Fed9UDevice/include
+
+        FED_LDDFLAGS   =
+	FED_LIBDIR     = ${ENV_CMS_TK_FED9U_ROOT}/Fed9UUtils ${ENV_CMS_TK_FED9U_ROOT}/Fed9UDeviceFactory ${ENV_CMS_TK_ICUTILS}
+        FED_LIB        = Fed9UUtils Fed9UDeviceFactory ICUtils
+        FED_LIBDIRL    = -L${ENV_CMS_TK_FED9U_ROOT}/Fed9UUtils -L${ENV_CMS_TK_FED9U_ROOT}/Fed9UDeviceFactory -L${ENV_CMS_TK_ICUTILS} -lFed9UUtils -lICUtils
+        FED_LIBL       = -lFed9UUtils -lFed9UDeviceFactory -lICUtils
+	FED_LIBCRATEL  = -L${ENV_CMS_TK_FED9U_ROOT}/Fed9UDevice -lFed9ULib -lDeviceDescriptions
+	SOURCESFED9U   = ConnectionFactory.cc DeviceFactory.cc DbClient.cc TkDiagErrorAnalyser.cc DbInterface.cc DBCacheHandler.cc TkMaskModulesFactory.cc
+
+#   	 FED_LIBDIR1     = ${ENV_CMS_TK_FED9U_ROOT}/Fed9UUtils ${ENV_CMS_TK_ICUTILS}
+#        FED_LIBDIRL1    = -L${ENV_CMS_TK_FED9U_ROOT}/Fed9UUtils -L${ENV_CMS_TK_ICUTILS} -lFed9UUtils -lICUtils
+#        FED_LIBL1       = -lFed9UUtils -lICUtils
+#	 SOURCESFED9U1   = ConnectionFactory.cc DeviceFactory.cc Fed9UDescriptionToXmlToDb.cc Fed9UDeviceFactoryException.cc Fed9UDescriptionToXmlToDb.cc Fed9UXMLDescriptionFromDb.cc Fed9UDeviceFactory.cc TkMaskModulesFactory.cc
+#	 TRACKERFED_SOURCEDIR  = ${ENV_CMS_TK_FED9U_ROOT}/Fed9UDeviceFactory/src
+
+else
+        FED_C++FLAGS    = 
+        FED_INCLUDE     = 
+        FED_LDDFLAGS    =
+        FED_LIB         =
+	SOURCESFED9U    = 
+	FED9USOURCEDIR  = 
+endif
+
+##################################################################
+# Tracker DAQ support
+#
+ifdef ENV_CMS_TK_COMMON
+#       Database caching system
+	ifdef ENV_CMS_TK_FED9U_ROOT
+        	TRACKERDAQ_C++FLAGS   = -DTRACKERXDAQ
+		TRACKERDAQ_C++SOURCE  = 
+		TRACKERDAQ_SOURCEDIR  = ${ENV_CMS_TK_XDAQ}
+	else
+		TRACKERDAQ_C++FLAGS   = 
+		TRACKERDAQ_C++SOURCE  = 
+		TRACKERDAQ_SOURCEDIR  = 
+	endif
+
+#       I2O Command interface
+        TRACKERDAQ_INCLUDE    = ${ENV_CMS_TK_COMMON}/Interface/include ${ENV_CMS_TK_XDAQ}/include
+        TRACKERDAQ_LDDFLAGS   =
+        TRACKERDAQ_LIB        =
+else
+        TRACKERDAQ_C++FLAGS   = 
+	TRACKERDAQ_C++SOURCE  = 
+	TRACKERDAQ_SOURCEDIR  = 
+        TRACKERDAQ_INCLUDE    = 
+        TRACKERDAQ_LDDFLAGS   =
+        TRACKERDAQ_LIB        =
+endif
+
+##################################################################
+# CMSSW for the det id in the interface for database
+# Not used for the time being
+ifdef ENV_CMSSW
+	CMSSW_C++SOURCE=TECDetId.cc TIBDetId.cc TIDDetId.cc TOBDetId.cc
+	CMSSW_C++FLAGS=-DCMSSWDETID
+	CMSSW_C++INCLUDE=${ENV_CMSSW}/src
+	CMSSW_C++SOURCEDIR=${ENV_CMSSW}/src/DataFormats/SiStripDetId/src
+else
+	CMSSW_C++SOURCE=
+	CMSSW_C++FLAGS=
+	CMSSW_C++INCLUDE=
+	CMSSW_C++SOURCEDIR=
+endif
+
+##################################################################
+# XML Support (SAX 2 using)
+# 
+ifdef XERCESCROOT
+	XERCESLIB=xerces-c
+	XERCESLIBL=-lxerces-c
+	XERCESC_INCLUDE=${XERCESCROOT}/include  
+else
+	ifdef XERCESROOT
+		XERCESLIB=xerces-c
+		XERCESLIBL=-lxerces-c
+		XERCESC_INCLUDE=${XERCESCROOT}/include  
+	else
+		XERCESLIB=NOXERCESPROBLEM
+	endif
+endif
+
+##################################################################
+# HAL and SBS/CAEN support
+#
+ifdef HALDIR
+  ifdef SBS_DIR
+    SBSINCLUDEDIR = ${SBS_DIR}/include
+    SBSLIBDIR     = ${SBS_DIR}/lib
+    SBSLIB        = SBSLinuxX86BusAdapter btp pthread_nonshared
+    SBSLIBL       = -lSBSLinuxX86BusAdapter -lbtp -lpthread_nonshared
+
+    BUSADAPTERC++FLAG += -DBUSVMESBS
+    BUSADAPTERINCLUDEDIR += ${SBSINCLUDEDIR}
+    BUSADAPTERLIBDIR  += ${SBSLIBDIR}
+    BUSADAPTERLIBDIRL += -L${SBSLIBDIR}
+    BUSADAPTERLIB     += ${SBSLIB}
+    BUSADAPTERLIBL    += ${SBSLIBL}
+
+  endif
+  ifdef CAEN_DIR
+    CAENINCLUDEDIR = ${CAEN_DIR}/include
+    CAENLIBDIR     = ${CAEN_DIR}/lib
+    CAENLIB        = CAENLinuxBusAdapter CAENVME
+    CAENLIBL       = -lCAENLinuxBusAdapter -lCAENVME
+
+    BUSADAPTERC++FLAG += -DBUSVMECAENPCI -DBUSVMECAENUSB
+    BUSADAPTERLIBDIR  += ${CAENLIBDIR}
+    BUSADAPTERLIBDIRL += -L${CAENLIBDIR}
+    BUSADAPTERINCLUDEDIR += ${CAENINCLUDEDIR}
+    BUSADAPTERLIB     += ${CAENLIB}
+    BUSADAPTERLIBL    += ${CAENLIBL}
+
+  endif
+
+  ifdef CAEN_DIR
+    BUSADAPTERSOURCES += FecVmeRingDevice.cc CCSTrigger.cc FecVmeTemperature.cc
+  else
+    ifdef SBS_DIR
+      BUSADAPTERSOURCES += FecVmeRingDevice.cc CCSTrigger.cc FecVmeTemperature.cc
+    endif
+  endif
+
+  HALLIB = GenericHAL config
+  HALLIBL = -lGenericHAL -lconfig
+
+  # XCEPT library
+  ifdef XDAQ_ROOT
+    HALLIBDIR += ${XDAQ_ROOT_DIR}/daq/xcept/lib/${XDAQ_OS}/${XDAQ_PLATFORM}
+    HALINCLUDEDIR += ${XDAQ_ROOT_DIR}/daq/xcept/include
+  else
+    HALLIBDIR += ${HALDIR}/xcept/lib/${XDAQ_OS}/${XDAQ_PLATFORM}
+    HALINCLUDEDIR += ${HALDIR}/xcept/include
+  endif
+  HALLIB += xcept xcept toolbox log4cplus asyncresolv uuid
+  HALLIBL += -lxcept -ltoolbox -llog4cplus -lasyncresolv -luuid
+endif
+
+##################################################################
+# ORACLE Support
+# 
+ifdef ENV_CMS_TK_ORACLE_HOME
+        # Set by the script FecSoftware/config/oracle.env.tcsh or oracle.env.bash
+        ORACLE_C++FLAGS   = -DDATABASE 
+#-DDATABASEUSER=\"${DATABASEUSER}\" -DDATABASEPASSWD=\"${DATABASEPASSWD}\" -DDATABASEPATH=\"${DATABASEPATH}\"
+
+        ORACLE_INCLUDE    = ${ENV_CMS_TK_ORACLE_HOME}/rdbms/demo ${ENV_CMS_TK_ORACLE_HOME}/rdbms/public ${ENV_CMS_TK_ORACLE_HOME}/plsql/public ${ENV_CMS_TK_ORACLE_HOME}/include
+	ORACLE_LDDFLAGS   = ${ENV_CMS_TK_ORACLE_HOME}/lib/ ${ENV_CMS_TK_ORACLE_HOME}/rdbms/lib/
+        ORACLE_LIB        = occi clntsh nnz11
+#       ORACLE_LIBL        =  -L${ENV_CMS_TK_ORACLE_HOME}/lib/ -L${ENV_CMS_TK_ORACLE_HOME}/rdbms/lib/ -locci -lclntsh -lnnz11
+        ORACLE_LIBL        =  -locci -lclntsh -lnnz11
+
+	#ifneq (${ENV_ORACLE_EXTERNAL},)
+	ifdef ENV_ORACLE_EXTERNAL
+        	ORACLE_INCLUDE    = ${ENV_ORACLE_EXTERNAL}/include 
+		ORACLE_LDDFLAGS   = ${ENV_ORACLE_EXTERNAL}/lib/ 
+	        ORACLE_LIB        = occi clntsh nnz11
+	#       ORACLE_LIBL        =  -L${ENV_CMS_TK_ORACLE_HOME}/lib/ -L${ENV_CMS_TK_ORACLE_HOME}/rdbms/lib/ -locci -lclntsh -lnnz11
+	        ORACLE_LIBL        =  -locci -lclntsh -lnnz11
+        endif
+
+	ORACLEC++FECSOURCES = DbCommonAccess.cc DbAccess.cc DbFecAccess.cc DbPiaResetAccess.cc DbTkDcuConversionAccess.cc DbTkDcuInfoAccess.cc DbConnectionsAccess.cc DbFedAccess.cc \
+				DbTkDcuPsuMapAccess.cc DbTkIdVsHostnameAccess.cc DbCommissioningAnalysisAccess.cc \
+                DbTkMaskModulesAccess.cc
+
+	ORACLEC++SOURCES    = ${ORACLEC++FECSOURCES}
+
+else
+        ORACLE_C++FLAGS     =
+        ORACLE_INCLUDE      =
+        ORACLE_LDDFLAGS     =
+        ORACLE_LIB          =
+	ORACLEC++FECSOURCES =
+	ORACLEC++SOURCES    =
+        DO_ORACLE           = no
+endif
+
+##################################################################
+# FECSOFT Support
+#
+# Directories needed for the compilation
+ifeq (${PCIFEC_COMPILE},yes)
+  FECSOFT_INCLUDE    = ${DEVICEDRIVERPATH}/include/
+  FECSOFT_LIBDIR     = ${DEVICEDRIVERPATH}
+  FECSOFT_LIB        = fec_glue
+  FECSOFT_LIBL       = -lfec_glue
+  FECSOFT_SRC        = ${DEVICEDRIVERPATH}/src
+
+  BUSADAPTERC++FLAG += -DBUSPCIFEC
+  BUSADAPTERINCLUDEDIR += ${FECSOFT_INCLUDE}
+  BUSADAPTERSOURCES += FecPciRingDevice.cc
+  BUSADAPTERLIBDIR  += ${DEVICEDRIVERPATH}
+  BUSADAPTERLIBDIRL += -L${DEVICEDRIVERPATH}
+  BUSADAPTERLIB     += ${FECSOFT_LIB}
+  BUSADAPTERLIBL    += ${FECSOFT_LIBL}
+
+else
+  FECSOFT_INCLUDE       = ${FECSOFTWARE_ROOT}/FecPciDeviceDriver/include/
+  BUSADAPTERINCLUDEDIR += ${FECSOFT_INCLUDE}
+  FECSOFT_LIBDIR     = 
+  FECSOFT_LIB        = 
+  FECSOFT_LIBL       = 
+  FECSOFT_SRC        = 
+endif
+
+# DEBUG or no
+#FECSOFTDEBUG = -DF1STLEVELCHECK -DS2NDLEVELCHECK -DT3TDLEVELCHECK
+ifeq (${DO_DEBUGFECSOFT}, yes)
+	FECSOFTDEBUG += -DDEBUGMSGERROR -DDATABASEDEBUG
+endif
+
+ifeq (${DO_DEBUGGETREGISTERS}, yes)
+	FECSOFTDEBUG += -DDEBUGGETREGISTERS
+endif
+
+# Define for the compilation 
+FECSOFT_C++FLAGS   += -fPIC -DDCUADDRESS=${DCUADDRESS} ${FECSOFTDEBUG} ${HAL_C++FLAGS}
+# -DDEFAULTXMLFILENAME=\"${XMLFILENAME}\"
+
+# Automatic scan of the ring and detect if it is a CCU25 or an old CCU
+# and the order of the CCUs
+ifeq (${DO_AUTOMATIC_SCAN}, yes)
+	FECSOFT_C++FLAGS += -DSCANCCUATSTARTING -DBROADCASTUSE
+endif
+
+# I2C bus speed
+ifeq (${BUSI2CSPEED}, 200)
+	FECSOFT_C++FLAGS += -DI2C200
+else
+	ifeq (${BUSI2CSPEED}, 400)
+		FECSOFT_C++FLAGS += -DI2C400
+	else
+		ifeq (${BUSI2CSPEED}, 1000)
+			FECSOFT_C++FLAGS += -DI2C1000
+		else
+			FECSOFT_C++FLAGS += -DI2C100
+		endif
+	endif
+endif
+
+# PIA bus strobe signal duration
+ifeq (${BUSPIASTROBEDURATION}, 100)
+	FECSOFT_C++FLAGS += -DPIA100
+else
+	ifeq (${BUSPIASTROBEDURATION}, 200)
+		FECSOFT_C++FLAGS += -DPIA200
+	else
+		ifeq (${BUSPIASTROBEDURATION}, 500)
+			FECSOFT_C++FLAGS += -DPIA500
+		else
+			ifeq (${BUSPIASTROBEDURATION}, 1000)
+				FECSOFT_C++FLAGS += -DPIA1000
+			endif
+		endif
+	endif
+endif
+
+#FECSOFT_C++FLAGS   =
+#FECSOFT_INCLUDE    = 
+#FECSOFT_LDDFLAGS   =
+#FECSOFT_LIB        =
+#FECSOFT_SRC        =
+#FECSOFT_SRC_C_FILE =
+
+##################################################################
+### FEC USB
+ifeq (${USBFEC_COMPILE},yes)
+  FECUSBSOFT_DIR        = ${FECSOFTWARE_ROOT}/FecUsbDeviceDriver
+  FECUSBSOFT_C++FLAGS   = -DWB_FEC_UNIQ
+  FECUSBSOFT_INCLUDE    = ${FECUSBSOFT_DIR}/include
+  FECUSBSOFTLIBDIR      = ${FECUSBSOFT_DIR}/lib/${XDAQ_OS}/${XDAQ_PLATFORM}
+  FECUSBSOFT_LDDFLAGS   = 
+  FECUSBSOFT_LIB        = fec_usb_glue usb 
+  FECUSBSOFT_LIBL       = -lfec_usb_glue -lusb
+  FECUSBSOFT_SRC        = ${FECUSBSOFT_DIR}/src/common
+
+  BUSADAPTERC++FLAG    += -DBUSUSBFEC ${FECUSBSOFT_C++FLAGS}
+  BUSADAPTERINCLUDEDIR += ${FECUSBSOFT_INCLUDE}
+  BUSADAPTERSOURCES    += FecUsbRingDevice.cc
+  BUSADAPTERLIBDIR     += ${FECUSBSOFTLIBDIR}
+  BUSADAPTERLIBDIRL    += -L${FECUSBSOFTLIBDIR}
+  BUSADAPTERLIB        += ${FECUSBSOFT_LIB}
+  BUSADAPTERLIBL       += ${FECUSBSOFT_LIBL}
+else
+  FECUSBSOFT_DIR        = 
+  FECUSBSOFT_C++FLAGS   = 
+  FECUSBSOFT_INCLUDE    = 
+  FECUSBSOFTLIBDIR      = 
+  FECUSBSOFT_LDDFLAGS   = 
+  FECUSBSOFT_LIB        = 
+  FECUSBSOFT_LIBL       = 
+  FECUSBSOFT_SRC        = 
+endif
+#
+##################################################################
+# Detector type:
+# Possible values are: PRESHOWER, TRACKER, TOTEM, PIXEL
+# TOTEM is now compiled in totem compilation and the devices are moved to ThirdParty/Totem/generic
+#    ifeq (${DETECTOR}, TOTEM)
+#	FECSOFT_C++FLAGS += -DTOTEM
+#	SOURCESDETECTOR=vfatAccess.cc totemCChipAccess.cc totemBBAccess.cc
+#	SOURCESDESCRIPTIONDETECTOR=vfatDescription.cc totemCChipDescription.cc totemBBDescription.cc
+#    else
+# see FecHeader.linux
+ifeq (${DETECTOR}, TRACKER)
+	FECSOFT_C++FLAGS += -DTRACKER
+	SOURCESDETECTOR=
+	SOURCESDESCRIPTIONDETECTOR=
+else
+  ifeq (${DETECTOR}, PRESHOWER)
+	FECSOFT_C++FLAGS += -DPRESHOWER
+	SOURCESDETECTOR=deltaAccess.cc paceAccess.cc kchipAccess.cc deltaDescription.cc paceDescription.cc kchipDescription.cc gohAccess.cc \
+	gohDescription.cc esMbResetDescription.cc
+	SOURCESDESCRIPTIONDETECTOR=deltaDescription.cc paceDescription.cc kchipDescription.cc gohDescription.cc esMbResetDescription.cc
+  else
+    ifeq (${DETECTOR}, PIXEL)
+        FECSOFT_C++FLAGS += -DPIXEL
+	SOURCESDETECTOR=delay25Access.cc
+	SOURCESDESCRIPTIONDETECTOR=delay25Description.cc
+    else
+      ifeq (${DETECTOR}, ALL)
+	  FECSOFT_C++FLAGS += -DTRACKER -DPRESHOWER -DPIXEL
+          SOURCESDETECTOR=deltaAccess.cc paceAccess.cc kchipAccess.cc gohAccess.cc delay25Access.cc
+	  SOURCESDESCRIPTIONDETECTOR=deltaDescription.cc paceDescription.cc kchipDescription.cc gohDescription.cc esMbResetDescription.cc delay25Description.cc
+      endif
+    endif
+  endif
+endif
+
+##################################################################
+##################################################################

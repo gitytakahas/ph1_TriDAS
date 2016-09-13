@@ -1,0 +1,28 @@
+#FileName : 	DiagHeader.linux
+#Content :		shell properties of DiagSystem package
+#Programmer :	Laurent GROSS
+#Version : 		TDS 4.0
+#Last modification date	19/12/2006
+#Support : 		mail to : laurent.gross@ires.in2p3.fr
+#online help : https://uimon.cern.ch/twiki/bin/view/CMS/DiagnosticSystem
+
+XDAQ_RPMBUILD:=yes
+XDAQ_OS:=linux
+XDAQ_PLATFORM:=x86_64_slc6
+XDAQ_ROOT:=/opt/xdaq
+XDAQ_BASE:=/opt/xdaq
+#DIAG_HOME:=DiagSystem
+ENV_CMS_TK_DIAG_ROOT=/home/cmspixel/ph1_TriDAS/DiagSystem
+ENV_CMS_TK_FEC_ROOT=/home/cmspixel/ph1_TriDAS/FecSoftwareV3_0
+#ENV_CMS_TK_XDAQ:=@tk_xdaq@
+DIAG_LOGREADER_USES_DB:=no
+DIAG_WILL_COMPILE_FOR_TRACKER:=no
+DIAG_WILL_COMPILE_FOR_PIXELS:=yes
+DIAG_WILL_COMPILE_FOR_GENERIC:=no
+DIAG_PARSE_XTRA_BUFFER:=no
+DIAG_PATH_TO_GWT_APPLETS_ROOT:=pixel
+DIAG_WILL_USE_PIXELS_ERRDB:=no
+DIAG_WILL_USE_TRACKER_ERRDB:=no
+DIAG_WILL_USE_GWT_FIREITEMS_VIEWER:=no
+DIAG_WILL_COMPILE_WITH_PACKAGE_INFOS:=yes
+

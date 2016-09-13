@@ -1,0 +1,950 @@
+See generic/README.TXT for more complete information
+---------------------------------------------------
+Last modification: 17/07/2009
+
+FecSoftware 6.2 => 17/07/2009
+ * no tag *
+  - Adding database and factory for masking modules
+
+FecSoftware 6.1 => 16/07/2009
+ * no tag *
+  - Two memory leaks where found in FecSupervisor
+        * one on the DCU readout
+        * one in the memory management in the method which handle the
+          exceptions (displayErrorManagement) present also in CrateController
+
+FecSoftware 6.0 => 23/03/2009
+ * no tag *
+ - Adding masking version so change all database calls, factory
+ - FEC FSM changed in order to go Configured when Stop transition is applied   
+
+FecSoftware 5.1 => 25/07/2008
+ * testing_2_5 *
+ * patches on 18/08/2008 *
+  - TkConfigurationDb update to display the external FEC information
+  - FecSupervisor: PIA reset is issed only at cold start (a parameter to set it at each configuration is given resetPIA).
+  - DcuFilter: send to PVSS debugged and valided
+ * patches on 21/08/2008 *
+  - DcuFilter: bug correction if TIB/TID DCU are coming from the same FEC
+ * patches on 09/09/2008 *
+  - FecSupervisor: adding an i2o to reconfigure hardware (see code for the default options)
+ * patch on 02/10/2008 *
+  - CrateController: Adding a new method to change the DCU 16777215 on TEC- and TOB to have the correction value (9564762, 16777214)
+    The method is implemented in the FecDeviceFactory and the correction is done in the hardware detection in CrateController
+    or FecProfiler.
+
+FecSoftware: 5.0 => 17/07/2008
+  * testing_2_4_1 (patched) - *
+  - FecSupervisor implementation of asynchronous FSM based on StateMachine provied in CMSSW. Test have been and seems to be ok.
+  - Disable DOH upload/download in the crate scan (CrateController & FecProfiler)
+
+FecSoftware: 4.0 => 16/07/2008
+  * testing_2_4 (patched) *
+  - FecSupervisor::initialiseAction is make the hardware configuration, the configureAction now is only managing the work loops (DCU/Device)
+  - DcuFilter: the upload in database is done on deadband, so the storage is done for all the channels every 5 min (parameter in DcuFilter 
+    like PVSS) or on change (10% of difference, parameter in DcuFilter).
+  - DBCacheHandler is managing a map of DbInterface based on partition name.
+  - DbInterface: the download of redundancy is done only on the first call.
+  - FecDetectionUpload: the DCU missing are added now in module that should be removed (to be tested).
+  - Adding in FecSupervisor time measurement for initialise and hardware
+    configuration
+  - DcuFilter: dead band bug correction
+  - DeviceFactory: Adding a new method to disable a module
+    This method download and upload FEC/FED/connection to database
+    then disable the modules
+  - Adding a new feature in the API in order to upload errors into the 
+    database
+  - Change in TkConfigurationDb
+  - o2o operations added in DeviceFactory / DbInterface, o2o operation can be inserted and can be checked with the current state
+
+FecSoftware: 4.0
+  * testing_2_4 (patched) *
+  - FecAccessManager: Maxmimum Number of errors changed (was set to 10)
+  - DcuFilter: during scan make a file with intermediate result
+
+FecSoftware: 4.0
+  * testing_2_4 *
+  - Adding TOTEM as subsystem for CCS trigger system (CCSTrigger class) and
+    change comment in ProgramTest program.
+  - dcuAccess::setDcuTREG/getDcuTREG was setting the CREG register (but not used by the software).
+  - FecExceptionHandler has been rewritten:
+    * Only one message is handled
+    * Method and line (based on C marco __PRETTY_FUNCTION__, __LINE__) is added
+    * MACRO is now provided to RAISE or CREATE exception, only these macro should be used to raise or create an exception
+    * Some methods have been changed to have coherent way 
+    * These changes are internal to the code and does not affect the user of the class
+    * System, subsystem is not anymore used
+  - All classes (most of them) that raise exceptions:
+    * All classes have been rewritten to use these macro and these new exception.
+  - errorCodeDefinition.h (FecErrorCodeDefinition.h)
+    * The error code and message have been clarified with coherent way of codification/severity.
+    * The file FecErrorCodeDefinition.h is removed
+    * System, subsystem is not anymore used
+  - Following the bug found in TkDcuInfoFactory (testing_2_3) all "hash_map[] !=" and "hash_map[] ==" are now replaced 
+    hash_map.find() != or == hash_map.end().
+  - Totem code is now separated from Tracker/Preshower code thanks to Juha Petäjäjärvi
+    * The devices (description and access) are now moved to ThirdParty/Totem/generic
+    * FecRules.linux is modified accordingly
+    * Some methods in FecDeviceFactory/FecFactory/XMLFecDevice/FecAccessManager/MembufOutputSource are now virtual
+      to allow polymorphism.
+	MemBufOutputSource:
+	  virtual ~MemBufOutputSource() ;
+	  virtual generateDeviceTag(deviceParameters) ;
+	XMLCommonFec:
+	  static unsigned int parseAttributes(parameterDescriptionNameType *parameterNames, XERCES_CPP_NAMESPACE::DOMNamedNodeMap *pAttributes) ;
+        XMLFecDevice:
+	  virtual ~XMLFecDevice ();
+	  virtual void initParameterNames ( ) ;
+	  virtual unsigned int parseAttributes ( XERCES_CPP_NAMESPACE::DOMNode *n ) ;
+	FecAccessManager:
+	  virtual ~FecAccessManager ( ) ;
+	  virtual void removeDevices ( ) ;
+	  virtual void removeDevices ( enumDeviceType type ) ;
+	  virtual void setAccess ( deviceAccess *access ) throw (FecExceptionHandler) ;
+	  virtual deviceAccess *getAccess ( enumDeviceType deviceType, keyType index ) ;
+	  virtual unsigned int downloadValues ( deviceVector *vDevice, std::list<FecExceptionHandler *> &errorList, bool pllReset = false, bool dohSet = true) throw (FecExceptionHandler) ;
+	  virtual unsigned int downloadValuesMultipleFrames ( deviceVector *vDevice, std::list<FecExceptionHandler *> &errorList, bool pllReset = false, bool dohSet = true) throw (FecExceptionHandler) ;
+	  virtual deviceVector *uploadValues ( std::list<FecExceptionHandler *> &errorList, bool comparison = false, bool dcuUpload = true, bool dohSet = true ) ;
+	  virtual deviceVector *uploadValuesMultipleFrames ( std::list<FecExceptionHandler *> &errorList, bool comparison = false, bool dcuUpload = true, bool dohSet = true ) ;
+	XMLFecDevice:
+	  virtual void setDevices ( deviceVector dVector, std::string outputFileName ) throw (FecExceptionHandler);
+	  virtual void setDevices ( std::string outputFileName ) throw (FecExceptionHandler);
+	FecFactory:
+	  virtual ~FecFactory ( ) ;
+	FecDeviceFactory
+	  virtual ~FecDeviceFactory ( ) ;
+  - Major bug correction in FecAccess / FecRingDevice, the configuration in multiple frames was not correctly set
+    since the version is now on the first two digits 0x17 in place of 0x1700 (bug found thanks to L. Mirabito).
+    Following this bug, the method for firmware less than 0x16 may have a bug, correction is currently under investigation (14/05/2008).
+    Same bug in FecSupervisor, updated on 20/05/2008.
+  - FecAcessManager / pllAccess:
+    * bug correction in method pllAccess::getBlockWriteValues that raise now an exception if the settings are out of range
+    * this exception is catched now in FecAccessManager::downloadValuesMultipleFrames ( deviceVector *vDevice, std::list<FecExceptionHandler *> &errorList, bool pllReset, bool dohSet )
+  - XMLFecPiaReset::parseAttributes is now checking for 10 parameters (DB was with the enabled tag and file was not).
+  - Naming convention for crateSlot has changed. The crateSlot is rename as crateId since the real usage of this parameter was for crateId:
+    * All access and descriptions classes:
+      - deviceAccess / deviceDescription implements a crateId parameter (that replace crateSlot) that can set/get through setCrateId/getCrateId. 
+        In order to have coherent management of FEC hardware ID and crate slot, the method setFecHardwareId takes a the crateSlot as parameter:
+        setFecHardwareId ( std::string fecHardwareId, tscType16 crateId) ;
+      - All device classes and descriptions have been modified in order to use the new setFecHardwareId.
+    * ConnectionDescription has also changed for getFecCrateId, getFedCrateId in place of crate slot
+
+FecSoftware: 3.37.6
+  * BeforeChangeException *
+  - DbAccess:
+    * getPartitionId method is now retreive the partition id (bug in the previous)
+  - DbFedAccess
+    * getXMLClobWithVersion(partitionName,fedId,hardId,versionMajor,versionMinor,withStrip) is now working
+  - CommissionningAnalysis (factory, base class and child classes)
+    * Implements a copyVector() method for DQM multi-partitioning
+  - TkRingDescription
+
+FecSoftware: 3.37.5
+  * testing_2_3 *
+  - TkDcuInfoFactory:
+    * the DET ID in the map managed by the DeviceFactory is now deleting the previous contents. So if you ask 
+      for different partitions the det id, the map will contain only the last det id for such partition.
+      Few next method's parameters have been added to accumulate if you need. 
+    * The partition/version is now correct managed in this Factory.
+    * Adding a method for the vector copy
+  - FecDeviceFactory, ConnectionFactory:
+    * Bug correction in the management of the partition/version.
+  - XPditor:
+    * add a header to the message for external service: setHeader("SOAPAction", "urn:xdaq-application:service=psx");
+    * The second parameter "urn:xdaq-application:service=psx" is now an attribut of the class (soapActionString)
+  - DcuFilter: 
+    * Bug fixe to avoid the XPditor creation two times but the initialisation is done by the web page.
+    * Adding the soapActionString in the class as a fire item for the creation of XPditor
+  - DbInterface:
+    * Bug correction following a crash between two consecutive downloads
+  - DQM Multipartitioning with commissioning analysis:
+    * Add new run types (MODETYPE table) according to CMSSW:
+      > TkRun.h
+    * Add new parameter in TkRun description:
+      > TkRun.h
+      > TkRunDefinition.h
+      > PkgRun.spec
+      > ViewAllRun.sql
+    * Add new parameter in TkState description:
+      > TkState.h
+      > TkStateDefinition.h
+      > TkConfigurationDb.cc
+    * Add new API method in CommissioningAnalysisFactory:
+      > CommissioningAnalysisFactory.h
+      > CommissioningAnalysisFactory.cc
+      > DbCommissioningAnalysisAccess.h
+      > DbCommissioningAnalysisAccess.cc
+      > CommissioningAnalysisDescription.h
+      > CommissioningAnalysisDescription.cc
+      > XMLCommissioningAnalysis.h
+      > XMLCommissioningAnalysis.cc
+    * Add new test unit:
+      > ThirdParty/DeviceFactoryTemplate/src/common/testAnalysis.cc
+      > ThirdParty/DeviceFactoryTemplate/src/common/CommandLineOptions.*
+      > ThirdParty/DeviceFactoryTemplate/src/common/CommandLineParameterSet.cc
+      > ThirdParty/DeviceFactoryTemplate/src/common/perfecthash.h
+  - Major bug found in TkDcuInfoFactory when a search is done on the DCU
+    hardid. (vDcuInfo_[DCUHARDID] == NULL) or (vDcuInfo_[DCUHARDID] != NULL) add automatically the NULL for key DCUHARDID.
+    It should be replaced by vDcuInfo_.find(DCUHARDID) == or != vDcuInfo_.end(). All hash_map search should be changed accordingly to 
+    this issue.
+
+FecSoftware: 3.37.4
+  * testing_2_0, testing_2_1, testing_2_1_1 *
+  - FecSupervisor:
+    * raised error if the FEC trigger part is not correct (QPLL error, QPLL not locked, TTCRx not ready) and goes to FSM faulty state 
+    * FecSupervisor goes to FSM faulty state if hardware access cannot be created
+    * Reload of the firmware is not intended to be done by default, never set the parameter ReloadFirmware to true, it is handle more or less automatically.
+    * Adding a procedure to make the redundancy if it is checked (a new XDAQ boolean parameter is introduced called "ApplyRedundancy" in the fire items).
+      The way of working of this parameter is to be done first to all the rings during the initialisation phase:
+        - check the rings, find the configuration from DbClient / Database, apply it, check and store the result
+        - then during the configuration phase the same procedure is applied for the rings which were successfully recovered (if needed)
+        - if you want to apply again the redundancy on all the rings then the parameter ApplyRedundancy should be set again to true (More Parameters web page).
+    * The ENV_CMS_TK_PARTITION is now used only if the partitionName_ was not fired by RCMS. 
+  - CrateController: 
+    * Since the check of the dummy is done since version 1.5, the new version include the test of the ring B from the FEC output to the first CCU.
+    * No default reload of the firmware should be done, it is handle more or less automatically.
+  - TkConfigurationDb:
+    * In [Modules & Parameters] web page, the procedure to change the delay in the FED channel is added
+  - DcuFilter:
+    * The ENV_CMS_TK_PARTITION is now used only if the partitionName_ was not fired by RCMS. 
+  - DbInterface / TShare / DbClient / DBCacheHandler is now integrated in the FecSoftwareV3_0 library (libGenericDescription.so) and the files are present in generic.
+  - FecExceptionHandler:
+    * XML buffer is correct to handle trigger error with a specific tag
+  - TkDcuInfoFactory:
+    * Adding a method to get the partition names from the current state
+    * Adding a method to get the current state history ID (see next point)
+    * Adding a method to change or insert/update the partition/version in the current state based on a state coming from the run number.
+  - TkConfigurationDb:
+    * A check is done when you try to change the state in case of somebody is doing the same thing in the DB as the same time
+    * Adding the possibily to apply a state coming from a run number (requiere DB 5.14).
+  - FecDeviceFactory:
+    * Adding the possibility to download the ring from the database for a given partition (requiere DB 5.15)
+  - DbFedAccess, DbFecAccess, DbTkDcuInfoAccess, DbTkDcuPsuMapAccess, DbAccess, DbCommonAccess:
+    * DbTkDcuInfoAccess::getDatabaseVersion, DbTkDcuPsuMapAccess::getDatabaseVersion added
+    * DbAccess::getDatabaseVersionFromQuery have been moved to DbAccess::getDatabaseVersionFromQuery
+    * DbAccess::getDatabaseVersionFromQuery is removed
+  - TkDcuInfoFactory, TkDcuPsuMapFactory:
+    * TkDcuInfoFactory::getDatabaseVersion, TkDcuPsuMapFactory::getDatabaseVersion added
+  - FecFactory, XMLCommonFec:
+    * Handle now the serialisation and de-serialisation of a vector TkRingDescription (writeTo and readFrom methods)
+    * XMLCommonFec now has an extra parameter to avoid delete of the memory passed to readFrom method.
+  - TkDcuInfoFactory:
+    * Bug correction in deleteHashMapTkDcuInfo method where the clear of the map was not done
+  - MemBufOutputSource, esMemBufOutputSource:
+    * Changing the usage of ostringstream by stringstream
+  - Porting to 64 bits:
+    * std::string::find() return type is managed as std::string::size_type
+
+FecSoftware: 3.37.3, 28/03/2005
+  * testing_1_5 *
+  - Adding methods to retrieve the APV which are not connected
+  - Adding vmeControllerDaisyChainId for FEC descriptions. It is not yet integrated in the creation of the FecAccess.
+  - FecSupervisor:
+    * Bug correction in FecSupervisor for PIA version display 
+    * issue a reload of mFEC firmwares
+  - DcuFilter bug corrections in the datapoints for the DCU/PSU map
+  - DbCommonAccess:
+    * changed in order to catch the exception ORA-22990: LOB locators cannot span transactions and recreate
+    an xml clob.
+    * DbCommonAccess::getAllPartitionNames(runNumber) bug correction
+  - TkConfigurationDb: Web page display changed for PSU/DCU map
+  - Strip tracker Template file for FEC changed in config to have the TIB gain/bias changed for TKCC. Updated names of the parameters (gain3/bias3 and timestamp).
+  - CrateController:
+    * A range can be specified for the FED scan
+    * Bug correction in CrateController for CCU scan
+    * adding a parameter to reload the firmware (true by default for mFECs)
+    * vmeControllerDaisyChainId is the number in case of daisy chain
+    * crateId is the number coming from DB for the different crates from 1 to 40 (number of FED crates)
+    * New features for FED from Jonny
+  - Adding new feature in DcuFilter for scan of DCU on CCU (interlock and connection is checked from PVSS side)
+  - TkDiagErrorAnalyser class bug correction
+  - FecAccess, FecRingDevice, FecVmeRingDevice:
+    * FecAccess::crateReset method automatically reload the firmware thanks to the method FecAccess::fecHardReset() (see comments below).
+      Please do not use anymore the method FecVmeRingDevice::crateReset but pass by the FecAccess method.
+    * FecAccess::fecHardReset display the following message "Reloading the mFEC firmware on slot" on the std::cout.
+      It raises the latest FecExceptionHandler seen (all the mFEC firmware reloads are performed).
+    *  A status is now available FecVmeRingDevice::getmFecInitialised which return -1 if hardware is not created, 0 if hardware is created but the initialisation of the ring ailed and 1 if everything works fine (see FecRingDevice::setInitFecRingDevice for the detail the initialisation, this method is now in public member).
+    *  FecVmeRingDevice::FecVmeRingDevice that probes the FEC is now based on the reading of VME firmware version and not status of the mFEC which was failing in case of firmware reload problem after a power cycle or a crate reset.
+    * FecAccess::setFecRingDevice that use the method FecVmeRingDevice::FecVmeRingDevice does not raised anymore an exception if the initialisation of the ring failed and try to recover it.
+      Depending on the status returned a reload of the mFEC firmware is done and the initialisation of the ring is performed again that may raise again an exception.
+      The consequence is that the ring is automatically recovered if one of the ring is not present/mFEC firmware not loaded at the creation of FecAccess.
+      The procedure of the recovery is done only on one ring so since we consider according hardware people that if a mFEC is correctly loaded then all the other should be correctly loaded.
+
+FecSoftware: 3.37.2
+  * testing_1_4 *
+  - Totem: change of access for totemCChipAccess.cc and vfatAccess.cc
+  - testOCCI: adding test for SQL query in C++ code
+  - XPditor change due to change in the XDAQ API (deprecated postSOAP).
+  - XDAQ BUILD 6 compatiblity
+  - Strip Tracker interface: adding a method in DeviceFactory to retreive
+    the partition names for a given run.
+  - Strip Commissioning procedures updated
+  - DcuFilter: bug correction when DcuFilter switch off the power group
+  - Adding in the DeviceFactory a method to request the PSU which have no DCUs (PSU in error?) 
+    and modify the TkConfigurationDb to have this list
+
+FecSoftware: 3.37.1
+  * testing_1_3 * 
+  - Strip Tracker modifications:
+    * Bug correction in parsing to DB (I2CADDRESS mis-typing)
+    * CrateController bug correction in the attribution of FED ID when the ID vs hostname
+      is not present.
+    * DcuFilter adding the partition name in the datapoint for PVSS and all messages defined 
+      for TKCC except the commissioning procedure name.
+    * DcuFilter adding a FSM for stop (E -> C and E -> H)
+
+FecSoftware: 3.37.0: 
+  * testing_1_2 *
+  - XDAQ 3.5 compatibily
+
+FecSoftware: 3.36.1: 18/01/2008
+  * No tag *
+  - Modification to compile DeviceDescriptions library
+  - External program (preshower, totem, devicefactorytemplate) should now link
+    to DeviceDescriptions if they want to use XML/DB related classes (DB is
+not mandatory for compilation)
+
+FecSoftware: 3.36.0: 09/01/2008
+  * No tag *
+  - the libDeviceAccess does not rely anymore on the factory classes
+  from strip tracker.
+  - Totem compilation has problem due to the remove of the dependency
+  on USB FEC and PCI FEC. Should be corrected.
+
+FecSoftware: 3.35.0: 26/11/2007
+  * FecSoftwareV3_35_0 *
+  - Checking memory leak in Strip Tracker database interface
+
+FecSoftware: 3.35.0: 26/11/2007
+  * FecSoftwareV3_35_0 *
+  - Bug correction in Strip Tracker applications
+
+FecSoftware: 3.34.1: 23/11/2007
+  * no tag *
+  - Integration of new methods in FecAccess for Prehsower/ECAL (no change if you are using VME FEC/PCI FEC and geometrical addressing).
+    If you want to use the plug and play, please contact Wojciech Bialas that supports this code.
+  - Integration of new classes for Strip Tracker: FED ID / hostname for P5 global run.
+  - Integration of new classes for Strip Tracker: upload/download information for the commissioning runs
+
+FecSoftware: 3.34.0: 07/11/2007
+  * no tag *
+  - All XML/DB classes have been changed in order to avoid copy of
+  pointers.
+  - Be really carefull when you delete the vector (deleteVector
+  methods from Factory) since the delete is handled by the Factory.
+  - The method remains as deleteVectorI that should be used if you
+  create your own device and add it in a vector. The renainming of the
+  method will be changed soon.
+  - The code is in current evaluation with valgrind.
+  - The exception message is now retreived with what for all classes
+  including FecExceptionHandler and SQLException except for XERCES
+  classes which not support it.
+
+FecSoftware: 3.33.0: 18/10/2007
+  * no tag *
+  - Integration of the Si TK DCU/PSU map in the factory"
+
+FecSoftware: 3.32.0: 18/10/2007
+  * FecSoftwareV3_32_0 *
+  * preTkDBPsuDcuMap18102007 *
+  - Method for the basic hardware access remind now the clock
+    polarity inversion
+  - Test with GUIDebugger done and correct
+  - FecProfilter / ProgramTest / Totem binaries have been updated to use 
+    the following options:
+     * force acknowledge used (-noFack or -fack (default is -fack))
+     * i2cSpeed used (-i2cSpeed [100 | 200 | 400 | 1000])
+     * initialise or not the FEC (-noInitFec, -initFec (default is initFec)
+     * initialise only the corresponding FEC if it is different from 0xFFFFFFFF (only for VME FEC) (-fec <>)
+     * invert the clock polarity (-invrecvclk, false by default)
+
+FecSoftware: 3.31.1: 09/10/2007
+  * no tag *
+  - Update on configure script
+  - Update of GUIDebugger
+
+FecSoftware: 3.31.0: 08/10/2007
+  * FecSoftwareV3_31_0 *
+  - RPM build bug correction in Makefile
+  - Configure script updated
+
+FecSoftware: 3.30.2: 27/08/2007
+  * No tag *
+  - RPM build is embedded now in the code (has to set
+    XDAQ_RPMBUILD=yes in FecHeader.linux)
+  - VME SBS and FEC USB are removed by default but the precompilation
+  flags can be set to compile these bus supports
+
+FecSoftware: 3.30.1: 24/08/2007
+  * No Tag *
+  - Some modification in the base libraries for preshower
+  - Makefiles are not compatible for XDAQ tgz and RPM
+
+FecSoftware: 3.30.0: 22/08/2007
+  * No tag *
+  - Porting to XDAQ 3.11 done
+  - All makefiles have been changed accordingly
+  - All Strip Tracker XDAQ applications have been changed accordingly
+    to 3.11
+
+FecSoftware: 3.29.0: 16/08/2007
+  * FecSoftwareV3_29_0 *
+  * Branch: TpreDBmerge082007 *
+
+FecSoftware: 3.28.9: 16/08/2007
+  * FecSoftwareV3_28_9 *
+  * Branch: preDBmerge082007 *
+
+FecSoftware: 3.28.8: 21/07/2007
+  * FecSoftwareV3_28_8 *
+  * Branch: trackerDAQ-0.6-rc2 *
+
+FecSoftware: 3.28.6: 06/07/2007
+  * FecSoftwareV3_28_6 *
+  * Branch: testing_0_5_rc3 *
+
+FecSoftware: 3.28.5: 25/06/2007
+  * Branch: testing_0_5_rc2 *
+   - Testing release
+
+FecSoftware: 3.28.5: 22/06/2007
+  * FecSoftwareV3_28_5 *
+   - Minor changes in the Si TK XDAQ applications
+
+FecSoftware: 3.28.4: 06/06/2007
+  * no tag *
+   - Integration of the crate slot
+   - the PLLDAQ is now a parameter in all PLL
+
+FecSoftware: 3.28.3:  23/05/2007
+  * FecSoftwareV3_28_3 *
+  * Branch: testing_0_4_rc3 *
+   - Minor correction for testing release
+
+FecSoftware: 3.28.2
+  * FecSoftwareV3_28_2 *
+   - Before change in the XML parsing
+
+FecSoftware: 3.28.1
+  * FecSoftware: 3.28.1 *
+   - Pixel device DELAY25 has been integrated but not tested in
+     running mode
+
+FecSoftware: 3.28.0
+  * FecSoftwareV3_28_0 *
+   - Bug correction in standalone makefile to ride out of oracle libs
+   - Done thanks to Anders Ryd
+   - Intermediate version for Si Tk Tracker
+
+FecSoftware: 3.27.2
+  * FecSoftwareV3_27_2 *
+  * Branch: testing_0_4_rc2 *
+   - Si Tk XDAQ applications had now the status/control of the FEC/CCS
+     trigger (hardware check in FecSupervisor and in CrateController)    
+   - FecSoftwareV3_27_1 tag contains a problem in the compilation
+
+FecSoftware: 3.27.0
+  * FecSoftwareV3_27_0 *
+  * Branch: FecSoftwareV3_RC2_0_4 *
+   - Si Tk XDAQ applications has been changed to handle the DOH
+     calibration and DCU readout
+   - Minor change in basic classes (check generic/README.TXT) to have 
+     details
+
+FecSoftware:        => 05/04/2007
+  * No tag *
+    - Si Tk XDAQ FecSupervisor: disable the readout of the DCU and
+    devices by default
+
+FecSoftware: 2.26.1 => 04/04/2007
+  * FecSoftwareV3_26_1 *
+  * Branch: FecSoftwareV3_RC1_0_4 *
+    - Si Tk XDAQ applications has been changed (CrateController)
+    - Si Tk XDAQ CrateController include a DOH calibration procedures
+
+FecSoftware: 3.26.0 => 23/032007
+  * FecSoftwareV3_26_0 *
+    - Calibration of the DOH added but still in debugging
+    - Minor correction in Si TK XDAQ applications
+
+FecSoftware: 3.25.2 => 13/03/2007
+  * FecSoftwareV3_25_2 *
+  * Branch: FecSoftwareV3_RC1_0_3 merge with the head *
+    - Bug correction in the automatic detection for Si-Tracker.
+      Read the file generic/README.TXT for more information.
+    - First attempt for the DOH calibration but this part is not yet working.
+
+FecSoftware: 3.25.1 => 27/02/2007
+  * FecSoftwareV3_25_1 *
+    - Bug correction in the automatic detection for Si-Tracker.
+    - Bug correction in the setRun method
+
+FecSoftware: 3.35   => 23/02/2007
+  * FecSoftwareV3_25_0 *
+    - Update of the database DbCommonAccess for correct managing of
+    the shared and static connection in the destructor (delete of the
+    connections)
+    - Option for the VME FEC temperature has been added in
+    ProgramTest.exe (-fectemp)
+    - Option to display all VME FECs in a summary display has been
+    added in ProgramTest.exe (-fecver)
+    - Option to reload the firmware by software on a given VME board
+    has been added in ProgramTest.exe (-uFecReload)
+
+FecSoftware: 3.24   => 25/01/2007
+  * FecSoftwareV3_24_0 *
+    - Passing of valgrind on the parsing
+    - Adding new XDAQ application for the GUI of the configuration DB
+
+FecSoftware: 3.23.6 => 23/01/2007 
+  * No tag *
+    - HAL table has been updated corresponding to the change of the
+      place of some registers and to integrate the JTAG capability (to
+      be tested)
+
+FecSoftware: 3.23.5 => 23/01/2007 
+  * No tag *
+    - DOM parser porting done (a tag inside XMLCommonFec.h can be switched to
+      come back to the SAX parsing)
+    - Totem/Preshower devices have been ported
+    - Tests have been done for download
+    - Tests now should be done for upload
+    - Solution to be used
+
+FecSoftware: 3.23.4   => 09/01/2007
+  * No tag *
+    - Before porting the XML parsing to a DOM parser
+
+FecSoftware: 3.23.3.1 => 09/01/2007
+  * *
+    - PLL update with version 6, see pllAccess::pllInit method
+      (pllAccess.cc) and pllAccess::setPllCheckGoingBitMultipleFrames
+
+FecSoftware: 3.23.3   => 20/12/2006
+  * FecSoftwareV3_23_0 *
+    - Porting to XDAQ 3.7, minor changes in the
+      FecSupervisor/DcuFilter/CrateController
+    - DeviceFactory updated to add a parameter in order to share or not the
+      DB connection and compatible with SLC4
+
+-------------------------------------------- Before migration to XDAQ 3.7
+-------------------------------------------- No Backward compatibility to XDAQ
+
+FecSoftware: 3.22.2   => 07/12/2006
+  * FecSoftwareV3_22_2 *
+    - Before the upgrade of the system with preshower modifications
+
+FecSoftware: 3.21.1   => 06/12/2006
+  * No tag *
+    - FEC timeout procedure
+
+FecSoftware: 3.21.0   => 10/11/2006
+  * FecSoftwareV3_21_0 *
+    - PLL cold init (V6) implemented but problem on the locking remains
+    - FecSupervisor integrate now a work loop that replace the DCU thread and a database cache can be specified (shared memory)
+
+FecSoftware: 3.20.2   => 23/10/2006
+  * FecSoftwareV3_20_2 *
+    - PLL cold init (V5) is changed and some modifications for CCU database/file redundancy storage
+
+FecSoftware: 3.20.1   => 16/10/2006
+  * FecSoftwareV3_20_1 *
+    - PLL cold init (V4) is changed and some modifications for enable/disable of the TK components but not working in TK
+
+FecSoftware: 3.20   => 03/10/2006
+  * FecSoftwareV3_20 *
+    - PLL cold init was rewritten with the procedure described in pllAccess.cc
+
+FecSoftware: 3.19.1 => 29/09/2006
+  * FecSoftwareV3_19_2 *
+    - Change the PLL access
+    - Change tools in the FecSoftware
+    - Shared Oracle connection in DB
+    - FEC PCI device driver changed to be be compatible with kernel 2.4 and kernel 2.6
+
+FecSoftware: 3.19.0 => 01/09/2006
+  * FecSoftwareV3_19_0 *
+    - Migration on the new CVS
+
+-------------------- MIGRATION TO IT CVS
+-------------------- THE CMS CVS is not more used for modification on it
+-------------------- THE READ ACCESS WILL BE SOON UNAVAILABLE
+-------------------- Version tagged as FecSoftware_V3_19_0
+
+FecSoftware: 3.18.13 => 26/07/2006
+  * No tag *
+    - Adding Totem software in ThirdParty
+    - Update of some XDAQ applications
+
+FecSoftware: 3.18.12 => 13/07/2006
+  * FecSoftwareV3_18_12 *
+    - Preparing the change with HAL.03.14 (not working with beta version)
+
+FecSoftware: 3.18.10 => 03/07/2006
+  * no tag *
+    - DCU type added both for automatic detection and for conversion factors
+    - Update of the CrateController application to manage DB accesses
+
+FecSoftware: 3.18.9 => 20/06/2006
+  * No tag *
+    - Adding TOTEM software (check FecHeader.linux)
+
+FecSoftware: 3.18.8 => 20/06/2006
+  * FecSoftwareV3_18_8 *
+    - Database access modifications to add state management
+    - Update of the FecSupervisor, CrateController
+
+FecSoftware: 3.18.7 => 14/06/2006
+  * FecSoftwareV3_18_7 *
+    - Modification of the display of the FecSupervisor and crate controller
+    - Adding some new methods to retreive state and version
+
+FecSoftware: 3.18.6 => 07/06/2006
+  * FecSoftwareV3_18_6 *
+    - Modification of the PLL access class to raise an error when one of the PLL is not in nominal state
+    - Multiple frame for the going bit is also changed to have the list of the PLL that is not in nominal state
+
+FecSoftware: 3.18.4   => 02/06/2006
+  * FecSoftwareV3_18_4 *
+    - Adding the new release diagnostic system in the XDAQ applications
+    - Adding modifications on the XML
+    - FecSupervisor, CrateController are compatible for the display of the FEC hardware check
+
+FecSoftware: 3.18.3   => 29/05/2006
+  * FecSoftwareV3_18_3 *
+    - Bug correction for multiframe method for mFEC firmware version < 0x1600 (1.6)
+
+FecSoftware: 3.18.2   => 29/05/2006
+  * FecSoftwareV3_18_2 *
+    - Removing reference to xerces version
+
+FecSoftware: 3.18.1   => 26/05/2006
+  * FecSoftwareV3_18_1 *
+    - Adding the CrateController
+    - Test template for database (population and examples) has been updated
+    - XML and database modifications
+
+FecSoftware: 3.18.0   => 09/05/2006
+  * No tag *
+    - Adding the Tk diagnostic system in the FecSupervisor and DcuFilter
+    - Please be aware that if you compile the FecSoftware with the Tk diagnostic system (variable CMS_TK_ENV_DIAG_ROOT devined), you need to load in the context a sentinel. You can find examples in FecSoftwareV3_0/DcuFilter/xml/FecSupervisorDiag.xml or in FecSoftwareV3_0/FecSupervisor/xml/FecSupervisorDiag.xml
+
+FecSoftware: 3.17.0   => 09/05/2006
+  * FecSoftwareV3_17_0"
+    - Add the multi-frames at the level of the ring (in // on the 8 rings)
+    - Release before the integration of the TK diagnostic system
+ 
+FecSoftware: 3.17.0   => 27/04/2006
+  * No tag *
+    - Removing all the XDAQ instance and class name from XML from database or file
+    - The version is now not compatible with old XML files
+
+FecSoftware: 3.16.4   => 26/04/2006
+  * FecSoftwareV3_15_4 *
+    - Configure plug and play now included in the software by default
+    - You need to set the file config/PlugNPlayConfigure.dat to the correct place to use it
+
+FecSoftware: 3.15.3   => 25/04/2006
+  * FecSoftwareV3_15_3 *
+    - Multi-ring parallelisation operational for mFEC firmware version >= 1.6
+
+FecSoftware: 3.15.2   => 11/04/2006
+  * FecSoftwareV3_15_2 *
+    - DcuFilter and FecSupervisor updated
+
+FecSoftware: 3.15.1   => 10/04/2006
+  * No tag *
+    - Plug and play is integrated, the system detects automatically 
+      if you are using or not the plug and play.
+      The system is based on the file FecSoftwareV3_0/config/PlugNPlayConfigure.dat
+      By default this file is as PlugNPlayConfigure.dat.plugnplay. To use the plug
+      and play please rename this to PlugNPlayConfigure.dat
+      Edit this file to set the correct path to the file FecAddressMap64.dat.
+      Renaming this file makes the software using geographical address.
+    - The system is based now on HAL >= 03-11
+    - Modification has been done on the low level classes (VME)
+
+FecSoftware: 3.15.0   => 09/04/2006
+  * FecSoftwareV3_15_0 *
+    - Last release before the integration of the plug'n play
+
+FecSoftware: 3.14.3   => 27/03/2006
+  * FecSoftwareV3_14_3 *
+    - New stable version
+    - bug in FecSoftware
+    - FecRules modifications for LCG oracle distribution
+
+FecSoftware: 3.14.1   => 15/03/2006
+  * FecSoftwareV3_14_2 *
+    - New stable version
+
+FecSoftware: 3.13.0   => 14/03/2006
+  * FecSoftwareV3_13_0 *
+    - BUG for the DcuFilter use V3_14_0
+
+FecSoftware: 3.12.12  => 29/02/2006
+  * FecSoftwareV3_12_11 *
+    - Minor changes
+
+FecSoftware: 3.12.11 => 28/02/2006
+  * FecSoftwareV3_12_11 *
+    - Add a file in the DCU filter
+    - FecRingDevice now integrate nanosleep and another method for the broadcast for long ring
+    - Porting to XDAQ 3.4 with XERCES 2.7 is done but not tested.
+    - Warning are issued during the compilation with XERCES 2.7:
+      https://uimon.cern.ch/twiki/bin/view/CMS/XercesInformation
+
+FecSoftware: 3.12.10 => 21/02/2006
+  * FecSoftwareV3_12_10 *
+    - DCU Filter tested for the PVSS upload
+    - The acess now include the VME block transfer (not tested)
+
+FecSoftware: 3.12.9 => 17/02/2006
+  * FecSoftwareV3_12_9 *
+    - DCU Filter updated (PVSS upload principle validated)
+    - Next version will have an update of the FEC usb low level libraries
+
+FecSoftware: 3.12.8 => 11/01/2006
+  * No Tag *
+    - CCS Trigger modification (see generic/README.TXT for details)
+
+FecSoftware: 3.12.7 => 09/01/2006
+  * No Tag *
+    - Add the CCS trigger
+
+FecSoftware: 3.12.6 => 21/12/2005
+  * No tag *
+    - All the errors are reported now to the high level program
+    - No display of errors are allow except for debugging in the other classes
+    - PLEASE DO NOT USE THIS VERSION, THE FECSUPERVISOR MUST BE PORTED BEFORE ANY USED !
+    - FecSoftware is no more compatible with HAL ver-03-06
+
+FecSoftware: 3.12.5 => 20/12/2005
+  * FecSoftwareV3_12_5 *
+    - Cleaning name space and remove printf in generic/include
+    - Modify FecVmeRingDevice class (header and source) to add backward compatibility
+
+FecSoftware: 3.12.4 => 19/12/2005
+  * FecSoftwareV3_12_4 *
+    - Add the VME block transfer support but not tested and not available for the user
+    - A new file called version.incl is added for developpers (version and stable or not stable version)
+
+FecSoftware: 3.12.3 => 16/12/2005
+  * No Tag *
+    - The tools are not anymore compatible with the FecSoftwareV1_0
+    - Cleaning of the name space using
+    - The FIFO length are set depending of the firmware version
+
+FecSoftware: 3.12.2 => 15/12/2005
+  * No Tag *
+    - Add the I2C procedure tests in ThirdParty/I2CTemplate:
+    - Database and XML parsing are based now on:
+        * Partition name, FEC or FED hardware ID
+        * Partition name and for FEC instance and class name
+        * Partition name
+      Note that the test are not completed
+
+FecSoftware: 3.12.1 => 02/12/2005
+  * No tag *
+    - FecSupervisor: add block messages, so modify FecAccessManager,
+      apvAccess, pllAccess, DcuThread
+    - FecAccess: add method to retreive index versus FEC hardware ID and vice
+      versa
+    - FecRingDevice: block frames, if an error is found on a device (same
+      index) then the rest of the registers are not
+
+FecSoftware: 3.12.0 => 24/11/2005
+  * FecSoftwareV3_12_0 *
+    - New stabelize version
+    - HAL version supported:
+        * ver-03-06 by default
+        * ver-03-09: 
+           ** Or you change the FecHeader.linux put: HALVER=ver-03-09
+           ** Or you export an environmental variable with the version ENV_CMS_TK_HAL_VERSION
+      The version can be found in HAL directory file thisVersion.txt
+      The installation script for the Tracker take care about it in his latest version modified today
+
+FecSoftware: 3.11.4 => 23/11/2005
+  * No tag *
+    - Add the support for FEC VME on slot 21
+
+FecSoftware: 3.11.3 => 18/11/2005
+  * FecSoftwareV3_11_3 *
+    - Bug correction in the tracker redundancy in ProgramTest.exe
+        commands = -autotrackerredundancy and -bypassed
+
+FecSoftware: 3.11.2 => 17/11/2005
+  * No tag *
+    - Add a GOH acess for the preshower
+
+FecSoftware: 3.11.1 => 16/11/2005
+  * No tag *
+    - Add an error dispatcher for all error displays or log4c calls
+
+FecSoftware: 3.11.0 => 4/11/2005
+  * FecSoftwareV3_11_0 *
+    - modification of the timeout for the frames
+    - minor modification in the PLL reset (delays)
+
+FecSoftware: 3.10.6 => 4/11/2005 
+  * FecSoftwareV3_10_6 *
+    - correction with valgrind tools for memory leak
+
+FecSoftware: 3.10.2 => 02/11/2005
+  * FecSoftwareV3_10_2 *
+    - bug in FecProfiler.cc is corrected for the FEC hardware ID
+
+FecSoftware: 3.10.1 => 27/10/2005
+  * FecSoftwareV3_10_1 *
+    - New PLL access implemented
+
+FecSoftware: 3.10.0 => 27/10/2005
+  * No tag *
+    - Database access has sligtly changed to include the FEC hardware ID
+
+FecSoftware: 3.9.4 => 24/10/2005
+  * FecSoftwareV3_9_4 *
+    - Bug correction in ProgramTest.exe / APIConsoleDebugger for redundancy
+
+FecSoftware: 3.9.3 => 24/10/2005
+  * FecSoftwareV3_9_3 *
+    - Bug correction in FecVmeRingDevice for the enable and disable of the IRQs
+
+FecSoftware: 3.9.0 => 12/10/2005
+  * FecSoftwareV3_9_0 *
+    - Following the problem of frames (mis-alignement), the frame write is waiting now on the force acknowledge.
+    - This modification is temporary and must be corrected in the hardware
+    - This modification only work in i2c force acknowledge mode to avoid high modification in the software
+      If the force acknowledge is not set, the software runs as before so waiting on pending IRQ (not on the data to FEC).
+    - This modification only works on CCU 25 not on old CCUs
+
+FecSoftware: 3.8.5 => 10/10/2005
+  * No Tag *
+    - Add a new check in case of wrong size in FIFO receive
+    - Please note the debugging of the registers are disabled. If you want to add it, please edit the FecSoftwareV3_0/FecHeader.linux file and change DO_DEBUGGETREGISTERS=no to yes
+    - Afterwards you need to clean and recompile all the FEC software: make clean && make && make install
+
+FecSoftware: 3.8.4 => 06/10/005
+  * FecSoftwareV3_8_4 *
+    - The class ccuDevice is replaced by CCUDescription to have the possibility to retreive from the database the input/output of each CCU
+    - Mainly XML parameters has been created
+
+FecSoftware: 3.8.3 => 06/10/005
+  * No Tag *
+    - Update of TestControlLoop for version V3
+
+FecSoftware: 3.8.2 => 05/10/2005
+  * No Tag *
+    - Update of the FecAccess for bug correction
+    - Update of the multiple frames to include PIA reset
+    - Add the readout of the FechardwareId in the class FecVmeRingDevice
+
+FecSoftware: 3.8.1 => 04/10/2005
+  * No Tag *
+    - Correct some bugs in the GUIDebugger
+
+FecSoftware: 3.8.0 => 03/10/2005
+  * FecSoftwareV3_8_0 *
+    - FecPciDeviceDriver is updated to avoid certain problem on some hardware
+
+FecSoftware: 3.7.8 => 03/09/2005
+  * FecSoftwareV3_7_8 *
+  - FecSupervisor::setPiaReset update for database
+
+FecSoftware: 3.7.7 => 30/09/2005
+  * No Tag *
+  - To have the debugging of the registers, you must set in the file FecSoftwareV3_0/FecHeader.linux the
+    DO_DEBUGGETREGISTERS=yes
+
+FecSoftware: 3.7.6 => 28/09/2005
+  * FecSoftwareV3_7_6 *
+  - Improvements of the timeout in the FecRingDevice class
+  - Change the internal management of the FecRingRegisters inside
+    FecExceptionHandler class
+
+FecSoftware: 3.7.5 => 27/09/2005
+  * FecSoftwareV3_7_5 *
+  - Add DbCommonAccess and DbDiagAccess classes
+  - Update of DbClasses
+
+FecSoftware: 3.6.4 => 27/09/2005
+  * No Tag *
+   - Remove all the IRQ calls from that class => can be the solution for the US setup
+   - Do not load a V1 FEC PCI device driver with the FecSoftwareV3_0. The driver is not compatible.
+
+FecSoftware: 3.6.3 => 27/09/2005
+  * No Tag *
+   - Change the write of a frame for the reconfiguration
+
+FecSoftware: 3.6.2 => 21/09/2005
+  * FecSoftwareV3_6_2 *
+   - The API for the device factory has been changed
+
+FecSoftware: 3.6.1 => 21/09/2005
+  * FecSoftwareV3_6_1 *
+   - Major bug: forgot to add the deviceFrame.h file
+
+FecSoftware: 3.6   => 20/09/2005
+  * FecSoftware3_6_0 *
+   - Disable the IRQ manager in the FEC PCI device driver
+   - Clear of the FEC IRQ is done now at the beginning of the FecRingDevice::writeFrame and in the FecRingDevice::readFrame methods
+
+FecSoftware: 3.5.1 => 18/09/2005
+  * FecSoftwareV3_5_1 *
+   - Update of the FecUsbDeviceDriver and FecUsbRingDevice class
+   - Update of the DeviceFactory classes (FecDeviceFactory and PiaResetFactory), see generic/README.TXT for more details.
+
+FecSoftware: 3.5   => 16/09/2005
+  * FecSoftwareV3_5_0 *
+   - The FecAccess does not anymore set the value of the PIA channels DDR and the data registers
+     It is done in the initialisation of the piaResetAccess.
+
+FecSoftware: 3.4   => 16/09/2005
+  * FecSoftwareV3_4_0 *
+   - Major Change: the method to write and read frame have been updated to wait
+     now on the Pending IRQ (for the direct ack) and on the Data to FEC for the
+     force ack. or the read answer.
+
+FecSoftware: 3.3.2 => 13/09/2005
+  * No Tag *
+   - Change the FecSupervisor for HTML page on XDAQ 3.2
+   - FecProfiler is now reseting the ring before making any scan (-tracker
+     command)
+
+FecSoftware: 3.3.1 => 07/09/2005
+ * No Tag *
+   - Modification for the separation between the hardware part and
+     software/XML/DB part. A new file is added: deviceType.h that contains
+     the definition of the vector of PIA reset and FEC devices.
+
+FecSoftware: 3.3   => 02/09/2005
+ * No Tag *
+   - Add new debugs to display all FEC/ring/CCU/channel registers in case of
+     errors, modify in the same way the FecAccessManager and APIAccess.cc
+   - The DOH is removed from the configuration file
+   - The FecPciDeviceDriver add a new features to check if the FIFO transmit
+     is not empty when you try toggle the bit send. The method
+FecRingDevice::writeFrame do the same check.
+
+FecSoftware: 3.2.1 => 22/08/2005
+ * No Tag *
+   - Add a new class for commissioning procedures
+
+FecSoftware: 3.2.0 => 22/08/2005
+ * No Tag *
+   - New inheritance project: FecPciRingDevice FecVmeRingDevice FecUsbRingDevice inherit from FecRingDevice.
+   - Class FecInterfaceDevice is removed and all the virtuals classes are in the FecRingDevice class
+
+FecSoftware: 3.1.1 => 17/08/2005
+ * TAG = FecSoftwareV3_1_1 *
+   - XML stuff to add documentation (doxygen)
+   - Some features related to the hardware (FecRingDevice)
+   - laserdriverAccess, pllAccess and dcuAccess for a new method for the SEU
+   - Bug in display in programtest
+   - Patch for the deviceDescriptions library to avoid the undefined symbol:
+     glue_fecdriver_get_error_message.
+
+FecSoftware: 3.1
+ * No Tag *
+  - Add Usb FEC support
+  - Remove hardware libraries from DeviceAccess and DeviceDescriptions

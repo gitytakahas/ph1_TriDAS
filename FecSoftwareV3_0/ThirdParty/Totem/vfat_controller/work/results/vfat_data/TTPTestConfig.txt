@@ -1,0 +1,76 @@
+########################################
+# VFAT_CONTROLLER PARAMETERS
+########################################
+
+# Pulse Scan settings (High resolution)
+VCal1_hi	30
+VCal2_hi	50
+VCalStep_hi 	1
+VThreshold1	0
+VThreshold2	15
+Channels	40 60 80 100
+
+# Pulse Scan settings (Low resolution, Binary checks)
+# Change VCal range if Threshold modified and redo latency scan 
+VCal1		30
+VCal2		60
+VCalStep 	1
+
+# S-Bit Checking settings, limit for correct S-Bit outputs in order to pass (in percent)
+PassLimit	90
+
+########################################
+# MONITOR PARAMETERS
+########################################
+
+# DAC point-by-point test is stopped at DAC value
+dacTestMax              150
+
+# DAC measurement error limit is given as (dacPointLimit) % of reference value at DAC = (dacPointReference)
+dacPointLimit           7
+dacPointReference       100
+
+# DAC slope difference limit (in percent)
+dacSlopeLimit           5
+
+# DAC slope reference values
+slopeIPreampIn          1.16E-06
+slopeIPreampFeed        1.15E-06
+slopeIPreampOut         2.33E-07
+slopeIShaper            2.32E-07
+slopeIShaperFeed        2.33E-07
+slopeIComp              5.88E-07
+slopeVThreshold1       -3.50E-03
+slopeVThreshold2       -3.49E-03
+slopeBaseline           0
+slopeVCal              -7.96E-04
+
+# DAC intercept reference values
+constIPreampIn          -8.92E-07
+constIPreampFeed        -9.64E-07
+constIPreampOut         -1.35E-06
+constIShaper            -1.40E-06
+constIShaperFeed        -1.35E-06
+constIComp              -9.93E-07
+constVThreshold1         2.23E+00
+constVThreshold2         2.23E+00
+constBaseline            1.06E+00
+constVCal                1.08E+00
+
+# limit for DAC Baseline slope
+dacBaselineSlopeLimit	1E-3
+
+
+# thresholds to mark a channel dead or noisy when doing binary check
+binDeadThreshold		40
+binNoisyThreshold		160
+
+# acceptance criterion for S-curves
+scurveMeanLimit		40
+scurveSigmaLimit	80
+
+# for high resolution S-curves, if a channel has more hits than the limit, it is assumed to have been pulsed
+scurveNoiseLimit	10.
+
+
+

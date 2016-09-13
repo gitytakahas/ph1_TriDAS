@@ -1,0 +1,17 @@
+#FileName : 	compile
+#Content :		build all three parts of the DiagBag project
+#Programmer :	Laurent GROSS
+#Version : 		DiagSystem 4.0
+#Last modification date	19/12/2006
+#Support : 		mail to : laurent.gross@ires.in2p3.fr
+#online help : https://uimon.cern.ch/twiki/bin/view/CMS/DiagnosticSystem
+
+#!/bin/bash
+
+cp -f ./Makefile.standalone Makefile
+make 
+cp -f ./Makefile.xdaq Makefile
+make 
+cp -f ./Makefile.wizard Makefile
+make 
+rm -f Makefile

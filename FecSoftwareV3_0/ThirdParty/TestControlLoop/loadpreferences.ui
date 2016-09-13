@@ -1,0 +1,106 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>LoadPreferences</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>LoadPreferences</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>236</width>
+            <height>161</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Load Preferences</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QPushButton" row="2" column="0">
+            <property name="name">
+                <cstring>loadButton</cstring>
+            </property>
+            <property name="text">
+                <string>Load</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="2" column="1">
+            <property name="name">
+                <cstring>backButton</cstring>
+            </property>
+            <property name="text">
+                <string>Back</string>
+            </property>
+        </widget>
+        <widget class="QListBox" row="0" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>fileListBox</cstring>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout23</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLineEdit">
+                    <property name="name">
+                        <cstring>fileNameLineEdit</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>.xml</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>fileListBox</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>LoadPreferences</receiver>
+        <slot>fileNameSelected()</slot>
+    </connection>
+    <connection>
+        <sender>backButton</sender>
+        <signal>released()</signal>
+        <receiver>LoadPreferences</receiver>
+        <slot>back()</slot>
+    </connection>
+    <connection>
+        <sender>loadButton</sender>
+        <signal>released()</signal>
+        <receiver>LoadPreferences</receiver>
+        <slot>loadPreferences()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>fileListBox</tabstop>
+    <tabstop>fileNameLineEdit</tabstop>
+    <tabstop>loadButton</tabstop>
+    <tabstop>backButton</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">loadpreferences.ui.h</include>
+</includes>
+<slots>
+    <slot>fileNameSelected()</slot>
+    <slot>back()</slot>
+    <slot>loadPreferences()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

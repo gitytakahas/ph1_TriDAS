@@ -1,0 +1,8 @@
+cp -f ./Makefile.wizard Makefile
+make clean
+cp -f ./Makefile.xdaq Makefile
+make clean
+rm -f Makefile
+cp -f ./Makefile.standalone Makefile
+make clean
+rm -f Makefile

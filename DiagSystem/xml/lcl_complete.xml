@@ -1,0 +1,62 @@
+<?xml version='1.0'?>
+<xc:Partition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30">
+
+
+	<!--xc:Context url="http://cmstkint02.cern.ch:1964"-->
+	<xc:Context url="http://127.0.0.1:1964">
+
+		<xc:Application class="Sentinel" id="21"  network="local" watchover="TkDiagErrorsPool,FFErrorsPool,TestErrorsPool">
+		</xc:Application>
+		<xc:Module>/home/lgross/TriDAS/daq/sentinel/lib/linux/x86/libsentinel.so</xc:Module>
+
+
+		<xc:Application class="FFApplication" instance="0" id="23"  network="local">
+		</xc:Application>
+		<xc:Module>/home/lgross/DiagSystem/modules/FFApplication/lib/linux/x86/libFFApplication.so</xc:Module>
+
+        </xc:Context>
+
+
+	<!--xc:Context url="http://sbgat248.cern.ch:1972"-->
+	<xc:Context url="http://127.0.0.1:1972">
+
+		<xc:Application class="Sentinel" id="21"  network="local" watchover="TkDiagErrorsPool,FFErrorsPool,TestErrorsPool">
+		</xc:Application>
+		<xc:Module>/home/lgross/TriDAS/daq/sentinel/lib/linux/x86/libsentinel.so</xc:Module>
+		
+		
+		<xc:Application class="DiagSentinelErrorsGrabber" id="23" instance="0" network="local" >
+		</xc:Application>
+		<xc:Module>$/home/lgross/DiagSystem/modules/DiagSentinelErrorsGrabber/lib/linux/x86/libDiagSentinelErrorsGrabber.so</xc:Module>
+
+
+		<!-- Declare the ErrorDispatcher first -->
+                <xc:Application class="ErrorDispatcher" id="31" instance="0" network="local"/>
+		<!-- Shared object library that contains the ErrorDispatcher inplementation -->		
+		<xc:Module>/home/lgross/DiagSystem/modules/ErrorDispatcher/lib/linux/x86/libErrorDispatcher.so</xc:Module>
+
+
+		<!-- Declare the FecSupervisor Application -->
+		<xc:Application class="FecSupervisor" id="30" instance="0" network="local">
+		      <properties xmlns="urn:xdaq-application:FecSupervisor" xsi:type="soapenc:Struct">
+		       <FecBusType xsi:type="xsd:string">VME_FEC</FecBusType>
+		       <StrBusAdapter xsi:type="xsd:string">CAENPCI</StrBusAdapter>
+		        <PIAReset xsi:type="xsd:boolean">true</PIAReset>
+		        <FECReset xsi:type="xsd:boolean">true</FECReset>
+		      </properties>
+		    </xc:Application>
+		    <xc:Module>/home/lgross/FecSoftwareV3_0/FecSupervisor/lib/linux/x86/libFecSupervisor.so</xc:Module>
+
+
+		<!-- Declare a DummySupervisorDiagLvlOne application -->
+                <xc:Application class="FecSupervisorDiagLvlOne" id="32" instance="0" network="local">
+		</xc:Application>
+		<!-- Shared object library that contains the DummySupervisorDiagLvlOne inplementation -->		
+		<xc:Module>/home/lgross/DiagSystem/modules/FecSupervisorDiagLvlOne/lib/linux/x86/libFecSupervisorDiagLvlOne.so</xc:Module>
+
+		
+        </xc:Context>
+
+
+
+</xc:Partition>

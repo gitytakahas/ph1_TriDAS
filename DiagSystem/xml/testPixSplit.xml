@@ -1,0 +1,87 @@
+<xc:Partition xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xc="http://xdaq.web.cern.ch/xdaq/xsd/2004/XMLConfiguration-30"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+    <xc:Context url="http://cmstkint11:15000">
+
+		<!-- Declare a GlobalErrorDispatcher application -->
+        <xc:Application class="GlobalErrorDispatcher" id="20" instance="0" network="local">
+            <properties xmlns="urn:xdaq-application:GlobalErrorDispatcher" xsi:type="soapenc:Struct">	
+		       <UseDiagSystem xsi:type="xsd:string">tuned</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+		       <DiagSystemSettings xsi:type="xsd:string">/home/$${USER}$$/DiagSystem/settings/glbEd.set</DiagSystemSettings>
+		       <LogFilePath xsi:type="xsd:string">/tmp/toto/</LogFilePath>
+            </properties>
+        </xc:Application>
+        <xc:Module>/home/${USER}/DiagSystem/modules/GlobalErrorDispatcher/lib/linux/x86_slc4/libGlobalErrorDispatcher.so</xc:Module>
+
+
+		<!-- Declare a LogReader application -->
+		<xc:Application class="LogReader" id="40" instance="0" network="local">
+		    <properties xmlns="urn:xdaq-application:LogReader" xsi:type="soapenc:Struct">
+		       <UseDiagSystem xsi:type="xsd:string">default</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+		       <DiagSystemSettings xsi:type="xsd:string">/home/lgross/DiagSystem/settings/lr.set</DiagSystemSettings>
+		    </properties>
+		</xc:Application>
+		<xc:Module>/home/lgross/DiagSystem/modules/LogReader/lib/linux/x86_slc4/libLogReader.so</xc:Module>
+
+
+
+    </xc:Context>
+
+
+    <xc:Context url="http://cmstkint11:14000">
+
+
+		<!-- Declare a DummySupervisor application -->
+		<xc:Application class="DummySupervisor" id="30" instance="0" network="local">
+		    <properties xmlns="urn:xdaq-application:DummySupervisor" xsi:type="soapenc:Struct">
+		       <UseDiagSystem xsi:type="xsd:string">tuned</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+		       <DiagSystemSettings xsi:type="xsd:string">/home/lgross/DiagSystem/settings/dummySupervisor.set</DiagSystemSettings>
+		    </properties>
+		</xc:Application>
+		<xc:Module>/home/lgross/DiagSystem/modules/DummySupervisor/lib/linux/x86_slc4/libDummySupervisor.so</xc:Module>
+
+
+        <xc:Application class="LocalErrorDispatcher" id="50" instance="0" network="local">
+            <properties xmlns="urn:xdaq-application:LocalErrorDispatcher" xsi:type="soapenc:Struct">	
+		       <UseDiagSystem xsi:type="xsd:string">tuned</UseDiagSystem> 
+		       <DiagSystemSettings xsi:type="xsd:string">/home/lgross/DiagSystem/settings/lclEd.set</DiagSystemSettings>
+		       <LogFilePath xsi:type="xsd:string">/tmp/toto/</LogFilePath>
+            </properties>
+        </xc:Application>
+        <xc:Module>/home/${USER}/DiagSystem/modules/LocalErrorDispatcher/lib/linux/x86_slc4/libLocalErrorDispatcher.so</xc:Module>
+
+
+    </xc:Context>
+
+
+
+
+
+    <xc:Context url="http://cmstkint12:14000">
+
+		<!-- Declare a DummySupervisor application -->
+		<xc:Application class="DummySupervisor" id="31" instance="1" network="local">
+		    <properties xmlns="urn:xdaq-application:DummySupervisor" xsi:type="soapenc:Struct">
+		       <UseDiagSystem xsi:type="xsd:string">default</UseDiagSystem>  <!-- off / default / tuned / oldway -->
+		       <DiagSystemSettings xsi:type="xsd:string">/home/$${USER}$$/DiagSystem/settings/clientApp.set</DiagSystemSettings>
+		    </properties>
+		</xc:Application>
+		<xc:Module>/home/lgross/DiagSystem/modules/DummySupervisor/lib/linux/x86_slc4/libDummySupervisor.so</xc:Module>
+
+
+        <xc:Application class="LocalErrorDispatcher" id="51" instance="1" network="local">
+            <properties xmlns="urn:xdaq-application:LocalErrorDispatcher" xsi:type="soapenc:Struct">	
+		       <UseDiagSystem xsi:type="xsd:string">tuned</UseDiagSystem> 
+		       <DiagSystemSettings xsi:type="xsd:string">/home/lgross/DiagSystem/settings/lclEd.set</DiagSystemSettings>
+		       <LogFilePath xsi:type="xsd:string">/tmp/toto/</LogFilePath>
+            </properties>
+        </xc:Application>
+        <xc:Module>/home/${USER}/DiagSystem/modules/LocalErrorDispatcher/lib/linux/x86_slc4/libLocalErrorDispatcher.so</xc:Module>
+
+
+    </xc:Context>
+
+
+</xc:Partition>

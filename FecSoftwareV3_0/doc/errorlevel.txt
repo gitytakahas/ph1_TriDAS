@@ -1,0 +1,81 @@
+DcuFilter:
+LOGUSERINFO
+Create an access to the database
+Upload X DCU raw data to PVSS on XXX
+Make the mapping of PSU channel with DCU thanks to the fil
+DcuFilter: receive X DCU from FecSupervisor BB for the PSU channel BB
+Mapping between the DCU and PSU done
+
+LOGINFO
+PVSS originator is
+Access to PVSS performed on class
+DcuFilter: number of DCU received
+The FEC temperature from slot
+Upload X DCU converted values in file
+Upload X DCU raw data in file
+Upload X DCU raw data into the database
+SOAP request successfully sent: datapoints are set.
+SOAP request successfully sent: datapoints are set.
+
+FecSupervisor:
+LOGUSERINFO
+Create an access to the database
+Parsing and downloading done successfully for the database: Partition " << partitionName_.toString() << "(" << partitionId_ << "): FEC device version " << versionMajorId_ << "." << versionMinorId_ ;
+Parsing and downloading done successfully for the file " << xmlFileName_.toString() ;
+
+
+LOGINFO
+Access the database and try to retreive version versus the partition
+Plug and play used: plug and play file
+Geographical address used: VME file name:
+Found a FEC on slot " << fecSlot_ << ", ring " << (int)ring ;
+Access the database and try to retreive version versus the partition " << partitionName_.toString() ;
+Partition " << partitionName << "(" << partitionId_ << "): PIA Reset Version " << versionPiaMajor_ << "." << versionPiaMinor_
+Partition " << partitionName << "(" << partitionId_ << "): FEC device Version " << versionMajorId_ << "." << versionMinorId_ 
+Download the values from the hardware
+No differences between the download and upload was detected, no values values are uploaded in database
+No differences between the download and upload was detected, no values values are uploaded in file
+Upload the values from the hardware in file or database
+X devices uploaded in version " << major << "." << minor << " for the FEC " << fecHardwareId_ 
+X devices uploaded in file " << xmlFileNameOutput_ 
+Upload done successfully for the database
+Upload done successfully for the file
+Found " << uDevice.size() << " DCU and starts the thread"
+Start autodetection of DCUs for the FEC << fecHardwareId_
+Found X DCUs for the FEC << fecHardwareId_
+Found X DCUs and starts the thread
+Found the DcuFilter
+Reset the FEC << fecHardwareId_
+Reset all the FECs
+Set the CCS Trigger SSID " << SSID_.toString() << " for the FEC " << fecHardwareId_
+Set the CCS Trigger SSID " << SSID_.toString() << " for the " << fecSlotList->size() << " FECs detected on the crate"
+SSID " << SSID_.toString() << " set for the FEC " << (int)getFecKey(index)
+Reset modules via PIA channels for FEC << fecHardwareId_
+Retreive the PIA reset from the database for FEC << fecHardwareId_
+Parse the XML file " << xmlFileName_.toString() << " for PIA reset
+Reset PLL for cold conditions
+Use the database with current version " << versionMajorId_ << "." << versionMinorId_
+Use an XML file: " << xmlFileName_.toString()
+Use the multiframes algorithm
+Use the VME block transfer
+Use the database with current version " << versionMajorId_ << "." << versionMinorId_
+Use the database with version " << versionMajorId_ << "." << versionMinorId_
+Use an XML file: " << xmlFileName_.toString()
+FEC " << std::dec << (int)getFecKey(index) << "." << (int)getRingKey(index) << " found
+
+LOGWARN
+A crate reset will be issued
+
+CrateController:
+
+LOGUSERINFO
+Create an access to the database
+The upload will be done in files
+No upload performed
+
+LOGINFO
+Plug and play used: plug and play file " << vmeFileNamePnP << " and FEC Id file " << vmeFileName
+FEC: Geographical address used: VME file name: " << vmeFileName
+
+LOGWARN
+A crate reset will be issued
