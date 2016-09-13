@@ -1,0 +1,15 @@
+Mode: ReadbackCalibration
+Parameters:
+Rows:
+10
+Cols:
+10
+VcalHigh
+Scan: TBMPLL 0 255 4
+Set: Vcal 200
+Set: Vana 100
+Set: Readback 0
+Repeat:
+32
+Rocs:
+all

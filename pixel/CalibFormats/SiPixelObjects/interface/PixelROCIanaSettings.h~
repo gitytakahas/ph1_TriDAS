@@ -1,0 +1,31 @@
+#ifndef PixelROCIanaSettings_h
+#define PixelROCIanaSettings_h
+
+#include "CalibFormats/SiPixelObjects/interface/PixelROCName.h"
+
+namespace pos{
+
+  class PixelROCIanaSettings{
+
+  public:
+
+    PixelROCIanaSettings();
+    virtual ~PixelROCIanaSettings(){;};
+
+    PixelROCIanaSettings(const PixelROCName& rocid){rocid_= rocid;}
+
+
+    int read(std::ifstream& in, const PixelROCName& rocid);
+
+    PixelROCName getROCName() const {return rocid_;} 
+
+  private:
+
+    PixelROCName rocid_;
+
+    //The iana settings used by the ROC
+
+    
+  };
+}
+#endif

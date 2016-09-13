@@ -1,0 +1,85 @@
+<dcsinterface:configuration xmlns:dcsinterface="urn:xdaq-dcsinterface:1.0" xmlns:fsm="urn:pvss-xdaq-fsm">
+
+ <fsm:node type="FwCaenChannelCtrl">
+  <fsm:state pvssName="ON" xdaqName="LV_ON" color="#33FF33"/>
+  <fsm:state pvssName="OFF" xdaqName="LV_OFF" color="#3333FF"/>
+  <fsm:state pvssName="OVERCURRENT" xdaqName="LV_OFF" color="#FF3333"/>
+  <fsm:state pvssName="UNDERVOLTAGE" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="OVERVOLTAGE" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="MAXVOLTAGE" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="INTERNALTRIP" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="CALIBRATIONERROR" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="UNPLUGGED" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="MAXVCONN" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="NO_COMMUNICATION" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="DISABLED" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="MAXDROP" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="INTERLOCKED" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="INTERNALFAIL" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="POWERFAIL" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="DEAD" xdaqName="UNDEFINED" color="#C0C0C0"/>
+ </fsm:node>
+
+ <fsm:node type="TkPowerGroup">
+  <fsm:state pvssName="OFF" xdaqName="LV_OFF" color="#3333FF"/>
+  <fsm:state pvssName="ON_LV" xdaqName="LV_ON" color="#33FF33"/>
+  <fsm:state pvssName="ON" xdaqName="HV_ON" color="#33FF33"/>
+  <fsm:state pvssName="HVMIXED" xdaqName="HV_ON" color="#33FF33"/>
+  <fsm:state pvssName="HVRAMPINGUP" xdaqName="LV_ON" color="#33FF33"/>
+  <fsm:state pvssName="HVRAMPINGDOWN" xdaqName="LV_ON" color="#33FF33"/>
+  <fsm:state pvssName="HVON_LVOFF" xdaqName="LV_ON" color="#33FF33"/>
+  <fsm:state pvssName="DIGITAL_ON_RED" xdaqName="LV_ON_REDUCED" color="#3333FF"/>
+  <fsm:state pvssName="ANALOG_ON_RED" xdaqName="LV_ON_REDUCED" color="#3333FF"/>
+  <fsm:state pvssName="ANALOG_ON" xdaqName="LV_OFF" color="#3333FF"/>
+  <fsm:state pvssName="ERROR" xdaqName="LV_OFF" color="#FF3333"/>
+  <fsm:state pvssName="UNPLUGGED" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="INTERLOCKED" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="NO_COMMUNICATION" xdaqName="LV_OFF" color="#FFFF33"/>
+  <fsm:state pvssName="DEAD" xdaqName="UNDEFINED" color="#C0C0C0"/>
+ </fsm:node>
+
+ <fsm:device type="CMS_Pixel_XDAQ_InitializationStatus" pvssDpType="bool">
+  <fsm:state xdaqName="INITIALIZED" pvssDpValue="1" color="#33FF33"/>
+  <fsm:state xdaqName="UNINITIALIZED" pvssDpValue="0" color="#3333FF"/>
+ </fsm:device>
+
+<!--
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate3/easyBoard12/channel002 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/ControlPowerChann"]
+
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard12/channel002 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmO/ControlPowerChann"]
+
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate3/easyBoard08/channel000 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/Pixel_Pilot_Blade_BmI_ROG1/channel000"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate3/easyBoard08/channel001 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/Pixel_Pilot_Blade_BmI_ROG1/channel001"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate3/easyBoard08/channel002 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/Pixel_Pilot_Blade_BmI_ROG1/channel002"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate3/easyBoard08/channel003 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/Pixel_Pilot_Blade_BmI_ROG1/channel003"]
+
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard08/channel000 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/Pixel_Pilot_Blade_BmI_DCDC/channel000"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard08/channel001 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/Pixel_Pilot_Blade_BmI_DCDC/channel001"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard08/channel002 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/Pixel_Pilot_Blade_BmI_DCDC/channel002"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard08/channel003 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmI/Pixel_Pilot_Blade_BmI_DCDC/channel003"]
+
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard09/channel000 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmO/Pixel_Pilot_Blade_BmO_DCDC/channel000"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard09/channel001 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmO/Pixel_Pilot_Blade_BmO_DCDC/channel001"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard09/channel002 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmO/Pixel_Pilot_Blade_BmO_DCDC/channel002"]
+["cms_trk_dcs_1:CAEN/CMS_TRACKER_SY1527_5/branchController05/easyCrate4/easyBoard09/channel003 CMS_TRACKER/PixelEndCap/Pixel_Pilot_Blade/Pixel_Pilot_Blade_BmO/Pixel_Pilot_Blade_BmO_DCDC/channel003"]
+-->
+
+
+ <fsm:partition name="Pilt_BmI" topname="PixelPilotBladeTop" topdomain="PixelPilotBladeTop"> 
+   <!-- name is Pilt_BmI so it fits in the powerMap_ scheme in (TK)FECSupervisor, but for pilot it has both BmI and BmO -->
+  <fsm:node type="FwCaenChannelCtrl" name="CMS_TRACKER:PixelPilotBladeTop:Pixel_Pilot_Blade:Pixel_Pilot_Blade_BmI:ControlPowerChann" domain="Pixel_Pilot_Blade"/>
+  <fsm:node type="TkPowerGroup" name="CMS_TRACKER:PixelPilotBladeTop:Pixel_Pilot_Blade:Pixel_Pilot_Blade_BmI:Pixel_Pilot_Blade_BmI_ROG1" domain="Pixel_Pilot_Blade">
+   <fsm:status fsmType="CMS_Pixel_XDAQ_InitializationStatus" dpName="cms_trk_dcs_1:CAEN\CMS_TRACKER_SY1527_5\branchController05\easyCrate3\easyBoard08.pixelSequence.configured"/>
+  </fsm:node>
+  <fsm:node type="TkPowerGroup" name="CMS_TRACKER:PixelPilotBladeTop:Pixel_Pilot_Blade:Pixel_Pilot_Blade_BmI:Pixel_Pilot_Blade_BmI_DCDC" domain="Pixel_Pilot_Blade">
+   <fsm:status fsmType="CMS_Pixel_XDAQ_InitializationStatus" dpName="cms_trk_dcs_1:CAEN\CMS_TRACKER_SY1527_5\branchController05\easyCrate4\easyBoard08.pixelSequence.configured"/>
+  </fsm:node>
+  <fsm:node type="FwCaenChannelCtrl" name="CMS_TRACKER:PixelPilotBladeTop:Pixel_Pilot_Blade:Pixel_Pilot_Blade_BmO:ControlPowerChann" domain="Pixel_Pilot_Blade"/>
+  <fsm:node type="TkPowerGroup" name="CMS_TRACKER:PixelPilotBladeTop:Pixel_Pilot_Blade:Pixel_Pilot_Blade_BmO:Pixel_Pilot_Blade_BmO_DCDC" domain="Pixel_Pilot_Blade">
+   <fsm:status fsmType="CMS_Pixel_XDAQ_InitializationStatus" dpName="cms_trk_dcs_1:CAEN\CMS_TRACKER_SY1527_5\branchController05\easyCrate4\easyBoard09.pixelSequence.configured"/>
+  </fsm:node>
+  <fsm:connection name="PixelTKFECSupervisor" type="TrkFEC" instance="1"/>
+  <fsm:connection name="PixelFECSupervisor" type="PxlFEC" instance="1"/>
+ </fsm:partition>
+
+</dcsinterface:configuration>
