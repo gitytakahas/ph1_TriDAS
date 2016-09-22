@@ -58,8 +58,9 @@ void PixelIanaAnalysis::goIana(const std::string& roc,
 
   if( fitChisquare <= 10 ){
 
+   currentIanaValue = f2->Eval(oldVana); 
    pass = true;
-   if( currentIanaValue > 24 && currentIanaValue < 26 ) pass = true;
+   if( currentIanaValue > 24 && currentIanaValue < 26 ){ pass = true; newVana=oldVana; newIana=currentIanaValue;}
    else{
     for( int p = 0; p <= 255; ++p ){
       double iana = f2->Eval(p);

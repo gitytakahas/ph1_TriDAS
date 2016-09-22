@@ -45,6 +45,15 @@ class PixelFEDReadbackCalibration: public PixelFEDCalibrationBase {
     char moduleName[38];
   };
 
+  struct branch_sum{
+    int deltaDelayX;
+    int deltaDelayY;
+    int newDelayX;
+    int newDelayY;
+    double nROCs;
+    char moduleName[38];
+  };
+
 };
 
 #endif

@@ -178,9 +178,7 @@ void PixelFEDIanaCalibration::RetrieveData(unsigned state) {
 
   if( event_ == tempCalibObject->nTriggersPerPattern()-1 ){
 
-     std::cout << "***************** JENDEBUG:: " << tempCalibObject->nTriggersPerPattern()-1 << std::endl;
      if( tempCalibObject->mode()=="Iana" ){
-     std::cout << "***************** JENDEBUG:: I AM HERE" << std::endl;
      ReadIana();
      }
      else if( tempCalibObject->mode()=="Vdig" ) ReadVdig();
@@ -293,6 +291,9 @@ void PixelFEDIanaCalibration::IanaAnalysis(PixelCalibConfiguration* tmpCalib) {
 	  x[j] = it4->first;
 	  ey[j] = 1.;
 	  j++;
+          //std::cout << " ROC#" << rocs[it3->first-1].roc() << " par0 " << par0ia << " par1 " << par1ia << " par2 " << par2ia;
+          //std::cout << " vana " << it4->first << std::endl;
+          //std::cout << " iana(ADC) " << it4->second << " iana(mA) " << froc->GetX(it4->second) << std::endl;
          }
 
         }//close loop on vana values
@@ -482,7 +483,7 @@ void PixelFEDIanaCalibration::ReadIana( void ) {
        
       for( unsigned int i=0; i<(it3->second).size(); ++i ){
 
-       //std::cout << " - channel#" << it2->first << " ROC#" << it3->first << " - dac " << i << ":" << (it3->second)[i] << std::endl;
+      //std::cout << " - channel#" << it2->first << " ROC#" << it3->first << " - dac " << i << ":" << (it3->second)[i] << std::endl;
        if( (((it3->second)[i])&(0x2)) == 2 && start == -1 ){start = i;}    
        else if( (((it3->second)[i])&(0x2)) == 2 && start != -1 ){stop = i;}         
       }
@@ -497,7 +498,7 @@ void PixelFEDIanaCalibration::ReadIana( void ) {
        //for( unsigned int b=0; b<bits.size(); ++b ){ std::cout << bits[b];}
        //std::cout << std::endl;
        rbvalue = 0;
-       for( unsigned int b=8; b<bits.size(); ++b ) rbvalue+=(bits[b]<<(16-b)); //std::cout << bits[b];
+       for( unsigned int b=8; b<bits.size(); ++b ) rbvalue+=(bits[b]<<(15-b)); //std::cout << bits[b];
        rocid=0;
        for( unsigned int b=0; b<4; ++b ) rocid+=(bits[b]<<(3-b));      
        rbregvalue=0;
@@ -569,7 +570,7 @@ void PixelFEDIanaCalibration::ReadVdig( void ) {
          //for( unsigned int b=0; b<bits.size(); ++b ){ std::cout << bits[b];}
          //std::cout << std::endl;
          rbvalue = 0;
-         for( unsigned int b=8; b<bits.size(); ++b ) rbvalue+=(bits[b]<<(16-b)); //std::cout << bits[b];
+         for( unsigned int b=8; b<bits.size(); ++b ) rbvalue+=(bits[b]<<(15-b)); //std::cout << bits[b];
          rocid=0;
          for( unsigned int b=0; b<4; ++b ) rocid+=(bits[b]<<(3-b));      
          rbregvalue=0;

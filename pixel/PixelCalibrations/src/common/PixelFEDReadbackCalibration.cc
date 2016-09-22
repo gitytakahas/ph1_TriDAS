@@ -168,7 +168,7 @@ void PixelFEDReadbackCalibration::RetrieveData(unsigned state) {
 
   }// close loop on feds
 
-  if( event_ == 31 ){
+  if( event_ == tempCalibObject->nTriggersPerPattern()-1 ){
 
      ReadbackROCs();
   }
@@ -184,35 +184,7 @@ void PixelFEDReadbackCalibration::Analyze() {
   PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
   assert(tempCalibObject != 0);
 
-  for( std::map<int,std::map<int,std::map<int,std::map<int,int> > > >::iterator it = values.begin(); it!=values.end(); ++it ){//feds   
-   for( std::map<int,std::map<int,std::map<int,int> > >::iterator it2 = (it->second).begin(); it2!=(it->second).end(); ++it2 ){//channels per fed   
-
-    const std::vector<PixelROCName>& rocs = theNameTranslation_->getROCsFromFEDChannel(it->first, it2->first);
-
-    for( std::map<int,std::map<int,int> >::iterator it3 = (it2->second).begin(); it3!=(it2->second).end(); ++it3 ){//rocs per channel
- 
-     for( std::map<int,int>::iterator it4 = (it3->second).begin(); it4!=(it3->second).end(); ++it4 ){
-
-      if( it4->second == rocs[it3->first-1].roc() ){ 
-       int tmp = it4->first; 
-       int delay1 = -1;
-       int delay2 = -1;
-       if( isTBMPLLdelayScan ){
-        delay1 = (tmp>>2)&0x7;
-        delay2 = ((tmp>>2)&0x38)>>3;
-       }
-       else{
-        delay1 = (tmp>>3)&0x7;
-        delay2 = tmp&0x7;
-       }
-       scansROCs[it->first][it2->first][it3->first-1]->Fill(delay1,delay2,1);
-      }
-
-     }//tbmplldelay values
-
-    }//rocs per channel
-   }//channels per fed
-  }//feds
+  std::map<std::string,int> nFEDchannelsPerModule;
 
   //fill histo with sum of channels
   for( std::map<int,std::map<int,std::vector<TH2F*> > >::iterator it1 = scansROCs.begin(); it1 != scansROCs.end(); ++it1 ){
@@ -225,6 +197,9 @@ void PixelFEDReadbackCalibration::Analyze() {
      moduleName = theChannel.modulename();
     }
 
+    if( nFEDchannelsPerModule.find(moduleName) == nFEDchannelsPerModule.end() ) nFEDchannelsPerModule[moduleName] = 1;
+    else nFEDchannelsPerModule[moduleName] += 1;
+
     for( unsigned int h = 0; h < it2->second.size(); ++h ) ROCsHistoSum[moduleName][0]->Add(it2->second[h]);
 
    }//close loop on channels
@@ -232,16 +207,19 @@ void PixelFEDReadbackCalibration::Analyze() {
 
   std::map<std::string,int> currentDelay;
   std::map<std::string,int> newDelay;
-  std::map<std::string,int> nROCsForcurrentDelay;
+  std::map<std::string,int> nROCsForDelay;
   std::map<std::string,int> passState;
 
   rootf->cd();
   branch theBranch;
+  branch_sum theBranch_sum;
   TDirectory* dirSummaries = gDirectory->mkdir("SummaryTrees","SummaryTrees");
   dirSummaries->cd();
 
   TTree* tree = new TTree("PassState","PassState");  
-  tree->Branch("PassState",&theBranch,"pass/F:moduleName/C",4096000);
+  TTree* tree_sum =new TTree("SummaryInfo","SummaryInfo"); 
+ tree->Branch("PassState",&theBranch,"pass/F:moduleName/C",4096000);
+  tree_sum->Branch("SummaryInfo",&theBranch_sum,"deltaDelayX/I:deltaDelayY/I:newDelayX/I:newDelayY/I:nROCs/D:moduleName/C",4096000);
   rootf->cd();
 
   for( std::map<std::string,std::vector<TH2F*> >::iterator it = ROCsHistoSum.begin(); it != ROCsHistoSum.end(); ++it ){
@@ -252,22 +230,24 @@ void PixelFEDReadbackCalibration::Analyze() {
    PixelConfigInterface::get(TBMSettingsForThisModule, "pixel/tbm/"+moduleName, *theGlobalKey_);
    assert(TBMSettingsForThisModule!=0);
 
-   int delayX;
-   int delayY;
+   int delayXold;
+   int delayYold;
    if( isTBMPLLdelayScan ){
     currentDelay[moduleName] = TBMSettingsForThisModule->getTBMPLLDelay();
-    delayX = (currentDelay[moduleName]&28)>>2;
-    delayY = (currentDelay[moduleName]&224)>>5;
+    delayXold = (currentDelay[moduleName]&28)>>2;
+    delayYold = (currentDelay[moduleName]&224)>>5;
    }
    else{
     currentDelay[moduleName] = TBMSettingsForThisModule->getTBMADelay();
-    delayX = (currentDelay[moduleName]&56)>>3;
-    delayY = (currentDelay[moduleName]&7);
+    delayXold = (currentDelay[moduleName]&56)>>3;
+    delayYold = (currentDelay[moduleName]&7);
    }
 
-   nROCsForcurrentDelay[moduleName] = it->second[0]->GetBinContent(delayX+1,delayY+1);
+   nROCsForDelay[moduleName] = it->second[0]->GetBinContent(delayXold+1,delayYold+1);
 
-   if( nROCsForcurrentDelay[moduleName] == 16 ){
+   int delayXnew = delayXold;
+   int delayYnew = delayYold;
+   if( nROCsForDelay[moduleName] == 16 ){
     passState[moduleName] = 1;
    }
    else{//maybe try here +=1 or 2 bins from the current value?
@@ -276,15 +256,17 @@ void PixelFEDReadbackCalibration::Analyze() {
 
     for( int bx = 1; bx < it->second[0]->GetNbinsX()+1; ++bx ){
      for( int by = 1; by < it->second[0]->GetNbinsY()+1; ++by ){ 
-      if( it->second[0]->GetBinContent(bx,by) == 16 ){ delayX = bx-1; delayY = by-1; passState[moduleName] = 1; break; }
+      if( it->second[0]->GetBinContent(bx,by) == 16 ){ delayXnew = bx-1; delayYnew = by-1; passState[moduleName] = 1; break;}
      }//close loop on by
     }//close loop on bx
     
    }
 
+   nROCsForDelay[moduleName] = it->second[0]->GetBinContent(delayXnew+1,delayYnew+1);
+
    if( isTBMPLLdelayScan ){
-    delayX = (delayX<<2);
-    delayY = (delayY<<5);
+    delayXnew = (delayXnew<<2);
+    delayYnew = (delayYnew<<5);
    }
    else{
 
@@ -296,11 +278,11 @@ void PixelFEDReadbackCalibration::Analyze() {
     else if( scanValueMin==2 ) mask=128;
     else if( scanValueMin==3 ) mask=192;
 
-    delayX = (delayX<<3)|mask;
-    delayY = delayY;
+    delayXnew = (delayXnew<<3)|mask;
+    delayYnew = delayYnew;
 
    }
-   newDelay[moduleName] = delayX+delayY;
+   newDelay[moduleName] = delayXnew+delayYnew;
 
    if( isTBMPLLdelayScan ) TBMSettingsForThisModule->setTBMPLLDelay(newDelay[moduleName]);
    else{
@@ -311,9 +293,16 @@ void PixelFEDReadbackCalibration::Analyze() {
    //std::cout << "Wrote TBM settings for module:" << moduleName << endl;			
    delete TBMSettingsForThisModule;
 
+   theBranch_sum.deltaDelayX = delayXnew-delayXold;
+   theBranch_sum.deltaDelayY = delayYnew-delayYold;
+   theBranch_sum.newDelayX = delayXnew;
+   theBranch_sum.newDelayY = delayYnew;
+   theBranch_sum.nROCs = nROCsForDelay[moduleName];
+   strcpy(theBranch_sum.moduleName,moduleName.c_str());
    theBranch.pass = passState[moduleName];
    strcpy(theBranch.moduleName,moduleName.c_str());
    tree->Fill();
+   tree_sum->Fill();
 
   }
   
@@ -395,34 +384,84 @@ void PixelFEDReadbackCalibration::BookEm(const TString& path) {
   rootf->cd(0);
 
 }
-  
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 void PixelFEDReadbackCalibration::ReadbackROCs( void ) {
+
+  int delay1 = -1;
+  int delay2 = -1;
+  if( isTBMPLLdelayScan ){
+   delay1 = (lastDelayValue>>2)&0x7;
+   delay2 = ((lastDelayValue>>2)&0x38)>>3;
+  }
+  else{
+   delay1 = (lastDelayValue>>3)&0x7;
+   delay2 = lastDelayValue&0x7;
+  }
   
   for( std::map<int,std::map<int,std::map<int,std::vector<int> > > >::iterator it = last_dacs.begin(); it!=last_dacs.end(); ++it ){//feds
    
    for( std::map<int,std::map<int,std::vector<int> > >::iterator it2 = (it->second).begin(); it2!=(it->second).end(); ++it2 ){//channels per fed 
 
+    const std::vector<PixelROCName>& rocs = theNameTranslation_->getROCsFromFEDChannel(it->first, it2->first);
+
     for( std::map<int,std::vector<int> >::iterator it3 = (it2->second).begin(); it3!=(it2->second).end(); ++it3 ){//rocs per channel
 
-      int start = -1;
-      int stop = -1;
-      int rocid = -1;
-      std::vector<int> bits;
-       
+      std::vector<int> start; start.push_back(-1);
+      std::vector<int> stop; stop.push_back(-1);
+
+      int ii=0; 
       for( unsigned int i=0; i<(it3->second).size(); ++i ){
-       if( (((it3->second)[i])&(0x2)) == 2 && start == -1 ){start = i;}    
-       else if( (((it3->second)[i])&(0x2)) == 2 && start != -1 ){stop = i;}         
+
+       if( (((it3->second)[i])&(0x2)) == 2 && start[ii] == -1 ){
+         start[ii]=i;
+       }    
+       else if( (((it3->second)[i])&(0x2)) == 2 && start[ii] != -1 ){
+        stop[ii] = i;
+        start.push_back(i);
+        stop.push_back(i);
+        ii++;
+       }         
       }
-      
-      if( start != stop && (stop-start)==16){   
-        rocid=0;
-        for( int i = start+1; i <= stop; ++i ){ bits.push_back((it3->second)[i]&0x1);}
-        for( unsigned int b=0; b<4; ++b ) rocid+=(bits[b]<<(3-b));    
-       }
-         
-       values[it->first][it2->first][it3->first][lastDelayValue] = rocid;            
-      
+
+      start.pop_back(); stop.pop_back();      
+      //std::cout << " - channel#" << it2->first << " ROC#" << it3->first << std::endl;
+      //std::cout << "*************** start size " << start.size() << " stop size " << stop.size() << std::endl;         
+      float counts = 0; 
+      for( unsigned int i = 0; i<start.size(); ++i){
+
+        //std::cout << "    (found start =  " << start[i] << " and stop = " << stop[i] << " ) " << std::endl;
+        int rocid = -1;
+        int rbregvalue = -1;
+        std::vector<int> bits;
+
+        if( start[i] != stop[i] && (stop[i]-start[i])==16){
+   
+         //now put together the 16 bits
+         for( int b = start[i]+1; b <= stop[i]; ++b ){ bits.push_back((it3->second)[b]&0x1);}
+    
+         //now get Iana
+         for( unsigned int b=0; b<bits.size(); ++b ){ std::cout << bits[b];}
+         std::cout << std::endl;
+         rocid=0;
+         for( unsigned int b=0; b<4; ++b ) rocid+=(bits[b]<<(3-b));      
+         rbregvalue=0;
+         for( unsigned int b=4; b<8; ++b ) rbregvalue+=(bits[b]<<(7-b));
+
+        }
+   
+
+
+        bool thebool = (( rocid == rocs[it3->first-1].roc() ) && rbregvalue==12);
+        counts+=thebool;
+        //std::cout << " ***** TBMPLLdelay_Y=" << delay2 << " TBMPLLdelay_X=" << delay1 << " rocid " << rocid << " expected " << rocs[it3->first-1].roc();
+        //std::cout << " thebool " << thebool << " counts " << counts << std::endl;
+        
+      }//close loop on starts and stops   
+      float scale = (start.size() != 0 ? start.size() : 1);
+      scansROCs[it->first][it2->first][it3->first-1]->Fill(delay1,delay2,counts/scale);
+      //std::cout << "*************** fill histo with " << counts/scale << std::endl;
+
     }      
    }      
   }//close loop

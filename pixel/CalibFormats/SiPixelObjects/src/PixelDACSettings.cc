@@ -21,6 +21,10 @@
 #include <sys/time.h>
 #include <cstdlib>
 
+namespace {
+  const bool  DEBUG_DK = false;
+}
+
 using namespace pos;
 
 namespace {
@@ -555,7 +559,11 @@ void PixelDACSettings::generateConfiguration(PixelFECConfigInterface* pixelFEC,
 
   for(unsigned int i=0;i<dacsettings_.size();i++){  // loop over ROCs
 
+    if(DEBUG_DK) std::cout<<i<<" "<<dacsettings_[i].getROCName()<<" "<<dacsettings_.size()<<std::endl;
+
     bool disableRoc = rocIsDisabled(detconfig, dacsettings_[i].getROCName());
+
+    if(DEBUG_DK) std::cout<<i<<" "<<disableRoc<<std::endl;
 
     dacsettings_[i].getDACs(dacs);
 
@@ -669,12 +677,16 @@ void PixelDACSettings::generateConfiguration(PixelFECConfigInterface* pixelFEC,
 			200,
 			bufferData);
     }
+
+
+    if(DEBUG_DK) std::cout<<i<<" finish "<<std::endl;
     
   } // end ROC loop 
   
   if (bufferData) {  // Send data to the FEC
     pixelFEC->qbufsend();
   }
+  if(DEBUG_DK) std::cout<<" flush "<<std::endl;
   
 }
 

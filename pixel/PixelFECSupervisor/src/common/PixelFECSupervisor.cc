@@ -18,7 +18,11 @@
 //#include "DiagCompileOptions.h"
 #include <toolbox/convertstring.h>
 
+namespace {
+  const bool DEBUG_DK=false;
+}
 using namespace pos;
+
 
 //#define USE_SEU_DETECT
 #define SETUP_TIF
@@ -2153,7 +2157,7 @@ void PixelFECSupervisor::stateConfiguring(toolbox::fsm::FiniteStateMachine &fsm)
               current1=readCurrent(*module_name);
 	      //                                                                                                           use HV OFF settings
 
-	      //cout<<" CALL DACS ======================================================= 1"<<endl;
+	      if(DEBUG_DK) cout<<" CALL DACS ======================================================= 1"<<endl;
               tempDACs->generateConfiguration(FECInterface[fecVMEBaseAddress], theNameTranslation_, theDetectorConfiguration_, false);
               ::sleep(1);
               current2=readCurrent(*module_name);
@@ -2163,7 +2167,7 @@ void PixelFECSupervisor::stateConfiguring(toolbox::fsm::FiniteStateMachine &fsm)
               }
             } else {
 	      //                                                                                                           use HV OFF settings
-	      //cout<<" CALL DACS ======================================================= 2"<<endl;
+	      if(DEBUG_DK)  cout<<" CALL DACS ======================================================= 2"<<endl;
               tempDACs->generateConfiguration(FECInterface[fecVMEBaseAddress], theNameTranslation_, theDetectorConfiguration_, false);
             }
 
@@ -2302,13 +2306,13 @@ void PixelFECSupervisor::stateConfiguring(toolbox::fsm::FiniteStateMachine &fsm)
 	  if (physics) {
 	    powerMapLast_.setHVoltage(powerCoordinate, HV_OFF, std::cout); //we are programming as if HV is off
 	    //                                                                                                   use HV OFF settings
-	    //cout<<" CALL DACS ======================================================= 3"<<endl;
+	    if(DEBUG_DK) cout<<" CALL DACS ======================================================= 3"<<endl;
 
 	    tempDACs->generateConfiguration(FECInterface[fecVMEBaseAddress], theNameTranslation_, theDetectorConfiguration_, false);
 	  }
 	  else { //calibration
 	    powerMapLast_.setHVoltage(powerCoordinate, powerHV, std::cout); //store 'last' state of HV
-	    //cout<<" CALL DACS ======================================================= 4"<<endl;
+	    if(DEBUG_DK)  cout<<" CALL DACS ======================================================= 4"<<endl;
 
 	    tempDACs->generateConfiguration(FECInterface[fecVMEBaseAddress], theNameTranslation_, theDetectorConfiguration_, powerHV==HV_ON);
 	  }
@@ -2317,7 +2321,7 @@ void PixelFECSupervisor::stateConfiguring(toolbox::fsm::FiniteStateMachine &fsm)
 	else {
 	  configDACTimer.start();
 	  //assume HV is ON
-	  //cout<<" CALL DACS ======================================================= 5"<<endl;
+	  if(DEBUG_DK) cout<<" CALL DACS ======================================================= 5"<<endl;
 
 	  tempDACs->generateConfiguration(FECInterface[fecVMEBaseAddress], theNameTranslation_, theDetectorConfiguration_, true);
 	  configDACTimer.stop();
@@ -2502,12 +2506,12 @@ xoap::MessageReference PixelFECSupervisor::Reconfigure (xoap::MessageReference m
 	if (PixelDCSFSMInterface_!=0) {
 	  string powerCoordinate="Pilt_BmI";  //Only one partition for pilot because of the bs connect we have to do // modulePath.substr(0, 8);
 	  powerMapLast_.setHVoltage(powerCoordinate, HV_OFF, std::cout); //act like HV is off no matter what
-	  //cout<<" CALL DACS ======================================================= 7"<<endl;
+	  if(DEBUG_DK) cout<<" CALL DACS ======================================================= 7"<<endl;
 
 	  tempDACs->generateConfiguration(FECInterface[fecVMEBaseAddress], theNameTranslation_, theDetectorConfiguration_, false);
 	}
 	else {	  //assume HV is ON
-	  //cout<<" CALL DACS ======================================================= 8"<<endl;
+	  if(DEBUG_DK) cout<<" CALL DACS ======================================================= 8"<<endl;
 
 	  tempDACs->generateConfiguration(FECInterface[fecVMEBaseAddress], theNameTranslation_, theDetectorConfiguration_, true);
 	}
@@ -3523,6 +3527,7 @@ void PixelFECSupervisor::startupHVCheck(bool startingRun, bool doReset) {
             bool enableRocs = startingRun && (powerHV==HV_ON);
 
 	    //change to generateConfiguration
+	    if(DEBUG_DK) cout<<" CALL DACS  ---------------- 10 "<<endl; 
 	    theDACs_[*module_name]->generateConfiguration(FECInterface[fecVMEBaseAddress], theNameTranslation_, theDetectorConfiguration_,enableRocs);
 	    // First wait for the last command to finish. Added 3/9/09 d.k.
 	    unsigned int stat1=0, stat2=0;

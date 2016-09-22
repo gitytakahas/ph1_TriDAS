@@ -249,9 +249,8 @@ void PixelFEDTBMDelayCalibration::Analyze() {
   for( std::map<int,std::map<int,std::vector<TH2F*> > >::iterator it1 = scansTBM.begin(); it1 != scansTBM.end(); ++it1 ){
    std::string moduleName = "";
    PixelChannel theChannel;
-   int nGoodBins = 0;
    for( std::map<int,std::vector<TH2F*> >::iterator it2 = it1->second.begin(); it2 != it1->second.end(); ++it2 ){  
-     
+
     if( theNameTranslation_->FEDChannelExist(it1->first, it2->first) ){
      theChannel = theNameTranslation_->ChannelFromFEDChannel(it1->first, it2->first);
      moduleName = theChannel.modulename();
@@ -261,6 +260,7 @@ void PixelFEDTBMDelayCalibration::Analyze() {
     else nFEDchannelsPerModule[moduleName] += 1;
      
     //count bins with eff = 100%
+    int nGoodBins = 0;     
     for( int bx = 1; bx < it2->second[0]->GetNbinsX()+1; ++bx ){
      for( int by = 1; by < it2->second[0]->GetNbinsY()+1; ++by ){ 
       if( it2->second[0]->GetBinContent(bx,by) == 1 ) nGoodBins++;

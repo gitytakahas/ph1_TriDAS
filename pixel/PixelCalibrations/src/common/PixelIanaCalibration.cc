@@ -31,11 +31,13 @@ bool PixelIanaCalibration::execute() {
   // Configure all TBMs and ROCs according to the PixelCalibConfiguration settings, but only when it's time for a new configuration.
   if (firstOfPattern) commandToAllFECCrates("CalibRunning");
 
-  unsigned int rbregvalue = 0;
-  if( tempCalibObject->mode()=="Iana" ) rbregvalue = 12;
-  else if( tempCalibObject->mode()=="Vdig" ) rbregvalue = 8; 
+  if( tempCalibObject->mode()=="Iana" && firstOfPattern ){
+   for (unsigned int i=0;i<rocs.size();i++) setDAC(rocs[i], pos::k_DACAddress_Readback, 12);
+  }
 
-  for (unsigned int i=0;i<rocs.size();i++) setDAC(rocs[i], pos::k_DACAddress_Readback, rbregvalue);
+  if( tempCalibObject->mode()=="Vdig" && (event_ % 32 == 0) ){
+   for (unsigned int i=0;i<rocs.size();i++) setDAC(rocs[i], pos::k_DACAddress_Readback, 8);
+  }
 
   sendTTCCalSync();
   usleep(1000);
