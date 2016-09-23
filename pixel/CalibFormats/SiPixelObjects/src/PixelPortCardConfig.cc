@@ -501,7 +501,7 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
 	assert( settingName.find("AOH") != string::npos && settingName.find("Gain") != string::npos // contains both "AOH" and "Gain"
         && settingName.find("123") == string::npos && settingName.find("456") == string::npos ); // does not contain "123" or "456"
 	
-	unsigned int i2c_address;
+	unsigned int i2c_address = 0;
 	
 	// Get the i2c address of this AOH, and the channel on the AOH.
 	string::size_type GainPosition = settingName.find("Gain");
@@ -516,8 +516,15 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
 	char digit[2]={0,0};
 	digit[0]=settingName[GainPosition+4];
 	unsigned int channelOnAOH = atoi( digit );
-	assert( (type_=="fpix" && whichAOH==0)||(type_=="bpix" && 1 <= whichAOH&&whichAOH <= 4) );
-	assert( 1 <= channelOnAOH && channelOnAOH <= 6 );
+	assert( (type_=="fpix" && whichAOH==0)||(type_=="bpix" && 1 <= whichAOH&&whichAOH <= 4) ||(type_=="ph1bpix" && 1 <= whichAOH && whichAOH <= 7));
+	if (type_ == "fpix" || type_ == "bpix")
+          assert( 1 <= channelOnAOH && channelOnAOH <= 6 );
+        else if (type_ == "pilt" )
+          assert( 1 <= channelOnAOH && channelOnAOH <= 7 );
+        else if (type_ == "ph1bpix")
+          assert( 1 <= channelOnAOH && channelOnAOH <= 4 );        
+        else
+          assert(0);
 	
 	if      ( whichAOH == 0 && channelOnAOH <= 3 ) i2c_address = k_fpix_AOH_Gain123_address;
 	else if ( whichAOH == 0 && channelOnAOH >= 4 ) i2c_address = k_fpix_AOH_Gain456_address;
@@ -1477,6 +1484,43 @@ unsigned int PixelPortCardConfig::AOHBiasAddressFromAOHNumber(unsigned int AOHNu
 				<< "."
 				<< std::endl; 
 				assert(0);}
+	}	
+	else if ( type_ == "ph1bpix" )
+	{
+		if      (AOHNumber ==  1) return PortCardSettingNames::k_ph1bpix_POH1_Bias1_address;
+		else if (AOHNumber ==  2) return PortCardSettingNames::k_ph1bpix_POH1_Bias2_address;
+		else if (AOHNumber ==  3) return PortCardSettingNames::k_ph1bpix_POH1_Bias3_address;
+		else if (AOHNumber ==  4) return PortCardSettingNames::k_ph1bpix_POH1_Bias4_address;
+		else if (AOHNumber ==  5) return PortCardSettingNames::k_ph1bpix_POH2_Bias1_address;
+		else if (AOHNumber ==  6) return PortCardSettingNames::k_ph1bpix_POH2_Bias2_address;
+		else if (AOHNumber ==  7) return PortCardSettingNames::k_ph1bpix_POH2_Bias3_address;
+		else if (AOHNumber ==  8) return PortCardSettingNames::k_ph1bpix_POH2_Bias4_address;
+		else if (AOHNumber ==  9) return PortCardSettingNames::k_ph1bpix_POH3_Bias1_address;
+		else if (AOHNumber == 10) return PortCardSettingNames::k_ph1bpix_POH3_Bias2_address;
+		else if (AOHNumber == 11) return PortCardSettingNames::k_ph1bpix_POH3_Bias3_address;
+		else if (AOHNumber == 12) return PortCardSettingNames::k_ph1bpix_POH3_Bias4_address;
+		else if (AOHNumber == 13) return PortCardSettingNames::k_ph1bpix_POH4_Bias1_address;
+		else if (AOHNumber == 14) return PortCardSettingNames::k_ph1bpix_POH4_Bias2_address;
+		else if (AOHNumber == 15) return PortCardSettingNames::k_ph1bpix_POH4_Bias3_address;
+		else if (AOHNumber == 16) return PortCardSettingNames::k_ph1bpix_POH4_Bias4_address;
+		else if (AOHNumber == 17) return PortCardSettingNames::k_ph1bpix_POH5_Bias1_address;
+		else if (AOHNumber == 18) return PortCardSettingNames::k_ph1bpix_POH5_Bias2_address;
+		else if (AOHNumber == 19) return PortCardSettingNames::k_ph1bpix_POH5_Bias3_address;
+		else if (AOHNumber == 20) return PortCardSettingNames::k_ph1bpix_POH5_Bias4_address;
+		else if (AOHNumber == 21) return PortCardSettingNames::k_ph1bpix_POH6_Bias1_address;
+		else if (AOHNumber == 22) return PortCardSettingNames::k_ph1bpix_POH6_Bias2_address;
+		else if (AOHNumber == 23) return PortCardSettingNames::k_ph1bpix_POH6_Bias3_address;
+		else if (AOHNumber == 24) return PortCardSettingNames::k_ph1bpix_POH6_Bias4_address;
+		else if (AOHNumber == 25) return PortCardSettingNames::k_ph1bpix_POH7_Bias1_address;
+		else if (AOHNumber == 26) return PortCardSettingNames::k_ph1bpix_POH7_Bias2_address;
+		else if (AOHNumber == 27) return PortCardSettingNames::k_ph1bpix_POH7_Bias3_address;
+		else if (AOHNumber == 28) return PortCardSettingNames::k_ph1bpix_POH7_Bias4_address;
+		else {std::cout << __LINE__ << "]\t" << mthn 
+		                << "ERROR: For ph1bpix, POH number must be in the range 1-28, but the given POH number was "
+				<< AOHNumber
+				<< "."
+				<< std::endl; 
+				assert(0);}
 	}
 	else assert(0);
 }
@@ -1527,6 +1571,29 @@ std::string PixelPortCardConfig::AOHGainStringFromAOHNumber(unsigned int AOHNumb
 		else if (AOHNumber ==24) return "AOH4_Gain6";
 		else {std::cout << __LINE__ << "]\t" << mthn 
 		                << "ERROR: For bpix, AOH number must be in the range 1-24, but the given AOH number was "
+				<< AOHNumber
+				<< "."
+				<< std::endl; 
+				assert(0);}
+	}	
+	else if ( type_ == "ph1bpix" )
+	{
+		if      (AOHNumber == 1) return "POH1_Gain12";
+		else if (AOHNumber == 2) return "POH1_Gain34";
+		else if (AOHNumber == 3) return "POH2_Gain12";
+		else if (AOHNumber == 4) return "POH2_Gain34";
+		else if (AOHNumber == 5) return "POH3_Gain12";
+		else if (AOHNumber == 6) return "POH3_Gain34";
+		else if (AOHNumber == 7) return "POH4_Gain12";
+		else if (AOHNumber == 8) return "POH4_Gain34";
+		else if (AOHNumber == 9) return "POH5_Gain12";
+		else if (AOHNumber ==10) return "POH5_Gain34";
+		else if (AOHNumber ==11) return "POH6_Gain12";
+		else if (AOHNumber ==12) return "POH6_Gain34";
+		else if (AOHNumber ==13) return "POH7_Gain12";
+		else if (AOHNumber ==14) return "POH7_Gain34";
+		else {std::cout << __LINE__ << "]\t" << mthn 
+		                << "ERROR: For ph1bpix, POH number must be in the range 1-14, but the given POH number was "
 				<< AOHNumber
 				<< "."
 				<< std::endl; 
