@@ -24,6 +24,7 @@ Iana             21 ;
 ROCDelay         22 ;
 ReadbackCalibration 23 ;
 Vdig 24 ;
+POHBias 25 ;
 VersionAliases
 detconfig  0 Default ;
 nametranslation  1 Default ;
