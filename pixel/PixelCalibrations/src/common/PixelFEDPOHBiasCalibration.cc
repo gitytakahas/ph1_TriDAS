@@ -1,9 +1,10 @@
 #include "CalibFormats/SiPixelObjects/interface/PixelCalibConfiguration.h"
 #include "CalibFormats/SiPixelObjects/interface/PixelDACNames.h"
 #include "CalibFormats/SiPixelObjects/interface/PixelPortCardSettingNames.h"
+#include "CalibFormats/SiPixelObjects/interface/PixelPortcardMap.h"
 #include "PixelCalibrations/include/PixelFEDPOHBiasCalibration.h"
-#include "PixelCalibrations/include/PixelPOHBiasCalibrationParameters.h"
 #include "PixelCalibrations/include/PixelPOHBiasCalibration.h"
+#include "PixelCalibrations/include/PixelCalibrationBase.h"
 #include "PixelConfigDBInterface/include/PixelConfigInterface.h"
 #include "PixelUtilities/PixelFEDDataTools/include/PixelFEDDataTypes.h"
 #include "PixelUtilities/PixelFEDDataTools/include/ErrorFIFODecoder.h"
@@ -14,6 +15,8 @@
 #include "PixelUtilities/PixelRootUtilities/include/PixelRootDirectoryMaker.h"
 #include "PixelUtilities/PixelFEDDataTools/include/DigFIFO1Decoder.h"
 
+
+
 #include "TFile.h"
 #include "TH1F.h"
 #include "TH2F.h"
@@ -22,7 +25,6 @@
 #include <algorithm>
 
 using namespace pos;
-using namespace PixelPOHBiasCalibrationParameters;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 PixelFEDPOHBiasCalibration::PixelFEDPOHBiasCalibration(const PixelFEDSupervisorConfiguration & tempConfiguration, SOAPCommander* mySOAPCmdr)
@@ -105,85 +107,8 @@ void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
 
   std::cout << "Enter retrieve data @ event = " << event_ << std::endl;
 
-///  PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
-///  assert(tempCalibObject!=0);
-///  
-///  unsigned int POHBiasMin      = k_ScanMin_default;
-///  if ( tempCalibObject->parameterValue("ScanMin") != "" ) POHBiasMin = atoi(tempCalibObject->parameterValue("ScanMin").c_str());
-///  unsigned int POHBiasMax      = k_ScanMax_default;
-///  if ( tempCalibObject->parameterValue("ScanMax") != "" ) POHBiasMax = atoi(tempCalibObject->parameterValue("ScanMax").c_str());
-///  unsigned int POHBiasStepSize = k_ScanStepSize_default;
-///  if ( tempCalibObject->parameterValue("ScanStepSize") != "" ) POHBiasStepSize = atoi(tempCalibObject->parameterValue("ScanStepSize").c_str());
-///  
-///  //  const std::set<unsigned int> fedcrates=tempCalibObject->getFEDCrates(theNameTranslation_, theFEDConfiguration_);
-///  //  const std::set<unsigned int> TKFECcrates=tempCalibObject->getTKFECCrates(thePortcardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
-///
-///  std::cout << "[DEBUG] kPOHBias = " << k_POHBias << std::endl;
-///
-///  for (unsigned int POHBias = POHBiasMin; POHBias <= POHBiasMax; POHBias += POHBiasStepSize){	
-///         
-///    std::cout << "[DEBUG] POHBias = " << POHBias << std::endl;
-///    
-///    // Set POH bias
-///    Attribute_Vector parametersToTKFEC(1);
-///    parametersToTKFEC[0].name_="POHBias"; parametersToTKFEC[0].value_=itoa(POHBias);
-///    //    commandToAllTKFECCrates("SetPOHBiasEnMass", parametersToTKFEC);
-///    
-///    
-///    //    Attribute_Vector parametersToFED(1);
-///    //    parametersToFED[k_POHBias].value_=itoa(POHBias);
-///    
-///    //    triggeringLoop(parametersToFED, fedcrates);
-///    
-///  } // end of loop over POHBias values
-
-
-
-
-
-
-
-
-
-//void PixelAOHBiasCalibration::triggeringLoop(Attribute_Vector parametersToFED, std::set<unsigned int> fedcrates){
-//
-//  PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
-//  assert(tempCalibObject!=0);
-//
-//  unsigned int Ntriggers = tempCalibObject->nTriggersPerPattern();
-//
-//  for (unsigned int i_event=0;i_event<Ntriggers;++i_event){
-//    // Send trigger to all TBMs and ROCs.
-//    sendTTCCalSync();
-//    
-//    // Read out data from each FED.
-//    for (std::set<unsigned int>::iterator ifedcrate=fedcrates.begin();ifedcrate!=fedcrates.end();++ifedcrate){
-//      if (Send(PixelFEDSupervisors_[(*ifedcrate)], "FEDCalibrations", parametersToFED)!="POHBiasDone"){
-//	diagService_->reportError("AOHBias in FED crate # " + stringF((*ifedcrate)) + " could not be done!",DIAGWARN);
-//      }
-//    }
-//  }
-//}
-
-
-///////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
-  assert(tempCalibObject != 0);
+  PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
+  assert(tempCalibObject!=0);
 
   const std::vector<std::pair<unsigned, std::vector<unsigned> > >& fedsAndChannels = tempCalibObject->fedCardsAndChannels(crate_, theNameTranslation_, theFEDConfiguration_, theDetectorConfiguration_);
 

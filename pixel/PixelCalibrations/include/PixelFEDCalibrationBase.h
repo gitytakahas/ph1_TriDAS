@@ -15,6 +15,7 @@
 
 #include "PixelSupervisorConfiguration/include/PixelFEDSupervisorConfiguration.h"
 #include "PixelCalibrations/include/DiagWrapper.h"
+#include "PixelCalibrations/include/PixelCalibrationBase.h"
 
 class PixelFEDCalibrationBase : public PixelFEDSupervisorConfiguration, 
 	    public SOAPCommander {
