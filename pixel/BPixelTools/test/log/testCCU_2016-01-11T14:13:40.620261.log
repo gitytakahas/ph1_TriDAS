@@ -1,0 +1,31 @@
+CCUs found
+CCU redundancy test: FAILED
+TestPIAResetDOH(): ERROR (programming delay25 failed)
+TestPIAResetDOH(): ERROR (programming pll failed)
+TestPIAResetDOH(): CCU reset (DOH) OK
+verification of delay25 SDA setting failed: wrote 1  , got 0
+Group +1PL12:	DELAY25: 	ERROR in programming
+verification of delay25 SDA setting failed: wrote 1  , got 0
+Group +1PL34:	DELAY25: 	ERROR in programming
+verification of PLL clock phase setting failed: wrote 1   got 0
+Group +1PL12:	PLL: 		ERROR in programming
+verification of PLL clock phase setting failed: wrote 1   got 0
+Group +1PL34:	PLL: 		ERROR in programming
+verification of bias setting failed: wrote 30, got 0
+CCU 0x7b (channel 0x10) DOH:	ERROR in programming
+verification of bias setting failed: wrote 30, got 0
+CCU 0x7c (channel 0x10) DOH:	ERROR in programming
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 

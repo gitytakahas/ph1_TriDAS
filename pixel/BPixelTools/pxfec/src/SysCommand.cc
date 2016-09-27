@@ -164,7 +164,7 @@ bool SysCommand::ParseNumberOrAlias(const char* word, const int &l, int *id){
      ( index("12345678",word[1])!=NULL ) &&
      ((word[2]=='P') || (word[2]=='N')) &&
      (word[3]=='L') &&
-     ( ((l==5) && (word[4]=='3')) || ((l==6) && (word[4]=='1') && (word[5]=='2')))
+     ( ((l==6) && (word[4]=='3') && (word[5]=='4')) || ((l==6) && (word[4]=='1') && (word[5]=='2')))
      ){
     *id=getCNidx(word);
     return true;

@@ -1,0 +1,4 @@
+CCUs found
+CCU 0x7c (channel 0x10) DOH:	programming OK
+CCU 0x7b (channel 0x10) DOH:	programming OK
+CCU redundancy test: FAILED

@@ -51,7 +51,8 @@ void Roc::Execute(SysCommand *command){
 
     if(command->narg==0) return;
     int *value1, *value2;
-    static int trimBits=15;
+    static int trimBits=0; //Jen Lea Danek
+    //static int trimBits=15;
   
     if(command->Keyword("mask")){
       cout << "masking roc " << iroc << "  on hub " << hubaddress << endl;

@@ -1,0 +1,13 @@
+CCUs found
+CCU 0x7c (channel 0x10) DOH:	programming OK
+CCU 0x7b (channel 0x10) DOH:	programming OK
+CCU redundancy test: OK
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+Group +2PL12:	 poh6: 		programming OK
+Group +2PL12:	 poh7: 		programming OK
+Group +2PL34:	 poh5: 		programming OK
+Group +2PL12:	DELAY25: 	programming OK
+Group +2PL34:	DELAY25: 	programming OK
+Group +2PL12:	PLL: 		programming OK
+Group +2PL34:	PLL: 		programming OK

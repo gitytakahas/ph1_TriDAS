@@ -1,0 +1,32 @@
+CCUs found
+CCU 0x7c (channel 0x10) DOH:	programming OK
+CCU 0x7b (channel 0x10) DOH:	programming OK
+CCU redundancy test: OK
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+verification of bias setting failed: wrote 20, got 0 
+Group +2PL12:	 poh6: 		ERROR in programming
+verification of bias setting failed: wrote 20, got 0 
+Group +2PL12:	 poh7: 		ERROR in programming
+verification of bias setting failed: wrote 20, got 0 
+Group +2PL34:	 poh5: 		ERROR in programming
+verification of delay25 SDA setting failed: wrote 1  , got 0
+Group +2PL12:	DELAY25: 	ERROR in programming
+verification of delay25 SDA setting failed: wrote 1  , got 0
+Group +2PL34:	DELAY25: 	ERROR in programming
+verification of PLL clock phase setting failed: wrote 1   got 0
+Group +2PL12:	PLL: 		ERROR in programming
+verification of PLL clock phase setting failed: wrote 1   got 0
+Group +2PL34:	PLL: 		ERROR in programming

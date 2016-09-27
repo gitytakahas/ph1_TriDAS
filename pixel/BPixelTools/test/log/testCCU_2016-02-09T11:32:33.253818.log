@@ -1,0 +1,11 @@
+CCUs found
+TestPIAResetDOH(): CCU reset (DOH) OK
+Group +6PL12:	DELAY25: 	programming OK
+Group +6PL34:	DELAY25: 	programming OK
+Group +6PL12:	PLL: 		programming OK
+Group +6PL34:	PLL: 		programming OK
+CCU 0x7b (channel 0x10) DOH:	programming OK
+CCU 0x7c (channel 0x10) DOH:	programming OK
+Group +6PL12:	 poh2: 		programming OK
+Group +6PL12:	 poh5: 		programming OK
+Group +6PL12:	 poh6: 		programming OK

@@ -1,0 +1,168 @@
+************* TRIGGER NUMBER  1 ****************
+TBMA
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  31  readback  0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+TBMB
+
+ROC#1 start  15  readback  1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 
+
+ROC#2 start  15  readback  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+
+ROC#3 start  15  readback  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+
+ROC#4 start  15  readback  1 0 1 0 0 1 1 1 1 1 1 0 0 0 0 0 
+
+************* TRIGGER NUMBER  2 ****************
+TBMA
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+TBMB
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 
+
+************* TRIGGER NUMBER  3 ****************
+TBMA
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+TBMB
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 
+
+************* TRIGGER NUMBER  4 ****************
+TBMA
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+TBMB
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 
+
+************* TRIGGER NUMBER  5 ****************
+TBMA
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+TBMB
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 
+
+************* TRIGGER NUMBER  6 ****************
+TBMA
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+TBMB
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 
+
+************* TRIGGER NUMBER  7 ****************
+TBMA
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+TBMB
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 
+
+************* TRIGGER NUMBER  8 ****************
+TBMA
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+TBMB
+
+ROC#1 start  15  readback  0 1 0 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#2 start  15  readback  0 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#3 start  15  readback  0 1 1 0 0 0 0 0 1 1 0 0 1 0 0 0 
+
+ROC#4 start  15  readback  0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 
+

@@ -1,0 +1,44 @@
+#!/bin/bash
+
+cd ~/TriDAS/pixel/BPixelTools/
+
+tab1=" --tab-with-profile=Default"
+options=(--tab --title=Terminal1)
+
+
+cmds[1]="cd ~/TriDAS/pixel/BPixelTools/ccu; source setup.bsh; ./run.bsh"
+titles[1]="CCU"
+
+cmds[2]="cd ~/TriDAS/pixel/BPixelTools/pxfec; source setup.bsh; ./run.bsh"
+titles[2]="pxfec"
+
+cmds[3]="cd ~/TriDAS/pixel/BPixelTools/fed; source setup.bsh; ./run.bsh"
+titles[3]="fed"
+
+cmds[4]="cd ~/TriDAS/pixel/BPixelTools/digitalfed; source setup.bsh; ./run.bsh"
+titles[4]="digitalfed"
+
+cmds[5]="cd ~/TriDAS/pixel/BPixelTools/tools; source setup.bsh; cd ~/TriDAS/pixel/BPixelTools"
+titles[5]="test"
+
+
+for i in 1 2 3 4 5; do
+    options+=($tab1 --title="${titles[i]}"  -e "bash -ic \"${cmds[i]}; bash\"" )     
+done
+
+gnome-terminal "${options[@]}"
+
+tab2=" --tab-with-profile=Default"
+options=(--tab --title=Terminal2)
+
+cmds[6]="telnet 172.19.4.176 1527"
+titles[6]="CAEN"
+
+cmds[7]="cd ~/run/TTC/;  source run_ttcci.csh"
+titles[7]="TTC"
+
+for i in 6 7 ; do
+    options+=($tab2 --title="${titles[i]}"  -e "bash -ic \"${cmds[i]} ; bash\"" )     
+done
+gnome-terminal "${options[@]}"
+exit 0

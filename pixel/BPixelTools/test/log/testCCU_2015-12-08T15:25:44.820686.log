@@ -1,0 +1,4 @@
+CCUs found
+TestPIAResetDOH(): CCU reset (DOH) OK
+TestDOHFiber  +1PL12 +1PL12
+TestDOHFiber  +1PL34 +1PL12

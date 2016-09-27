@@ -1,0 +1,42 @@
+#####################################################################
+USE GOOGLE!!!!
+problem with root type: root cern <problem>
+usually someone else had the same problem and solved it
+same for c++ and python
+#####################################################################
+to navigate in the terminal
+enter a dir: cd <dir>
+going up a folder: cd ..
+text editor: emacs <filename.py, filename.txt, filename.cc> &
+#####################################################################
+opening root: root
+open a root TBrowser: 
+     root 
+     new TBrowser()
+#####################################################################
+to merge different poh bias scans with different gain setting:
+USE maker1.py INSTEAD OF  make-plots.py
+USE maker1.py INSTEAD OF  make-plots.py
+USE maker1.py INSTEAD OF  make-plots.py
+USE maker1.py INSTEAD OF  make-plots.py
+ Additional macro to plot the poh bias scan results in the folder “macros” under the test dir
+
+    be sure the input files are called “poh_bias_scan_gain<gain>.root”
+    if you want to compare the bias/rms/slope of different channels at fixed gain <gain>
+
+ python make-plots.py --gain <gain> --plot bias
+ python make-plots.py --gain <gain> --plot rms
+ python make-plots.py --gain <gain> --plot slope
+
+    if you want to compare the bias/rms/slope of one channel <channel> for different gain values
+
+ python make-plots.py --channel <channel> --plot bias
+ python make-plots.py --channel <channel> --plot rms
+ python make-plots.py --channel <channel> --plot slope
+#####################################################################
+1)First try to open root, then open TBrowser and look at the file, try to fit the slope with a linear function as yesterday
+2)try to run the program on your laptop
+3) if it works try to modify it so it merge  poh bias scans with the same gain but in different position 
+the files are:
+2016poh_2016-01-13-008_567.root 
+2016poh_2016-01-13-019_89_10.root

@@ -1,0 +1,20 @@
+CCUs found
+TestPIAResetDOH(): CCU reset (DOH) OK
+Group +6PL12:	DELAY25: 	programming OK
+Group +6PL34:	DELAY25: 	programming OK
+Group +6PL12:	PLL: 		programming OK
+Group +6PL34:	PLL: 		programming OK
+CCU 0x7b (channel 0x10) DOH:	programming OK
+CCU 0x7c (channel 0x10) DOH:	programming OK
+Group +6PL12:	 poh1: 		programming OK
+Group +6PL12:	 poh2: 		programming OK
+Group +6PL34:	 poh3: 		programming OK
+Group +6PL12:	 poh4: 		programming OK
+verification of bias setting failed: wrote 20, got 0 
+Group +6PL34:	 poh5: 		ERROR in programming
+verification of bias setting failed: wrote 20, got 0 
+Group +6PL12:	 poh6: 		ERROR in programming
+verification of bias setting failed: wrote 20, got 0 
+Group +6PL12:	 poh7: 		ERROR in programming
+Group +6PL34:	 poh1: 		programming OK
+Group +6PL34:	 poh7: 		programming OK

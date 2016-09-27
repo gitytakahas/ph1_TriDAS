@@ -1,0 +1,6 @@
+CCUs found
+CCU 0x7b (channel 0x10) DOH:	programming OK
+CCU 0x7c (channel 0x10) DOH:	programming OK
+CCU redundancy test: OK
+verification of delay25 SDA setting failed: wrote 1  , got 0
+Group +2P:	DELAY25: 	ERROR in programming

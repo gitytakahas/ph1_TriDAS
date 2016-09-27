@@ -1,0 +1,5 @@
+CCUs found
+verification of bias setting failed: wrote 30, got 0
+CCU 0x7d (channel 0x10) DOH:	ERROR in programming
+verification of bias setting failed: wrote 30, got 0
+CCU 0x7e (channel 0x10) DOH:	ERROR in programming
