@@ -3299,10 +3299,10 @@ void FecRingDevice::fecScanRingBroadcast ( )
   readRegistersError_ = false ;
 #endif
 
-//   // Delete the CCU previously stored in the ring
-//   for (ccuMapAccessedType::iterator p=ccuMapAccess_.begin();p!=ccuMapAccess_.end();p++)  
-//     delete p->second ; // Remove all the accesses for the CCU device
-//   ccuMapAccess_.clear() ;
+  // Delete the CCU previously stored in the ring
+  for (ccuMapAccessedType::iterator p=ccuMapAccess_.begin();p!=ccuMapAccess_.end();p++)  
+    delete p->second ; // Remove all the accesses for the CCU device
+  ccuMapAccess_.clear() ;
 
   // Frame to be sent
   tscType8 frame[DD_USER_MAX_MSG_LENGTH*4] = {BROADCAST_ADDRESS,FRAMEFECNUMBER,0x03,0x00,0x01,CMD_CCUREADCRA} ;
@@ -3359,7 +3359,7 @@ void FecRingDevice::fecScanRingBroadcast ( )
       temporary[3] = (value & 0x000000FF)       ; // channel
 
       // Read next
-      value = getFifoReceive ( ) ;
+      value = getFifoReceive ( ) ;   
       temporary[4] = (value & 0xFF000000) >> 24 ; // status
       temporary[5] = (value & 0x00FF0000) >> 16 ; // transaction number
       temporary[6] = (value & 0x0000FF00) >> 8  ; // data
@@ -3405,8 +3405,10 @@ void FecRingDevice::fecScanRingBroadcast ( )
 					     buildFecRingKey(getFecSlot(),getRingSlot()) ) ;
   }
 
+ 
   // Clear errors
   setFecRingCR1 (FEC_CR1_CLEARIRQ | FEC_CR1_CLEARERRORS) ; // Clear errors    
+  
 
   // Check that we have no the same address for the CCUs
   for (int i = 0 ; i < nbccu-1 ; i ++) 
@@ -3421,6 +3423,8 @@ void FecRingDevice::fecScanRingBroadcast ( )
 				   CRITICALERRORCODE,
 				   buildFecRingKey(getFecSlot(),getRingSlot()) | setCcuKey(ccuAddresses[i])) ;
       }
+
+ 
 
   // delete the CCU that was bypassed
   for (int i = 0 ; i < nbccu ; i ++) {
@@ -3459,9 +3463,12 @@ void FecRingDevice::fecScanRingBroadcast ( )
       CCUDescription *ccu = new CCUDescription (buildCompleteKey(getFecSlot(),getRingSlot(),ccuAddresses[i],0,0),isCcu25) ;
       ccuMapAccess_[ccuAddresses[i]] = ccu ;
       ccuMapOrder_[i] = ccu ;
+      
     }
+  
   }
   
+
   nbCcuOnTheRing_ = nbccu ;
 
 #ifdef DEBUGGETREGISTERS
@@ -4723,8 +4730,9 @@ std::list<keyType> *FecRingDevice::getCcuList ( bool noBroadcast, bool scan)
   if (scan) {
     if (noBroadcast)       
       fecScanRingNoBroadcast ( ) ;
-    else
+    else {
       fecScanRingBroadcast ( ) ;
+    }
   }
   //#endif
 

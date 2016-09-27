@@ -40,6 +40,14 @@ const unsigned int aoh3BdeviceAddress = 0x1C;
 const unsigned int aoh4AdeviceAddress = 0x20;
 const unsigned int aoh4BdeviceAddress = 0x24;
 
+const unsigned int poh1deviceAddress = 0x0;
+const unsigned int poh2deviceAddress = 0x08;
+const unsigned int poh3deviceAddress = 0x10;
+const unsigned int poh4deviceAddress = 0x18;
+const unsigned int poh5deviceAddress = 0x20;
+const unsigned int poh6deviceAddress = 0x28;
+const unsigned int poh7deviceAddress = 0x30;
+
 const unsigned int moduleAddress = 0x08;
 
 const unsigned int PixelDelay25FrequencyMode = 40;

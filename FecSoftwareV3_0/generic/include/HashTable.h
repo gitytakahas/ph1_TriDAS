@@ -35,6 +35,7 @@
 #include "philipsAccess.h"     //class philipsAccess ;
 #include "dcuAccess.h"         //class dcuAccess ;
 #include "PiaResetAccess.h"    //class PiaResetAccess ;
+#include "delay25Access.h"     //class delay25Access ;
 
 //#include "deviceDescription.h"
 //#include "piaResetDescription.h"
@@ -44,7 +45,7 @@
 #include "deltaAccess.h" //class deltaAccess ;
 #include "paceAccess.h"  //class paceAccess  ;
 #include "kchipAccess.h" //class kchipAccess ;
-#include "gohAccess.h"   //class gohAccess ; 
+#include "gohAccess.h"   //class gohAccess ;
 #endif // PRESHOWER
 
 #ifdef TOTEM
@@ -55,6 +56,9 @@
 
 // All the map needed for the FecSupervisor program and threads program
 // Create new type in order to store the access of each device type
+
+// Hash table for the Delay25
+typedef Sgi::hash_map<keyType, delay25Access *> delay25AccessedType ;
 
 // Hash table for the APV
 typedef Sgi::hash_map<keyType, apvAccess *> apvAccessedType ;
