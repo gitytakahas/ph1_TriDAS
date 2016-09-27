@@ -1,3 +1,0 @@
-#
-source ../setup.bsh
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${XDAQ_ROOT}/lib:${ENV_CMS_TK_FEC_ROOT}/lib:${BPIXELTOOLS}/tools/lib
