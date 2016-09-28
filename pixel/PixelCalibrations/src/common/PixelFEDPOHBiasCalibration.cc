@@ -126,14 +126,19 @@ void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
     std::cout << "[DEBUG] vmeBaseAddress = " << vmeBaseAddress << std::endl;
 
     for( unsigned int ch = 0; ch < fedsAndChannels[ifed].second.size(); ch++ ){
+      std::cout << "[DEBUG ] channel = " << fedsAndChannels[ifed].second[ch] << std::endl;
       statusFifo1[ch] = iFED->drainFifo1(fedsAndChannels[ifed].second[ch], bufferFifo1[ch], 1024);
-      std::cout << "[DEBUG] ch = " << ch << " statusFifo1 = "  << statusFifo1 << std::endl;
+      std::cout << "[DEBUG] statusFifo1 = "  << statusFifo1[ch] << std::endl;
     }
      
     for( unsigned int ch = 0; ch < fedsAndChannels[ifed].second.size(); ch++ ){
+
+      std::cout << "[DEBUG] ch_before " << ch << std::endl;
       
       int channel = (fedsAndChannels[ifed].second)[ch];
       
+      std::cout << "[DEBUG] ch_after " << channel << " statusFifo = " << statusFifo1[ch] << std::endl;
+
       if (statusFifo1[ch] > 0) {
 	
         DigFIFO1Decoder theFIFO1Decoder(bufferFifo1[ch],statusFifo1[ch]);

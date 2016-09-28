@@ -3,9 +3,7 @@ Parameters:
 DumpFIFOs yes
 ReadFifo1 yes
 Rows:
-10
 Cols:
-10
 VcalHigh
 Set: Vcal 200
 Repeat: 10
