@@ -32,6 +32,8 @@ bool PixelPOHBiasCalibration::execute() {
   const unsigned state = event_/(tempCalibObject->nTriggersPerPattern());
   reportProgress(0.05);
 
+
+
   // Configure all TBMs and ROCs according to the PixelCalibConfiguration settings, but only when it's time for a new configuration.
   if (firstOfPattern) {
     commandToAllFECCrates("CalibRunning");
@@ -41,7 +43,7 @@ bool PixelPOHBiasCalibration::execute() {
   commandToAllFEDCrates("JMTJunk");
 
   // Send trigger to all TBMs and ROCs.
-  sendTTCCalSync();
+  //  sendTTCCalSync();
 
   // Read out data from each FED.
 
@@ -61,6 +63,15 @@ bool PixelPOHBiasCalibration::execute() {
   if ( tempCalibObject->parameterValue("ScanMax") != "" ) AOHBiasMax = atoi(tempCalibObject->parameterValue("ScanMax").c_str());
   unsigned int AOHBiasStepSize = k_ScanStepSize_default;
   if ( tempCalibObject->parameterValue("ScanStepSize") != "" ) AOHBiasStepSize = atoi(tempCalibObject->parameterValue("ScanStepSize").c_str());
+
+  unsigned int nTriggersPerPOHBias = k_nTriggersPerPOHBias_default;
+  if ( tempCalibObject->parameterValue("nTriggersPerPOHBias") != "" ) nTriggersPerPOHBias = atoi(tempCalibObject->parameterValue("nTriggersPerPOHBias").c_str());
+
+  std::cout << "[DEBUG] AOHBiasMin = " << AOHBiasMin << std::endl;
+  std::cout << "[DEBUG] AOHBiasMax = " << AOHBiasMax << std::endl;
+  std::cout << "[DEBUG] AOHBiasStepSize = " << AOHBiasStepSize << std::endl;
+  std::cout << "[DEBUG] nTriggersPerPOHBias = " << nTriggersPerPOHBias << std::endl;
+
   
   const std::set<unsigned int> fedcrates=tempCalibObject->getFEDCrates(theNameTranslation_, theFEDConfiguration_);
   const std::set<unsigned int> TKFECcrates=tempCalibObject->getTKFECCrates(thePortcardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
@@ -74,10 +85,14 @@ bool PixelPOHBiasCalibration::execute() {
 
     std::cout << "[DEBUG] POH bias = " << AOHBias << std::endl;
       
-    unsigned int Ntriggers=tempCalibObject->nTriggersPerPattern();
-    std::cout << "[DEBUG] nTriggersPerPattern = " << Ntriggers << std::endl;
+    //    unsigned int Ntriggers=tempCalibObject->nTriggersPerPattern();
+    //    std::cout << "[DEBUG] nTriggersPerPattern = " << Ntriggers << std::endl;
 
-    for (unsigned int i_event=0;i_event<Ntriggers;++i_event){
+    for (unsigned int i_event=0; i_event < nTriggersPerPOHBias; ++i_event){
+
+      //      Send trigger to all TBMs and ROCs.
+      sendTTCCalSync();
+
       Attribute_Vector parametersToFED(2);
       parametersToFED[0].name_ = "WhatToDo"; 
       parametersToFED[1].name_ = "StateNum"; 

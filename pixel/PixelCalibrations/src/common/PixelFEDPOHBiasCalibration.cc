@@ -51,6 +51,7 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::beginCalibration(xoap::Messag
   tempCalibObject->writeASCII(outputDir());
   DumpFIFOs = tempCalibObject->parameterValue("DumpFIFOs") == "yes";
 
+
   std::cout << "[DEBUG] OutputDir = " << outputDir() << ", dumpFIFOs = " << DumpFIFOs << std::endl;
 
   setFIFO1Mode();//jen
@@ -140,10 +141,15 @@ void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
       std::cout << "[DEBUG] ch_after " << channel << " statusFifo = " << statusFifo1[ch] << std::endl;
 
       if (statusFifo1[ch] > 0) {
-	
+
+	std::cout << "[DEBUG] inside Fifo1 = " << channel <<std::endl;
         DigFIFO1Decoder theFIFO1Decoder(bufferFifo1[ch],statusFifo1[ch]);
+	std::cout << "[DEBUG] after Fifo1 definition globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
+
         if( (int)theFIFO1Decoder.globalChannel() != channel ) continue;
 	
+	std::cout << "[DEBUG] globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
+
         if( true ){
 	  std::cout << "-----------------------------------" << std::endl;
 	  std::cout << "Contents of FIFO 1 for channel " << channel << " (status = " << statusFifo1[ch] << ")" << std::endl;
