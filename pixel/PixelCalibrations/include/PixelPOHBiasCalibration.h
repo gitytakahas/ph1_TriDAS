@@ -18,12 +18,10 @@ class PixelPOHBiasCalibration : public PixelCalibrationBase {
   virtual bool execute();
   void endCalibration();
   virtual std::vector<std::string> calibrated();
-  //  void POHBiasLoop();
-  //  void triggeringLoop(Attribute_Vector parametersToFED, std::set<unsigned int> fedcrates, unsigned int Ntriggers);
-  bool ToggleChannels;
-  bool CycleScopeChannels;
-  bool DelayBeforeFirstTrigger;
-  bool DelayEveryTrigger;
+  //  bool ToggleChannels;
+//  bool CycleScopeChannels;
+  //  bool DelayBeforeFirstTrigger;
+  //  bool DelayEveryTrigger;
   //  Attribute_Vector SetupParametersToFED() const;
 };
 

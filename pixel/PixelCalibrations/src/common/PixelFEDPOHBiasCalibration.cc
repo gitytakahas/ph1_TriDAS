@@ -78,12 +78,15 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::execute(xoap::MessageReferenc
   Attribute_Vector parameters(2);
   parameters[0].name_ = "WhatToDo";
   parameters[1].name_ = "StateNum";
+  parameters[2].name_ = "AOHBias";
   Receive(msg, parameters);
 
   const unsigned state = atoi(parameters[1].value_.c_str());
+  const unsigned AOHBias = atoi(parameters[2].value_.c_str());
 
   if (parameters[0].value_ == "RetrieveData")
-    RetrieveData(state);
+    RetrieveData(state, AOHBias);
+  //RetrieveData(state);
   else if (parameters[0].value_ == "Analyze")
     Analyze();
   else {
@@ -97,16 +100,17 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::execute(xoap::MessageReferenc
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 xoap::MessageReference PixelFEDPOHBiasCalibration::endCalibration(xoap::MessageReference msg) {
-
+  
   std::cout << "In PixelFEDPOHBiasCalibration::endCalibration()" << std::endl;
   xoap::MessageReference reply = MakeSOAPMessageReference("EndCalibrationDone");
   return reply;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
+void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state, unsigned AOHBias) {
+  //void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
 
-  std::cout << "Enter retrieve data @ event = " << event_ << std::endl;
+  std::cout << "Enter retrieve data @ event = " << event_ << " " << state << std::endl;
 
   PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
   assert(tempCalibObject!=0);
@@ -134,11 +138,8 @@ void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
      
     for( unsigned int ch = 0; ch < fedsAndChannels[ifed].second.size(); ch++ ){
 
-      std::cout << "[DEBUG] ch_before " << ch << std::endl;
-      
       int channel = (fedsAndChannels[ifed].second)[ch];
-      
-      std::cout << "[DEBUG] ch_after " << channel << " statusFifo = " << statusFifo1[ch] << std::endl;
+      bool found_TBMA = false;
 
       if (statusFifo1[ch] > 0) {
 
@@ -147,6 +148,7 @@ void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
 	std::cout << "[DEBUG] after Fifo1 definition globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
 
         if( (int)theFIFO1Decoder.globalChannel() != channel ) continue;
+        found_TBMA = theFIFO1Decoder.foundTBM();
 	
 	std::cout << "[DEBUG] globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
 
@@ -160,7 +162,10 @@ void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
         }
 	
       }
-      
+
+      std::cout << "[DEBUG] found_TBMA = " << found_TBMA << std::endl;
+      FillEm(state, AOHBias, fednumber, channel, found_TBMA);
+
     }// end loop on channels
       
       
@@ -437,6 +442,18 @@ void PixelFEDPOHBiasCalibration::BookEm(const TString& path) {
   CloseRootf();
   rootf = new TFile(root_fn, "create");
   assert(rootf->IsOpen());
+
+  tree = new TTree("tree", "tree");
+
+  tree->Branch("channel",&b_channel,"channel/I");
+  tree->Branch("fednumber",&b_fednumber,"fednumber/I");
+  tree->Branch("state",&b_state,"state/I");
+  tree->Branch("isTBM",&b_isTBM,"isTBM/I");
+  tree->Branch("AOHBias",&b_AOHBias,"AOHBias/I");
+    
+
+  
+
 //
 //  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
 //  assert(tempCalibObject != 0);
@@ -519,22 +536,19 @@ void PixelFEDPOHBiasCalibration::BookEm(const TString& path) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-void PixelFEDPOHBiasCalibration::FillEm(unsigned state, int fedid, int ch, int which, float c) {
-//  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
-//  assert(tempCalibObject != 0);
-//
-//  if (event_==0) return;
-//
-//  if (dacsToScan.size() == 0 ) ntrigsTBM[fedid][ch][which]->Fill(c,1);
-//  if (dacsToScan.size() == 1){
-//
-//   const std::string& iname = dacsToScan[0];
-//   const double ival(tempCalibObject->scanValue(iname, state)); 
-//   uint32_t tmp = ival; 
-//   int delay1 = (tmp>>2)&0x7;
-//   int delay2 = ((tmp>>2)&0x38)>>3;
-//   scansTBM[fedid][ch][which]->Fill(delay1,delay2,c);
-//
-//  }
+void PixelFEDPOHBiasCalibration::FillEm(unsigned state, unsigned AOHBias, int fedid, int ch, int which) {
+  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
+  assert(tempCalibObject != 0);
+
+  std::cout << "[DEBUG] FilEm = " << state << " " << fedid << " " << ch << " " << which << std::endl;
+  
+  if (event_==0) return;
+
+  b_channel = ch;
+  b_fednumber = fedid;
+  b_state = state;
+  b_isTBM = which;
+  b_AOHBias = AOHBias;
+  tree->Fill();
 
 }

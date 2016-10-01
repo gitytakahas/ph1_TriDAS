@@ -95,10 +95,11 @@ bool PixelPOHBiasCalibration::execute() {
 
       Attribute_Vector parametersToFED(2);
       parametersToFED[0].name_ = "WhatToDo"; 
-      parametersToFED[1].name_ = "StateNum"; 
+      parametersToFED[1].name_ = "StateNum";
+      parametersToFED[2].name_ = "AOHBias"; 
       parametersToFED[0].value_ = "RetrieveData";
       parametersToFED[1].value_ = itoa(state);
-      
+      parametersToFED[2].value_ = itoa(AOHBias);
       commandToAllFEDCrates("FEDCalibrations", parametersToFED);
     }
       

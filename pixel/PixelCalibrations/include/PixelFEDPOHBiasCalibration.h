@@ -16,9 +16,10 @@
 #include <fstream>
 
 class TFile;
+class TTree;
 class TH1F;
-class TH2F;
-class TH3F;
+//class TH2F;
+//class TH3F;
 
 class PixelFEDPOHBiasCalibration: public PixelFEDCalibrationBase {
  public:
@@ -30,37 +31,46 @@ class PixelFEDPOHBiasCalibration: public PixelFEDCalibrationBase {
   virtual xoap::MessageReference endCalibration(xoap::MessageReference msg);
 
  private:
-  void RetrieveData(unsigned int state);
+  void RetrieveData(unsigned int state, unsigned int AOHBias);
+  //void RetrieveData(unsigned int state);
   void Analyze();
   void CloseRootf();
   void BookEm(const TString& path);
-  void FillEm(unsigned state,int fedid, int ch, int which, float c);
+  void FillEm(unsigned state,unsigned AOHBias, int fedid, int ch, int which);
 
   bool DumpFIFOs;
-  bool PrintHits;
-  bool ReadFifo1;
+  //  bool PrintHits;
+  //  bool ReadFifo1;
   std::vector<std::string> dacsToScan;
-  unsigned lastTBMPLL;
+  //  unsigned lastTBMPLL;
   TFile* rootf;
-  bool inject_;
+  TTree* tree;
+  
+  Int_t b_channel;
+  Int_t b_fednumber;
+  Int_t b_state;
+  Int_t b_isTBM;
+  Int_t b_AOHBias;
 
-  std::map<int,std::map<int,std::vector<TH1F*> > > ntrigsTBM;
-  std::map<int,std::map<int,std::vector<TH2F*> > > scansTBM;
-  std::map<std::string,std::vector<TH2F*> > TBMsHistoSum;
+  //  bool inject_;
 
-   struct branch{
-    float pass;
-    char moduleName[38];
-  };
+  //  std::map<int,std::map<int,std::vector<TH1F*> > > ntrigsTBM;
+  //  std::map<int,std::map<int,std::vector<TH2F*> > > scansTBM;
+  //  std::map<std::string,std::vector<TH2F*> > TBMsHistoSum;
 
-  struct branch_sum{
-    int deltaTBMPLLdelayX;
-    int deltaTBMPLLdelayY;
-    int newTBMPLLdelayX;
-    int newTBMPLLdelayY;
-    double efficiency;
-    char moduleName[38];
-  };
+//   struct branch{
+//    float pass;
+//    char moduleName[38];
+//  };
+
+//  struct branch_sum{
+//    int deltaTBMPLLdelayX;
+//    int deltaTBMPLLdelayY;
+//    int newTBMPLLdelayX;
+//    int newTBMPLLdelayY;
+//    double efficiency;
+//    char moduleName[38];
+//  };
 
 };
 
