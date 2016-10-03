@@ -31,46 +31,26 @@ class PixelFEDPOHBiasCalibration: public PixelFEDCalibrationBase {
   virtual xoap::MessageReference endCalibration(xoap::MessageReference msg);
 
  private:
-  void RetrieveData(unsigned int state, unsigned int AOHBias);
+  void RetrieveData(unsigned int AOHBias, unsigned AOHGain);
   //void RetrieveData(unsigned int state);
   void Analyze();
   void CloseRootf();
   void BookEm(const TString& path);
-  void FillEm(unsigned state,unsigned AOHBias, int fedid, int ch, int which);
+  void FillEm(unsigned AOHBias, unsigned AOHGain, int fedid, int ch, int which);
 
   bool DumpFIFOs;
-  //  bool PrintHits;
-  //  bool ReadFifo1;
-  std::vector<std::string> dacsToScan;
-  //  unsigned lastTBMPLL;
+  //  std::vector<std::string> dacsToScan;
+
   TFile* rootf;
   TTree* tree;
   
   Int_t b_channel;
   Int_t b_fednumber;
-  Int_t b_state;
   Int_t b_isTBM;
   Int_t b_AOHBias;
+  Int_t b_AOHGain;
 
-  //  bool inject_;
 
-  //  std::map<int,std::map<int,std::vector<TH1F*> > > ntrigsTBM;
-  //  std::map<int,std::map<int,std::vector<TH2F*> > > scansTBM;
-  //  std::map<std::string,std::vector<TH2F*> > TBMsHistoSum;
-
-//   struct branch{
-//    float pass;
-//    char moduleName[38];
-//  };
-
-//  struct branch_sum{
-//    int deltaTBMPLLdelayX;
-//    int deltaTBMPLLdelayY;
-//    int newTBMPLLdelayX;
-//    int newTBMPLLdelayY;
-//    double efficiency;
-//    char moduleName[38];
-//  };
 
 };
 

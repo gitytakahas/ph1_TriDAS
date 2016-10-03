@@ -1,5 +1,5 @@
 #include "CalibFormats/SiPixelObjects/interface/PixelCalibConfiguration.h"
-#include "CalibFormats/SiPixelObjects/interface/PixelDACNames.h"
+//#include "CalibFormats/SiPixelObjects/interface/PixelDACNames.h"
 #include "CalibFormats/SiPixelObjects/interface/PixelPortCardSettingNames.h"
 #include "CalibFormats/SiPixelObjects/interface/PixelPortcardMap.h"
 #include "PixelCalibrations/include/PixelFEDPOHBiasCalibration.h"
@@ -14,8 +14,6 @@
 #include "PixelUtilities/PixelFEDDataTools/include/FIFO3Decoder.h"
 #include "PixelUtilities/PixelRootUtilities/include/PixelRootDirectoryMaker.h"
 #include "PixelUtilities/PixelFEDDataTools/include/DigFIFO1Decoder.h"
-
-
 
 #include "TFile.h"
 #include "TH1F.h"
@@ -51,21 +49,9 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::beginCalibration(xoap::Messag
   tempCalibObject->writeASCII(outputDir());
   DumpFIFOs = tempCalibObject->parameterValue("DumpFIFOs") == "yes";
 
-
   std::cout << "[DEBUG] OutputDir = " << outputDir() << ", dumpFIFOs = " << DumpFIFOs << std::endl;
 
   setFIFO1Mode();//jen
-
-  for (unsigned dacnum = 0; dacnum < tempCalibObject->numberOfScanVariables(); ++dacnum) {
-    const std::string& dacname = tempCalibObject->scanName(dacnum);
-    std::vector<unsigned int> dacvals = tempCalibObject->scanValues(dacname);
-    if (dacvals.size() > 1){
-      std::cout << "[DEBUG] dcaname = " << dacname << std::endl;
-      dacsToScan.push_back(dacname);
-    }
-
-    for( unsigned int i = 0; i < dacvals.size(); ++i ) std::cout << " dac value " << i << " is " << dacvals[i] << std::endl;
-  }
 
   BookEm("");
 
@@ -75,18 +61,17 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::beginCalibration(xoap::Messag
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 xoap::MessageReference PixelFEDPOHBiasCalibration::execute(xoap::MessageReference msg) {
-  Attribute_Vector parameters(2);
+  Attribute_Vector parameters(3);
   parameters[0].name_ = "WhatToDo";
-  parameters[1].name_ = "StateNum";
-  parameters[2].name_ = "AOHBias";
+  parameters[1].name_ = "AOHBias";
+  parameters[2].name_ = "AOHGain";
   Receive(msg, parameters);
 
-  const unsigned state = atoi(parameters[1].value_.c_str());
-  const unsigned AOHBias = atoi(parameters[2].value_.c_str());
+  const unsigned AOHBias = atoi(parameters[1].value_.c_str());
+  const unsigned AOHGain = atoi(parameters[2].value_.c_str());
 
   if (parameters[0].value_ == "RetrieveData")
-    RetrieveData(state, AOHBias);
-  //RetrieveData(state);
+    RetrieveData(AOHBias, AOHGain);
   else if (parameters[0].value_ == "Analyze")
     Analyze();
   else {
@@ -107,10 +92,9 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::endCalibration(xoap::MessageR
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state, unsigned AOHBias) {
-  //void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state) {
+void PixelFEDPOHBiasCalibration::RetrieveData(unsigned AOHBias, unsigned AOHGain) {
 
-  std::cout << "Enter retrieve data @ event = " << event_ << " " << state << std::endl;
+  std::cout << "Enter retrieve data @ event = " << event_ << std::endl;
 
   PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
   assert(tempCalibObject!=0);
@@ -147,24 +131,21 @@ void PixelFEDPOHBiasCalibration::RetrieveData(unsigned state, unsigned AOHBias) 
         DigFIFO1Decoder theFIFO1Decoder(bufferFifo1[ch],statusFifo1[ch]);
 	std::cout << "[DEBUG] after Fifo1 definition globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
 
-        if( (int)theFIFO1Decoder.globalChannel() != channel ) continue;
-        found_TBMA = theFIFO1Decoder.foundTBM();
+        if( (int)theFIFO1Decoder.globalChannel() == channel ){
+	  found_TBMA = theFIFO1Decoder.foundTBM();
 	
-	std::cout << "[DEBUG] globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
-
-        if( true ){
-	  std::cout << "-----------------------------------" << std::endl;
-	  std::cout << "Contents of FIFO 1 for channel " << channel << " (status = " << statusFifo1[ch] << ")" << std::endl;
-	  std::cout << "-----------------------------------" << std::endl;
-	  std::cout << "[DEBUG] start printToStream from here ... " << std::endl;
-	  theFIFO1Decoder.printToStream(std::cout);
-	  std::cout << "[DEBUG] end printToStream to here" << std::endl;
-        }
+	  if( DumpFIFOs ){
+	    std::cout << "-----------------------------------" << std::endl;
+	    std::cout << "Contents of FIFO 1 for channel " << channel << " (status = " << statusFifo1[ch] << ")" << std::endl;
+	    std::cout << "-----------------------------------" << std::endl;
+	    theFIFO1Decoder.printToStream(std::cout);
+	  }
+	}
 	
       }
 
       std::cout << "[DEBUG] found_TBMA = " << found_TBMA << std::endl;
-      FillEm(state, AOHBias, fednumber, channel, found_TBMA);
+      FillEm(AOHBias, AOHGain, fednumber, channel, found_TBMA);
 
     }// end loop on channels
       
@@ -193,227 +174,27 @@ void PixelFEDPOHBiasCalibration::Analyze() {
 //    return;
 //  }
 //
-//  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
-//  assert(tempCalibObject != 0);
-//  const std::vector<std::pair<unsigned, std::vector<unsigned> > >& fedsAndChannels = tempCalibObject->fedCardsAndChannels(crate_, theNameTranslation_, theFEDConfiguration_, theDetectorConfiguration_);
-//
-//  std::map<std::string,int> bestTBMPLLSettings;
-//  std::map<std::string,int> currentTBMPLLdelay;
-//  std::map<std::string,int> passState;
-//  std::map<std::string,double> effForCurrentTBMPLLdelay;
-//  std::map<std::string,double> effForBestTBMPLLdelay;
-//  std::map<std::string,int> nFEDchannelsPerModule;
-//  std::map<std::string,std::map<int,int> > nGoodBinsPerModule;  
-//
-//  //normalize by number of triggers
-//  for( std::map<int,std::map<int,std::vector<TH2F*> > >::iterator it1 = scansTBM.begin(); it1 != scansTBM.end(); ++it1 ){
-//   for( std::map<int,std::vector<TH2F*> >::iterator it2 = it1->second.begin(); it2 != it1->second.end(); ++it2 ){
-//    for(unsigned int i = 0; i < it2->second.size(); ++i ) it2->second[i]->Scale(1./ntriggers);
-//   }
-//  }
-//
-//  //fill histo with sum of channels
-//  for( std::map<int,std::map<int,std::vector<TH2F*> > >::iterator it1 = scansTBM.begin(); it1 != scansTBM.end(); ++it1 ){
-//   std::string moduleName = "";
-//   PixelChannel theChannel;
-//   int nGoodBins = 0;
-//   for( std::map<int,std::vector<TH2F*> >::iterator it2 = it1->second.begin(); it2 != it1->second.end(); ++it2 ){  
-//     
-//    if( theNameTranslation_->FEDChannelExist(it1->first, it2->first) ){
-//     theChannel = theNameTranslation_->ChannelFromFEDChannel(it1->first, it2->first);
-//     moduleName = theChannel.modulename();
-//    }
-//
-//    if( nFEDchannelsPerModule.find(moduleName) == nFEDchannelsPerModule.end() ) nFEDchannelsPerModule[moduleName] = 1;
-//    else nFEDchannelsPerModule[moduleName] += 1;
-//     
-//    //count bins with eff = 100%
-//    for( int bx = 1; bx < it2->second[0]->GetNbinsX()+1; ++bx ){
-//     for( int by = 1; by < it2->second[0]->GetNbinsY()+1; ++by ){ 
-//      if( it2->second[0]->GetBinContent(bx,by) == 1 ) nGoodBins++;
-//     }//close loop on by
-//    }//close loop on bx   
-//    nGoodBinsPerModule[moduleName][it2->first] = nGoodBins;
-//
-//    for(unsigned int i = 0; i < it2->second.size(); ++i ){ TBMsHistoSum[moduleName][i]->Add(it2->second[i]); }
-//
-//   }//close loop on channels
-//  }//close loop on fed
-//
-//  //normalize the sum histo by number of triggers and number of fed channels
-//  for( std::map<std::string,std::vector<TH2F*> >::iterator it = TBMsHistoSum.begin(); it != TBMsHistoSum.end(); ++it ){
-//   for( unsigned int i = 0; i < it->second.size(); ++i ){ it->second[i]->Scale(1./(nFEDchannelsPerModule[it->first])); }
-//  }
-//
-//  //find best settings for each module
-//  for( std::map<std::string,std::vector<TH2F*> >::iterator it = TBMsHistoSum.begin(); it != TBMsHistoSum.end(); ++it ){
-//     
-//   /*check if the current TBMPLL delay value gives 100% efficiency*/
-//   PixelTBMSettings *TBMSettingsForThisModule=0;
-//   std::string moduleName=it->first;//(module_name->modulename());
-//   PixelConfigInterface::get(TBMSettingsForThisModule, "pixel/tbm/"+moduleName, *theGlobalKey_);
-//   assert(TBMSettingsForThisModule!=0);
-//
-//   currentTBMPLLdelay[moduleName] = TBMSettingsForThisModule->getTBMPLLDelay();
-//
-//   int delayX = (currentTBMPLLdelay[moduleName]&28)>>2;
-//   int delayY = (currentTBMPLLdelay[moduleName]&224)>>5;
-//   effForCurrentTBMPLLdelay[moduleName] = it->second[0]->GetBinContent(delayX+1,delayY+1);
-//   
-//   // if efficiency for current tbmpll delay != 100% search for new best value; if efficiency == 100% keep the current value
-//   if( effForCurrentTBMPLLdelay[moduleName] == 1 ){
-//    passState[moduleName] = 1;
-//    bestTBMPLLSettings[moduleName] = currentTBMPLLdelay[moduleName];
-//    effForBestTBMPLLdelay[moduleName] = effForCurrentTBMPLLdelay[moduleName];
-//   }
-//   else{
-//
-//    //find efficiency = 100%
-//    std::map<int,int> bestBins;
-//    for( int bx = 1; bx < it->second[0]->GetNbinsX()+1; ++bx ){
-//     for( int by = 1; by < it->second[0]->GetNbinsY()+1; ++by ){ 
-//      if( it->second[0]->GetBinContent(bx,by) == 1 ) bestBins[bx-1] = by-1;  //try first to find 100% eff bins
-//     }//close loop on by
-//    }//close loop on bx
-//
-//    if( bestBins.size() == 0 ){//or find max efficiency
-//
-//     double eff = 0;
-//     int binxbest = 0;
-//     int binybest = 0;
-//     double maxEff = 0;
-//     for( int bx = 1; bx < it->second[0]->GetNbinsX()+1; ++bx ){
-//      for( int by = 1; by < it->second[0]->GetNbinsY()+1; ++by ){ 
-//       if( it->second[0]->GetBinContent(bx,by) >= eff ){
-//        eff = it->second[0]->GetBinContent(bx,by);
-//        binxbest = bx-1;
-//        binybest = by-1;
-//       }
-//      }//close loop on by
-//     }//close loop on bx
-//
-//     bestBins[binxbest] = binybest; 
-//     maxEff = it->second[0]->GetBinContent(binxbest+1,binybest+1);
-//     //check if there are other bins with same max eff
-//     for( int bx = 1; bx < it->second[0]->GetNbinsX()+1; ++bx ){
-//      for( int by = 1; by < it->second[0]->GetNbinsY()+1; ++by ){ 
-//
-//       if( it->second[0]->GetBinContent(bx,by) == maxEff ){       
-//        std::map<int,int>::iterator binsIt = bestBins.find(bx-1);
-//        if( binsIt->first != binxbest && binsIt->second != binybest ) bestBins[bx-1] = by-1;
-//       }
-//
-//      }//close loop on by
-//     }//close loop on bx       
-//    }//close bestBins.size() == 0
-//
-//    if( bestBins.size() == 0 ) passState[moduleName] = 0;//at this point this should not be true
-//    else{
-//     int bestX = 0;
-//     int bestY = 0;
-//     for( std::map<int,int>::iterator binsIt = bestBins.begin(); binsIt != bestBins.end(); ++binsIt ){
-//      if( binsIt->first >= 0 && binsIt->first < 8 && binsIt->second > 0 && binsIt->second < 8 ){
-//       bestX = binsIt->first;
-//       bestY = binsIt->second;
-//       break;
-//      }
-//     }//close loop on best bins
-//
-//     if( bestX == 0 && bestY == 0 ){
-//      bestX = (bestBins.begin())->first;
-//      bestY = (bestBins.begin())->second;
-//     }
-//
-//     if( it->second[0]->GetBinContent(bestX+1,bestY+1) != 1 ) passState[moduleName] = 0;
-//     else passState[moduleName] = 1;
-//     effForBestTBMPLLdelay[moduleName] = it->second[0]->GetBinContent(bestX+1,bestY+1); 
-//     bestX = (bestX<<2);
-//     bestY = (bestY<<5);
-//     bestTBMPLLSettings[moduleName] = bestX+bestY;
-//
-//    }//close case bestBins!=0
-//
-//   }//close case eff!=1
-//
-//   //check that the module has enough good bins for each fed channel otherwise set flag = 0
-//   for( std::map<int,int>::iterator gb = nGoodBinsPerModule[moduleName].begin(); 
-//        gb != nGoodBinsPerModule[moduleName].end(); ++gb ){
-//        if( gb->second < 10 ){passState[moduleName] = 0;break;}
-//   }
-//  
-//  }//close loop on modules
-//
-//  rootf->cd();
-//  branch theBranch;
-//  branch_sum theBranch_sum;
-//  TDirectory* dirSummaries = gDirectory->mkdir("SummaryTrees","SummaryTrees");
-//  dirSummaries->cd();
-//
-//  TTree* tree = new TTree("PassState","PassState");
-//  TTree* tree_sum =new TTree("SummaryInfo","SummaryInfo");
-//  
-//  tree->Branch("PassState",&theBranch,"pass/F:moduleName/C",4096000);
-//  tree_sum->Branch("SummaryInfo",&theBranch_sum,"deltaTBMPLLdelayX/I:deltaTBMPLLdelayY/I:newTBMPLLdelayX/I:newTBMPLLdelayY/I:efficiency/D:moduleName/C",4096000);
-//  rootf->cd();
-//
-//  ofstream out((outputDir()+"/summary.txt").c_str()); //leave the file method intact for now
-//  assert(out.good()); //file method
-//
-//  //std::vector<PixelModuleName>::const_iterator module_name = theDetectorConfiguration_->getModuleList().begin();
-//  //for (;module_name!=theDetectorConfiguration_->getModuleList().end();++module_name){
-//  for( std::map<std::string,std::vector<TH2F*> >::iterator it = TBMsHistoSum.begin(); it != TBMsHistoSum.end(); ++it ){
-//
-//   std::string moduleName=it->first;//(module_name->modulename());
-//
-//   int oldDelayX = (currentTBMPLLdelay[moduleName]&28)>>2;
-//   int oldDelayY = (currentTBMPLLdelay[moduleName]&224)>>5;
-//   int newDelayX = (bestTBMPLLSettings[moduleName]&28)>>2;
-//   int newDelayY = (bestTBMPLLSettings[moduleName]&224)>>5;
-//
-//   theBranch_sum.deltaTBMPLLdelayX = newDelayX-oldDelayX;
-//   theBranch_sum.deltaTBMPLLdelayY = newDelayY-oldDelayY;
-//   theBranch_sum.newTBMPLLdelayX = newDelayX;
-//   theBranch_sum.newTBMPLLdelayY = newDelayY;
-//   theBranch_sum.efficiency = effForBestTBMPLLdelay[moduleName];
-//   strcpy(theBranch_sum.moduleName,moduleName.c_str());
-//   theBranch.pass = passState[moduleName];
-//   strcpy(theBranch.moduleName,moduleName.c_str());
-//
-//   tree->Fill();
-//   tree_sum->Fill();
-//
-//   PixelTBMSettings *TBMSettingsForThisModule=0;
-//   PixelConfigInterface::get(TBMSettingsForThisModule, "pixel/tbm/"+moduleName, *theGlobalKey_);
-//   assert(TBMSettingsForThisModule!=0);
-//   TBMSettingsForThisModule->setTBMPLLDelay(bestTBMPLLSettings[moduleName]);
-//   TBMSettingsForThisModule->writeASCII(outputDir());
-//   //std::cout << "Wrote TBM settings for module:" << moduleName << endl;			
-//   delete TBMSettingsForThisModule;
-//
-//  }
-//
+  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
+  assert(tempCalibObject != 0);
+
+  const std::vector<std::pair<unsigned, std::vector<unsigned> > >& fedsAndChannels = tempCalibObject->fedCardsAndChannels(crate_, theNameTranslation_, theFEDConfiguration_, theDetectorConfiguration_);
+
+
+
+  for (unsigned ifed = 0; ifed < fedsAndChannels.size(); ++ifed) {
+
+    const unsigned fednumber = fedsAndChannels[ifed].first;
+
+    for( unsigned int ch = 0; ch < fedsAndChannels[ifed].second.size(); ch++ ){
+
+      int channel = (fedsAndChannels[ifed].second)[ch];
+      
+      std::cout << "[DEBUG] " << fednumber << " " << channel << std::endl;
+    }
+  }
+
+
   CloseRootf();
-//
-//  //now print summary and save it on text file
-//  std::map<std::string,std::vector<int> > FEDchannelsPerModule;
-//  for (unsigned ifed = 0; ifed < fedsAndChannels.size(); ++ifed) {
-//   std::string moduleName = "";
-//   for( unsigned int ch = 0; ch < fedsAndChannels[ifed].second.size(); ch++ ){
-//    PixelChannel theChannel = theNameTranslation_->ChannelFromFEDChannel(fedsAndChannels[ifed].first, (fedsAndChannels[ifed].second)[ch]);
-//    moduleName = theChannel.modulename();
-//    FEDchannelsPerModule[moduleName].push_back((fedsAndChannels[ifed].second)[ch]);
-//   }
-//  }
-//
-//  out << "Module                        | FED channels | 400MHz phase | 160MHz phase | DeltaTBMPLLDelay | Efficiency | Pass | \n";
-//  for( std::map<std::string,std::vector<int> >::iterator it = FEDchannelsPerModule.begin(); it != FEDchannelsPerModule.end(); ++it ){
-//   out << it->first << " | ";
-//   for( unsigned int i = 0; i < (it->second).size(); ++i ) out << (it->second)[i] << " ";
-//   out << " | " << ((bestTBMPLLSettings[it->first]&28)>>2) << "            | " << ((bestTBMPLLSettings[it->first]&224)>>5);
-//   out << "            | " << bestTBMPLLSettings[it->first] - currentTBMPLLdelay[it->first];
-//   out.precision(4);
-//   out << "              | " << effForBestTBMPLLdelay[it->first] << "          | " << passState[it->first] << "    | \n";
-//  }
 
 }
 
@@ -447,9 +228,9 @@ void PixelFEDPOHBiasCalibration::BookEm(const TString& path) {
 
   tree->Branch("channel",&b_channel,"channel/I");
   tree->Branch("fednumber",&b_fednumber,"fednumber/I");
-  tree->Branch("state",&b_state,"state/I");
   tree->Branch("isTBM",&b_isTBM,"isTBM/I");
   tree->Branch("AOHBias",&b_AOHBias,"AOHBias/I");
+  tree->Branch("AOHGain",&b_AOHGain,"AOHGain/I");
     
 
   
@@ -536,19 +317,19 @@ void PixelFEDPOHBiasCalibration::BookEm(const TString& path) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-void PixelFEDPOHBiasCalibration::FillEm(unsigned state, unsigned AOHBias, int fedid, int ch, int which) {
+void PixelFEDPOHBiasCalibration::FillEm(unsigned AOHBias, unsigned AOHGain, int fedid, int ch, int which) {
   PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
   assert(tempCalibObject != 0);
 
-  std::cout << "[DEBUG] FilEm = " << state << " " << fedid << " " << ch << " " << which << std::endl;
+  std::cout << "[DEBUG] FilEm = " << " "<< AOHBias << " " << fedid << " " << ch << " " << which << std::endl;
   
-  if (event_==0) return;
+  //  if (event_==0) return;
 
   b_channel = ch;
   b_fednumber = fedid;
-  b_state = state;
   b_isTBM = which;
   b_AOHBias = AOHBias;
+  b_AOHGain = AOHGain;
   tree->Fill();
 
 }

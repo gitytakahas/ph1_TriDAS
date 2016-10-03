@@ -14,6 +14,9 @@ namespace PixelPOHBiasCalibrationParameters {
 	const unsigned int k_ScanMin_default = 20;
 	const unsigned int k_ScanMax_default = 25;
 	const unsigned int k_ScanStepSize_default = 1;
+	const unsigned int k_GainMin_default = 1;
+	const unsigned int k_GainMax_default = 3;
+	const unsigned int k_GainStepSize_default = 1;
 	const unsigned int k_nTriggersPerPOHBias_default = 8;
 	//	const unsigned int k_TargetBMin_default = 512-100;
 	//	const unsigned int k_TargetBMax_default = 512+100;
