@@ -2666,7 +2666,7 @@ xoap::MessageReference PixelTKFECSupervisor::SetAOHGainEnMass (xoap::MessageRefe
 	Receive(msg, parameters);
 	const unsigned int AOHGain = atoi(parameters[0].value_.c_str());
 	
-	//std::cout << "Will set all AOHBias values for modules in the calib object to AOHBias = "<<AOHBias<<".\n";
+	std::cout << "Will set all AOHBias values for modules in the calib object to AOHBias = "<<AOHGain <<".\n";
 	
 	PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
         assert(tempCalibObject!=0);
@@ -2680,10 +2680,18 @@ xoap::MessageReference PixelTKFECSupervisor::SetAOHGainEnMass (xoap::MessageRefe
 	for ( std::set<PixelChannel>::const_iterator channelsToCalibrate_itr = channelsToCalibrate.begin(); channelsToCalibrate_itr != channelsToCalibrate.end(); channelsToCalibrate_itr++ )
 	{
 		const std::pair< std::string, int > portCardAndAOH = thePortcardMap_->PortCardAndAOH(*channelsToCalibrate_itr);
-		const std::string portCardName = portCardAndAOH.first; assert(portCardName!="none");
+		const std::string portCardName = portCardAndAOH.first; 
 		
 		//ben debugging
 		std::cout << "portCardName: " << portCardName << std::endl;
+		std::cout << "module name: " << (*channelsToCalibrate_itr).modulename() << std::endl;
+		std::cout << "TBM name: " << (*channelsToCalibrate_itr).TBMChannelString() << std::endl;
+		std::cout << "TBM name detail : " << (*channelsToCalibrate_itr).TBMChannelStringFull( ) << std::endl;
+		std::cout << "channel name : " << (*channelsToCalibrate_itr).channelname() << std::endl;
+
+		if((*channelsToCalibrate_itr).TBMChannelStringFull().find("2")!=std::string::npos) continue;
+
+		assert(portCardName!="none");
 
 		PixelPortCardConfig* tempPortCard=mapNamePortCard_[portCardName];
 		assert(tempPortCard!=0);
