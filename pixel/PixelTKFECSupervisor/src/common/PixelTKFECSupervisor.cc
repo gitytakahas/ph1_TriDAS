@@ -2690,9 +2690,12 @@ xoap::MessageReference PixelTKFECSupervisor::SetAOHGainEnMass (xoap::MessageRefe
 		std::cout << "TBM name: " << (*channelsToCalibrate_itr).TBMChannelString() << std::endl;
 		std::cout << "TBM name detail : " << (*channelsToCalibrate_itr).TBMChannelStringFull( ) << std::endl;
 		std::cout << "channel name : " << (*channelsToCalibrate_itr).channelname() << std::endl;
+		
+		const std::string tbmname = (*channelsToCalibrate_itr).TBMChannelStringFull();
 
 		// This is to escape for A2/B2 channels - YT
-		if((*channelsToCalibrate_itr).TBMChannelStringFull().find("2")!=std::string::npos) continue;
+		//		if((*channelsToCalibrate_itr).TBMChannelStringFull().find("2")!=std::string::npos) continue;
+		if(tbmname.find("2")!=std::string::npos) continue;
 
 		assert(portCardName!="none");
 
@@ -2726,7 +2729,8 @@ xoap::MessageReference PixelTKFECSupervisor::SetAOHGainEnMass (xoap::MessageRefe
 		}
 		
 		// Change the AOH gain and record the address for this AOH.
-		portCardToChange->first.setAOHGain(AOHNumber, AOHGain);
+		// The last value is necessary for the POH Gain settings (YT)
+		portCardToChange->first.setAOHGain(AOHNumber, AOHGain, tbmname);
 		const unsigned int addressToAdd = portCardToChange->first.AOHGainAddressFromAOHNumber(AOHNumber);
 		portCardToChange->second.insert(addressToAdd);
 	}

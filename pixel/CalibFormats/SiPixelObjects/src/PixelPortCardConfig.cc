@@ -443,7 +443,7 @@ PixelPortCardConfig::PixelPortCardConfig(std::string filename):
     if ( (settingName.find("AOH") != string::npos || settingName.find("POH") != string::npos) && settingName.find("Gain") != string::npos // contains both "AOH" and "Gain"
       && settingName.find("123") == string::npos && settingName.find("456") == string::npos ) // does not contain "123" or "456"
     {
-    	setAOHGain(settingName, i2c_values);
+      setAOHGain(settingName, i2c_values, "dummy");
     }
     else if ( settingName == k_PLL_CTR4 || settingName == k_PLL_CTR5 ) // special handling
     {
@@ -504,12 +504,12 @@ unsigned int PixelPortCardConfig::new_PLL_CTR2_value(std::string CTR4or5, unsign
 	else assert(0);
 }
 
-void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value)
+void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value, std::string tbmname)
 {
   assert( (settingName.find("AOH") != string::npos || settingName.find("POH") != string::npos) && settingName.find("Gain") != string::npos // contains both "AOH" and "Gain"
         && settingName.find("123") == string::npos && settingName.find("456") == string::npos ); // does not contain "123" or "456"
 	
-  std::cout << " [DEBUG YT] : setting AOH Gain, setting Name = " << settingName << " value = " << value << std::endl;
+  std::cout << " [DEBUG YT] : setting AOH Gain, setting Name = " << settingName << " value = " << value << " tbmname = " << tbmname << std::endl;
 
 	unsigned int i2c_address = 0;
 	
@@ -587,15 +587,29 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
 		{
 			foundOne = true;
 			unsigned int oldValue = device_[i].second;
-			if      ( channelOnAOH%3 == 1 )
-				device_[i].second = (0x3c & oldValue) + ((value & 0x3)<<0); // replace bits 0 and 1 with value
-			else if ( channelOnAOH%3 == 2 )
-				device_[i].second = (0x33 & oldValue) + ((value & 0x3)<<2); // replace bits 2 and 3 with value
-			else if ( channelOnAOH%3 == 0 )
-				device_[i].second = (0x0f & oldValue) + ((value & 0x3)<<4); // replace bits 4 and 5 with value
-			else assert(0);
-			//			std::cout << "[DEBUG YT] Changed setting "<< k_fpix_AOH_Gain123 <<"(address 0x"<<std::hex<<k_fpix_AOH_Gain123_address<<") from 0x"<<oldValue<<" to 0x"<< device_[i].second << std::dec <<"\n";
-			std::cout << "[DEBUG YT] Changed setting old = " << oldValue << " new = " << device_[i].second << std::endl;
+
+			if(type_=="ph1bpix"){
+			  //			  device_[i].second = oldValue + (value & 0x3); // replace bits 4 and 5 with value
+
+			  if(tbmname=="A1"){
+			    device_[i].second = (0x0f & oldValue) + ((value & 0x3)<<4); // replace bits 4 and 5 with value
+			  }else if(tbmname=="B1"){
+			    device_[i].second = (0x3c & oldValue) + ((value & 0x3)<<0); // replace bits 0 and 1 with value
+			  }
+
+			  std::cout << "[DEBUG YT] : old = " << oldValue << " value = " << value << ", (value & 0x3) = " << (value & 0x3) << std::endl;
+			  std::cout << "[DEBUG YT] Changed setting old for ph1bpix = " << oldValue << " new = " << device_[i].second << std::endl;		  
+			}else{
+			  if      ( channelOnAOH%3 == 1 )
+			    device_[i].second = (0x3c & oldValue) + ((value & 0x3)<<0); // replace bits 0 and 1 with value
+			  else if ( channelOnAOH%3 == 2 )
+			    device_[i].second = (0x33 & oldValue) + ((value & 0x3)<<2); // replace bits 2 and 3 with value
+			  else if ( channelOnAOH%3 == 0 )
+			    device_[i].second = (0x0f & oldValue) + ((value & 0x3)<<4); // replace bits 4 and 5 with value
+			  else assert(0);
+			  //			std::cout << "[DEBUG YT] Changed setting "<< k_fpix_AOH_Gain123 <<"(address 0x"<<std::hex<<k_fpix_AOH_Gain123_address<<") from 0x"<<oldValue<<" to 0x"<< device_[i].second << std::dec <<"\n";
+			  std::cout << "[DEBUG YT] Changed setting old = " << oldValue << " new = " << device_[i].second << std::endl;
+			}
 		}
 	}
 
@@ -604,12 +618,22 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
 	else // If this was not set previously, add this setting with the other two gains set to zero.
 	{
 		unsigned int i2c_value;
-		if      ( channelOnAOH%3 == 1 ) i2c_value  = ((value & 0x3)<<0);
-		else if ( channelOnAOH%3 == 2 ) i2c_value  = ((value & 0x3)<<2);
-		else if ( channelOnAOH%3 == 0 ) i2c_value  = ((value & 0x3)<<4);
-		else assert(0);
+		if(type_=="ph1bpix"){
 
-		std::cout << "[DEBUG YT] add new one : address = " << i2c_address << " value = " << i2c_value << std::endl;
+		  // First set values for the first channels
+		  if(tbmname=="dummy") i2c_value = value;
+		  else if(tbmname=="A1") i2c_value  = (value & 0x3)<<4;
+		  else if(tbmname=="B1") i2c_value  = (value & 0x3)<<0;
+
+		  std::cout << "[DEBUG YT] add new one for ph1bpix: address = " << i2c_address << " value = " << i2c_value << std::endl;
+		}else{
+		  if      ( channelOnAOH%3 == 1 ) i2c_value  = ((value & 0x3)<<0);
+		  else if ( channelOnAOH%3 == 2 ) i2c_value  = ((value & 0x3)<<2);
+		  else if ( channelOnAOH%3 == 0 ) i2c_value  = ((value & 0x3)<<4);
+		  else assert(0);
+		  std::cout << "[DEBUG YT] add new one : address = " << i2c_address << " value = " << i2c_value << std::endl;
+		}
+
 		pair<unsigned int, unsigned int> p(i2c_address, i2c_value);
 		device_.push_back(p);
 		return;

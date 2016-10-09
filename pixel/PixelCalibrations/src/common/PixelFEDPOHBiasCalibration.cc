@@ -321,7 +321,7 @@ void PixelFEDPOHBiasCalibration::FillEm(unsigned AOHBias, unsigned AOHGain, int 
   PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
   assert(tempCalibObject != 0);
 
-  std::cout << "[DEBUG] FilEm = " << " "<< AOHBias << " " << fedid << " " << ch << " " << which << std::endl;
+  std::cout << "[DEBUG] FilEm = " << " "<< AOHBias << " " << AOHGain << " " << fedid << " " << ch << " " << which << std::endl;
   
   //  if (event_==0) return;
 

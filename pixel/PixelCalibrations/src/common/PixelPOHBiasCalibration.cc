@@ -28,7 +28,6 @@ bool PixelPOHBiasCalibration::execute() {
   assert(tempCalibObject != 0);
 
   const bool firstOfPattern = event_ % tempCalibObject->nTriggersPerPattern() == 0;
-  //  const unsigned state = event_/(tempCalibObject->nTriggersPerPattern());
   reportProgress(0.05);
 
 
@@ -42,7 +41,6 @@ bool PixelPOHBiasCalibration::execute() {
 
 
   // Read out data from each FED.
-  //  std::cout << "[DEBUG] status = " << state << std::endl;
   std::cout << "[DEBUG] nTriggersPerPattern = " << tempCalibObject->nTriggersPerPattern() << std::endl;
   std::cout << "[DEBUG] nTriggersTotal = " << tempCalibObject->nTriggersTotal() << std::endl;
   std::cout << "[DEBUG] event_ = " << event_ << std::endl;
@@ -73,6 +71,9 @@ bool PixelPOHBiasCalibration::execute() {
   std::cout << "[DEBUG] AOHBiasMin = " << AOHBiasMin << std::endl;
   std::cout << "[DEBUG] AOHBiasMax = " << AOHBiasMax << std::endl;
   std::cout << "[DEBUG] AOHBiasStepSize = " << AOHBiasStepSize << std::endl;
+  std::cout << "[DEBUG] AOHGainMin = " << AOHGainMin << std::endl;
+  std::cout << "[DEBUG] AOHGainMax = " << AOHGainMax << std::endl;
+  std::cout << "[DEBUG] AOHGainStepSize = " << AOHGainStepSize << std::endl;
   std::cout << "[DEBUG] nTriggersPerPOHBias = " << nTriggersPerPOHBias << std::endl;
 
   //  const std::set<unsigned int> fedcrates=tempCalibObject->getFEDCrates(theNameTranslation_, theFEDConfiguration_);
