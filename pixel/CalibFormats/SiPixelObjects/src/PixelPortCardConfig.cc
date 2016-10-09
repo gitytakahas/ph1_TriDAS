@@ -233,6 +233,8 @@ PixelPortCardConfig::PixelPortCardConfig(vector < vector< string> >  &tableMat):
     }
 
   portcardname_ = tableMat[1][colM["PORT_CARD"]] ;
+
+  std::cout << "[YT : DEBUG] " << portcardname_ << std::endl;
 //  cout << __LINE__ << mthn << "Loading PortCard " << portcardname_ << endl ;
   if(portcardname_.find("FPix") != std::string::npos)
     {
@@ -242,6 +244,9 @@ PixelPortCardConfig::PixelPortCardConfig(vector < vector< string> >  &tableMat):
     {
       type_ = "bpix" ;
     }
+
+  std::cout << "[YT : DEBUG] type = " << type_ << " " << portcardname_ << std::endl;
+
   fillNameToAddress();
   fillDBToFileAddress() ;
   
@@ -267,6 +272,9 @@ PixelPortCardConfig::PixelPortCardConfig(vector < vector< string> >  &tableMat):
       
       settingName = tableMat[0][col] ;
       i2c_values  = atoi(tableMat[1][col].c_str()) ;
+
+      std::cout << "[DEBUG] settingName = " << settingName << std::endl;
+      std::cout << "[DEBUG] i2c_values = " << i2c_values << std::endl;
       
       // Special handling for AOHX_GainY
       if( type_ == "fpix" && settingName.find("AOH_") != string::npos && settingName.find("GAIN") != string::npos // contains both "AOH_" and "Gain"
@@ -432,7 +440,7 @@ PixelPortCardConfig::PixelPortCardConfig(std::string filename):
     if ( settingName[settingName.size()-1] == ':' ) settingName.resize( settingName.size()-1 ); // remove ':' from end of string, if it's there
     
     // Special handling for AOHX_GainY
-    if ( settingName.find("AOH") != string::npos && settingName.find("Gain") != string::npos // contains both "AOH" and "Gain"
+    if ( (settingName.find("AOH") != string::npos || settingName.find("POH") != string::npos) && settingName.find("Gain") != string::npos // contains both "AOH" and "Gain"
       && settingName.find("123") == string::npos && settingName.find("456") == string::npos ) // does not contain "123" or "456"
     {
     	setAOHGain(settingName, i2c_values);
@@ -501,10 +509,15 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
   assert( (settingName.find("AOH") != string::npos || settingName.find("POH") != string::npos) && settingName.find("Gain") != string::npos // contains both "AOH" and "Gain"
         && settingName.find("123") == string::npos && settingName.find("456") == string::npos ); // does not contain "123" or "456"
 	
+  std::cout << " [DEBUG YT] : setting AOH Gain, setting Name = " << settingName << " value = " << value << std::endl;
+
 	unsigned int i2c_address = 0;
 	
 	// Get the i2c address of this AOH, and the channel on the AOH.
 	string::size_type GainPosition = settingName.find("Gain");
+
+	std::cout << "[DEBUG] GainPosition (exp. 5) = " << GainPosition << std::endl;
+
 	unsigned int whichAOH;
 	if ( settingName[GainPosition-2] == 'H' ) whichAOH = 0; // fpix
 	else  // bpix
@@ -516,6 +529,9 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
 	char digit[2]={0,0};
 	digit[0]=settingName[GainPosition+4];
 	unsigned int channelOnAOH = atoi( digit );
+
+	std::cout << " [DEBUG YT] type = " << type_ << " whichAOH " << whichAOH << ", channelOnAOH = " << channelOnAOH << std::endl;
+
 	assert( (type_=="fpix" && whichAOH==0)||(type_=="bpix" && 1 <= whichAOH&&whichAOH <= 4) ||(type_=="ph1bpix" && 1 <= whichAOH && whichAOH <= 7));
 	if (type_ == "fpix" || type_ == "bpix")
           assert( 1 <= channelOnAOH && channelOnAOH <= 6 );
@@ -526,18 +542,43 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
         else
           assert(0);
 	
-	if      ( whichAOH == 0 && channelOnAOH <= 3 ) i2c_address = k_fpix_AOH_Gain123_address;
-	else if ( whichAOH == 0 && channelOnAOH >= 4 ) i2c_address = k_fpix_AOH_Gain456_address;
-	else if ( whichAOH == 1 && channelOnAOH <= 3 ) i2c_address = k_bpix_AOH1_Gain123_address;
-	else if ( whichAOH == 1 && channelOnAOH >= 4 ) i2c_address = k_bpix_AOH1_Gain456_address;
-	else if ( whichAOH == 2 && channelOnAOH <= 3 ) i2c_address = k_bpix_AOH2_Gain123_address;
-	else if ( whichAOH == 2 && channelOnAOH >= 4 ) i2c_address = k_bpix_AOH2_Gain456_address;
-	else if ( whichAOH == 3 && channelOnAOH <= 3 ) i2c_address = k_bpix_AOH3_Gain123_address;
-	else if ( whichAOH == 3 && channelOnAOH >= 4 ) i2c_address = k_bpix_AOH3_Gain456_address;
-	else if ( whichAOH == 4 && channelOnAOH <= 3 ) i2c_address = k_bpix_AOH4_Gain123_address;
-	else if ( whichAOH == 4 && channelOnAOH >= 4 ) i2c_address = k_bpix_AOH4_Gain456_address;
-	else assert(0);
+	std::cout << " [DEBUG YT] i2c_address = " << k_bpix_AOH4_Gain123_address << " " << k_ph1bpix_POH4_Gain12_address  << " channelOnAOH = " << channelOnAOH << " " << k_ph1bpix_POH4_Gain34_address << std::endl;
+
+	if (type_ == "fpix" || type_ == "bpix"){
+	  if      ( whichAOH == 0 && channelOnAOH <= 3 ) i2c_address = k_fpix_AOH_Gain123_address;
+	  else if ( whichAOH == 0 && channelOnAOH >= 4 ) i2c_address = k_fpix_AOH_Gain456_address;
+	  else if ( whichAOH == 1 && channelOnAOH <= 3 ) i2c_address = k_bpix_AOH1_Gain123_address;
+	  else if ( whichAOH == 1 && channelOnAOH >= 4 ) i2c_address = k_bpix_AOH1_Gain456_address;
+	  else if ( whichAOH == 2 && channelOnAOH <= 3 ) i2c_address = k_bpix_AOH2_Gain123_address;
+	  else if ( whichAOH == 2 && channelOnAOH >= 4 ) i2c_address = k_bpix_AOH2_Gain456_address;
+	  else if ( whichAOH == 3 && channelOnAOH <= 3 ) i2c_address = k_bpix_AOH3_Gain123_address;
+	  else if ( whichAOH == 3 && channelOnAOH >= 4 ) i2c_address = k_bpix_AOH3_Gain456_address;
+	  else if ( whichAOH == 4 && channelOnAOH <= 3 ) i2c_address = k_bpix_AOH4_Gain123_address;
+	  else if ( whichAOH == 4 && channelOnAOH >= 4 ) i2c_address = k_bpix_AOH4_Gain456_address;
+	  else assert(0);
+	}else if(type_ == "ph1bpix"){
+	  if ( whichAOH == 1 && channelOnAOH <= 2 ) i2c_address = k_ph1bpix_POH1_Gain12_address;
+	  else if ( whichAOH == 1 && channelOnAOH >= 3 ) i2c_address = k_ph1bpix_POH1_Gain34_address;
+	  else if ( whichAOH == 2 && channelOnAOH <= 2 ) i2c_address = k_ph1bpix_POH2_Gain12_address;
+	  else if ( whichAOH == 2 && channelOnAOH >= 3 ) i2c_address = k_ph1bpix_POH2_Gain34_address;
+	  else if ( whichAOH == 3 && channelOnAOH <= 2 ) i2c_address = k_ph1bpix_POH3_Gain12_address;
+	  else if ( whichAOH == 3 && channelOnAOH >= 3 ) i2c_address = k_ph1bpix_POH3_Gain34_address;
+	  else if ( whichAOH == 4 && channelOnAOH <= 2 ) i2c_address = k_ph1bpix_POH4_Gain12_address;
+	  else if ( whichAOH == 4 && channelOnAOH >= 3 ) i2c_address = k_ph1bpix_POH4_Gain34_address;
+	  else if ( whichAOH == 5 && channelOnAOH <= 2 ) i2c_address = k_ph1bpix_POH5_Gain12_address;
+	  else if ( whichAOH == 5 && channelOnAOH >= 3 ) i2c_address = k_ph1bpix_POH5_Gain34_address;
+	  else if ( whichAOH == 6 && channelOnAOH <= 2 ) i2c_address = k_ph1bpix_POH6_Gain12_address;
+	  else if ( whichAOH == 6 && channelOnAOH >= 3 ) i2c_address = k_ph1bpix_POH6_Gain34_address;
+	  else if ( whichAOH == 7 && channelOnAOH <= 2 ) i2c_address = k_ph1bpix_POH7_Gain12_address;
+	  else if ( whichAOH == 7 && channelOnAOH >= 3 ) i2c_address = k_ph1bpix_POH7_Gain34_address;
+	  else assert(0);
+	}else{
+	  std::cout << "unkown type" << std::endl;
+	  assert(0);
+	}
 	
+	std::cout << "[DEBUG YT] i2c_address = " << i2c_address << std::endl;
+
 	// Search for this address in the previously-defined settings.
 	bool foundOne = false;
 	for (unsigned int i=0;i<device_.size();i++)
@@ -553,9 +594,12 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
 			else if ( channelOnAOH%3 == 0 )
 				device_[i].second = (0x0f & oldValue) + ((value & 0x3)<<4); // replace bits 4 and 5 with value
 			else assert(0);
-			//std::cout << "Changed setting "<< k_fpix_AOH_Gain123 <<"(address 0x"<<std::hex<<k_fpix_AOH_Gain123_address<<") from 0x"<<oldValue<<" to 0x"<< device_[i].second << std::dec <<"\n";
+			//			std::cout << "[DEBUG YT] Changed setting "<< k_fpix_AOH_Gain123 <<"(address 0x"<<std::hex<<k_fpix_AOH_Gain123_address<<") from 0x"<<oldValue<<" to 0x"<< device_[i].second << std::dec <<"\n";
+			std::cout << "[DEBUG YT] Changed setting old = " << oldValue << " new = " << device_[i].second << std::endl;
 		}
 	}
+
+	std::cout << "[DEBUG YT] foundOne = " << foundOne << ", channelOnAOH = " << channelOnAOH << std::endl;
 	if ( foundOne ) return;
 	else // If this was not set previously, add this setting with the other two gains set to zero.
 	{
@@ -564,7 +608,8 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
 		else if ( channelOnAOH%3 == 2 ) i2c_value  = ((value & 0x3)<<2);
 		else if ( channelOnAOH%3 == 0 ) i2c_value  = ((value & 0x3)<<4);
 		else assert(0);
-		
+
+		std::cout << "[DEBUG YT] add new one : address = " << i2c_address << " value = " << i2c_value << std::endl;
 		pair<unsigned int, unsigned int> p(i2c_address, i2c_value);
 		device_.push_back(p);
 		return;
@@ -573,6 +618,9 @@ void PixelPortCardConfig::setAOHGain(std::string settingName, unsigned int value
 
 void PixelPortCardConfig::setDataBaseAOHGain(std::string settingName, unsigned int value)
 {
+
+  std::cout << "[DEBUG] entering setDataBaseAOHGain" << std::endl;
+
 	unsigned int i2c_address;
 	
 	// Get the i2c address of this AOH, and the channel on the AOH.
@@ -1414,8 +1462,9 @@ unsigned int PixelPortCardConfig::getdeviceValuesForSetting(std::string settingN
 
 unsigned int PixelPortCardConfig::getdeviceValuesForAddress(unsigned int address) const
 {
-	for (int i=device_.size()-1; i>=0; i--) // Get the last occurance of address, if there are more than one.
+  for (int i=device_.size()-1; i>=0; i--) // Get the last occurance of address, if there are more than one.
     {
+      std::cout << "[DEBUG YT] first = " << device_.at(i).first << " second = " << device_.at(i).second << " address = " << address << " " << type_ << std::endl;
       if( device_.at(i).first==address )
         {
           return device_.at(i).second;

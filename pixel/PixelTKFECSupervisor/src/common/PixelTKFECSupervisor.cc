@@ -2661,12 +2661,14 @@ xoap::MessageReference PixelTKFECSupervisor::SetDelayEnMass(xoap::MessageReferen
 
 xoap::MessageReference PixelTKFECSupervisor::SetAOHGainEnMass (xoap::MessageReference msg) //throw (xoap::exception::Exception)
 {
+  std::cout << "Enter SetAOHGainEnMass" << std::endl;
+
 	Attribute_Vector parameters(1);
 	parameters[0].name_="AOHGain";
 	Receive(msg, parameters);
 	const unsigned int AOHGain = atoi(parameters[0].value_.c_str());
 	
-	std::cout << "Will set all AOHBias values for modules in the calib object to AOHBias = "<<AOHGain <<".\n";
+	std::cout << "Will set all AOHGain values for modules in the calib object to AOHBias = "<<AOHGain <<".\n";
 	
 	PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
         assert(tempCalibObject!=0);
@@ -2689,6 +2691,7 @@ xoap::MessageReference PixelTKFECSupervisor::SetAOHGainEnMass (xoap::MessageRefe
 		std::cout << "TBM name detail : " << (*channelsToCalibrate_itr).TBMChannelStringFull( ) << std::endl;
 		std::cout << "channel name : " << (*channelsToCalibrate_itr).channelname() << std::endl;
 
+		// This is to escape for A2/B2 channels - YT
 		if((*channelsToCalibrate_itr).TBMChannelStringFull().find("2")!=std::string::npos) continue;
 
 		assert(portCardName!="none");
@@ -2747,6 +2750,8 @@ xoap::MessageReference PixelTKFECSupervisor::SetAOHGainEnMass (xoap::MessageRefe
 
 xoap::MessageReference PixelTKFECSupervisor::SetAOHBiasEnMass (xoap::MessageReference msg) //throw (xoap::exception::Exception)
 {
+
+  std::cout << "Enter SetAOHBiasEnMass" << std::endl;
 	Attribute_Vector parameters(1);
 	parameters[0].name_="AOHBias";
 	Receive(msg, parameters);
