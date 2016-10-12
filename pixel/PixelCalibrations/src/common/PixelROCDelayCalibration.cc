@@ -95,5 +95,6 @@ void PixelROCDelayCalibration::endCalibration() {
 
 std::vector<std::string> PixelROCDelayCalibration::calibrated() {
   std::vector<std::string> tmp;
+  tmp.push_back("tbm");
   return tmp;
 }

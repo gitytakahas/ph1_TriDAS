@@ -233,6 +233,7 @@ void PixelFEDROCDelayCalibration::Analyze() {
   }
 
   std::map<std::string,std::map<int,int> > nGoodBinsPerModule;  
+  std::map<std::string,int> nROCsPerModule;  
   //fill histo with sum of channels
   for( std::map<int,std::map<int,std::vector<TH2F*> > >::iterator it1 = scansROCs.begin(); it1 != scansROCs.end(); ++it1 ){
    std::string moduleName = "";
@@ -245,6 +246,8 @@ void PixelFEDROCDelayCalibration::Analyze() {
     }
 
     const std::vector<PixelROCName>& rocs = theNameTranslation_->getROCsFromFEDChannel(it1->first, it2->first);
+    if( nROCsPerModule.find(moduleName) == nROCsPerModule.end() ) nROCsPerModule[moduleName] = rocs.size();
+    else nROCsPerModule[moduleName]+=rocs.size();
 
     //count bins with nrocs == 4/8
     int nGoodBins = 0;     
@@ -257,9 +260,7 @@ void PixelFEDROCDelayCalibration::Analyze() {
      }//close loop on by
     }//close loop on bx   
     nGoodBinsPerModule[moduleName][it2->first] = nGoodBins;
-
-    std::cout << "************* JENDEBUG: module " << moduleName << " fed ch " << it2->first << " nbins " << nGoodBins << std::endl;
-    ROCsHistoSum[moduleName][0]->Add(it2->second[rocs.size()]);
+    ROCsHistoSum[moduleName][0]->Add(it2->second[rocs.size()]);   
 
    }//close loop on channels
   }//close loop on fed
@@ -292,7 +293,7 @@ void PixelFEDROCDelayCalibration::Analyze() {
    nROCsForBestROCDelay[moduleName] = nROCsForCurrentROCDelay[moduleName];
    
    //first check if current roc delay gives 16 rocs
-   if( nROCsForCurrentROCDelay[moduleName] == 16 ){
+   if( nROCsForCurrentROCDelay[moduleName] == nROCsPerModule[moduleName] ){
     passState[moduleName] = 1;
    }
    else{// if not then find bins for which nrocs = 16
@@ -300,7 +301,7 @@ void PixelFEDROCDelayCalibration::Analyze() {
     std::map<int,int> bestBins;
     for( int bx = 1; bx < it->second[0]->GetNbinsX()+1; ++bx ){
      for( int by = 1; by < it->second[0]->GetNbinsY()+1; ++by ){       
-      if( it->second[0]->GetBinContent(bx,by) == 16 ) bestBins[bx-1] = by-1;
+      if( it->second[0]->GetBinContent(bx,by) == nROCsPerModule[moduleName] ) bestBins[bx-1] = by-1;
      }
     }
     
@@ -355,7 +356,7 @@ void PixelFEDROCDelayCalibration::Analyze() {
       bestY = (bestBins.begin())->second;
      }
 
-     if( it->second[0]->GetBinContent(bestX+1,bestY+1) != 16 ) passState[moduleName] = 0;
+     if( it->second[0]->GetBinContent(bestX+1,bestY+1) != nROCsPerModule[moduleName] ) passState[moduleName] = 0;
      else passState[moduleName] = 1;
 
      nROCsForBestROCDelay[moduleName] = it->second[0]->GetBinContent(bestX+1,bestY+1);

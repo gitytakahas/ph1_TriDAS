@@ -222,7 +222,7 @@ PixelCalibrationBase* PixelCalibrationFactory::getCalibration(const std::string&
     return new PixelROCDelayCalibration(*pixSupConfPtr, soapCmdrPtr);
   }
 
-  if (calibName=="ReadbackCalibration") {
+  if (calibName=="TBMDelayForReadback" || calibName=="ROCDelayForReadback") {
     return new PixelReadbackCalibration(*pixSupConfPtr, soapCmdrPtr);
   }
 
@@ -383,7 +383,7 @@ PixelFEDCalibrationBase* PixelCalibrationFactory::getFEDCalibration(const std::s
     return new PixelFEDROCDelayCalibration(*pixFEDSupConfPtr, soapCmdrPtr);
   }
 
-  if (calibName=="ReadbackCalibration") {
+  if (calibName=="TBMDelayForReadback" || calibName=="ROCDelayForReadback") {
     return new PixelFEDReadbackCalibration(*pixFEDSupConfPtr, soapCmdrPtr);
   }
 

@@ -95,5 +95,6 @@ void PixelTBMDelayCalibration::endCalibration() {
 
 std::vector<std::string> PixelTBMDelayCalibration::calibrated() {
   std::vector<std::string> tmp;
+  tmp.push_back("tbm");
   return tmp;
 }

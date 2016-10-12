@@ -35,7 +35,7 @@ bool PixelIanaCalibration::execute() {
    for (unsigned int i=0;i<rocs.size();i++) setDAC(rocs[i], pos::k_DACAddress_Readback, 12);
   }
 
-  if( tempCalibObject->mode()=="Vdig" && (event_ % 32 == 0) ){
+  if( tempCalibObject->mode()=="Vdig" && (event_ % 16 == 0) ){
    for (unsigned int i=0;i<rocs.size();i++) setDAC(rocs[i], pos::k_DACAddress_Readback, 8);
   }
 
@@ -66,5 +66,6 @@ void PixelIanaCalibration::endCalibration() {
 
 std::vector<std::string> PixelIanaCalibration::calibrated() {
   std::vector<std::string> tmp;
+  tmp.push_back("dac");
   return tmp;
 }

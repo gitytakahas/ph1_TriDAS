@@ -63,5 +63,6 @@ void PixelReadbackCalibration::endCalibration() {
 
 std::vector<std::string> PixelReadbackCalibration::calibrated() {
   std::vector<std::string> tmp;
+  tmp.push_back("tbm");
   return tmp;
 }

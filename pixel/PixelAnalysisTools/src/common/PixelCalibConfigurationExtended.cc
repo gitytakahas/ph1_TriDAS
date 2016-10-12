@@ -188,7 +188,7 @@ void PixelCalibConfigurationExtended::fillFedChannelHWandTypeInfo(){
 ///////////////////////////////////////////////////////////////////////////////////
 void PixelCalibConfigurationExtended::getRowsAndCols(unsigned int state, const vector<unsigned int> *&rows, 
                                    const vector<unsigned int> *&cols) const{
-  assert(state<nConfigurations()); // commented at UZH (Jen)
+  //assert(state<nConfigurations()); // commented at UZH (Jen)
   unsigned int i_ROC=state/(columnList().size()*rowList().size()*nScanPoints());
   unsigned int i_row=(state-i_ROC*columnList().size()*rowList().size()*nScanPoints())/
                      (columnList().size()*nScanPoints());
