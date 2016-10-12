@@ -1,11 +1,11 @@
-Mode: TBMDelayForReadback
+Mode: ROCDelayForReadback
 Parameters:
 Rows:
 10
 Cols:
 10
 VcalHigh
-Scan: TBMPLL 0 255 4
+Scan: TBMADelay 64 127 1
 Set: Vcal 200
 Set: Vana 100
 Set: Readback 12

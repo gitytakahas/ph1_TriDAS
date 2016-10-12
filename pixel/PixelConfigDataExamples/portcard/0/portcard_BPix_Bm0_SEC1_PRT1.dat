@@ -35,3 +35,9 @@ POH6_Bias3: 0x28
 POH6_Bias4: 0x28
 POH6_Gain12: 0x33
 POH6_Gain34: 0x33
+POH7_Bias1: 0x28
+POH7_Bias2: 0x28
+POH7_Bias3: 0x28
+POH7_Bias4: 0x28
+POH7_Gain12: 0x33
+POH7_Gain34: 0x33

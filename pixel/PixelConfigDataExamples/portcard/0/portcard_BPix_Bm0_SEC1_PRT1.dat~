@@ -19,7 +19,7 @@ POH2_Gain12: 0x33
 POH2_Gain34: 0x33
 POH4_Bias1: 0x28
 POH4_Bias2: 0x28
-POH4_Bias3: 0x1E
+POH4_Bias3: 0x28
 POH4_Bias4: 0x28
 POH4_Gain12: 0x33
 POH4_Gain34: 0x33
