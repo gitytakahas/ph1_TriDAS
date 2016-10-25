@@ -45,6 +45,11 @@ bool PixelPOHBiasCalibration::execute() {
   std::cout << "[DEBUG] nTriggersTotal = " << tempCalibObject->nTriggersTotal() << std::endl;
   std::cout << "[DEBUG] event_ = " << event_ << std::endl;
 
+
+  const std::set<unsigned int> fedcrates=tempCalibObject->getFEDCrates(theNameTranslation_, theFEDConfiguration_);
+  const std::set<unsigned int> TKFECcrates=tempCalibObject->getTKFECCrates(thePortcardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
+
+
   // Scan the AOH Bias 
   
   unsigned int AOHBiasMin = k_ScanMin_default;
@@ -76,6 +81,7 @@ bool PixelPOHBiasCalibration::execute() {
   std::cout << "[DEBUG] AOHGainStepSize = " << AOHGainStepSize << std::endl;
   std::cout << "[DEBUG] nTriggersPerPOHBias = " << nTriggersPerPOHBias << std::endl;
 
+  const std::set<PixelChannel>& channelsToCalibrate = tempCalibObject->channelList();
   
   for (unsigned int AOHBias = AOHBiasMin; AOHBias <= AOHBiasMax; AOHBias += AOHBiasStepSize){
       
@@ -83,32 +89,58 @@ bool PixelPOHBiasCalibration::execute() {
     Attribute_Vector parametersToTKFEC(1);
     parametersToTKFEC[0].name_="AOHBias"; parametersToTKFEC[0].value_=itoa(AOHBias);
     commandToAllTKFECCrates("SetAOHBiasEnMass", parametersToTKFEC);
-
+    
     std::cout << "[DEBUG] POH bias = " << AOHBias << std::endl;
-
+    
     for (unsigned int AOHGain=AOHGainMin; AOHGain <= AOHGainMax; ++AOHGain){
-
+      
       Attribute_Vector parametersToTKFEC_Gain(1);
       parametersToTKFEC_Gain[0].name_="AOHGain"; parametersToTKFEC_Gain[0].value_=itoa(AOHGain);
       commandToAllTKFECCrates("SetAOHGainEnMass", parametersToTKFEC_Gain);
       
       std::cout << "[DEBUG] POH gain = " << AOHGain << std::endl;
-
-      for (unsigned int i_event=0; i_event < nTriggersPerPOHBias; ++i_event){
-
-	// Send trigger to all TBMs and ROCs.
-	sendTTCCalSync();
+      
+      
+      for ( std::set<PixelChannel>::const_iterator channelsToCalibrate_itr = channelsToCalibrate.begin(); channelsToCalibrate_itr != channelsToCalibrate.end(); channelsToCalibrate_itr++ ){
 	
-	Attribute_Vector parametersToFED(3);
-	parametersToFED[0].name_ = "WhatToDo"; 
-	parametersToFED[1].name_ = "AOHBias"; 
-	parametersToFED[2].name_ = "AOHGain"; 
-	parametersToFED[0].value_ = "RetrieveData";
-	parametersToFED[1].value_ = itoa(AOHBias);
-	parametersToFED[2].value_ = itoa(AOHGain);
-	commandToAllFEDCrates("FEDCalibrations", parametersToFED);
-      }
+	// Get info about this channel.
+	const PixelHdwAddress& channelHdwAddress = theNameTranslation_->getHdwAddress(*channelsToCalibrate_itr);
+	const unsigned int fednumber = channelHdwAddress.fednumber();
+	const unsigned int fedcrate=theFEDConfiguration_->crateFromFEDNumber( fednumber );
+	const unsigned int channel = channelHdwAddress.fedchannel();
+	
+	std::cout << "CHECK !!!!! fednumber = " << fednumber << " fedcrate = " << fedcrate << " channel = " << channel << std::endl;
+	
+	for (unsigned int i_event=0; i_event < nTriggersPerPOHBias; ++i_event){
 
+	  sendTTCCalSync();	    	  
+	  
+	  // Send trigger to all TBMs and ROCs.
+	  
+	  Attribute_Vector parametersToFED(5);
+	  parametersToFED[0].name_ = "WhatToDo"; 
+	  parametersToFED[1].name_ = "AOHBias"; 
+	  parametersToFED[2].name_ = "AOHGain";
+	  parametersToFED[3].name_ = "fednumber";
+	  parametersToFED[4].name_ = "channel"; 
+	  
+	  parametersToFED[0].value_ = "RetrieveData";
+	  parametersToFED[1].value_ = itoa(AOHBias);
+	  parametersToFED[2].value_ = itoa(AOHGain);
+	  parametersToFED[3].value_ = itoa(fednumber);
+	  parametersToFED[4].value_ = itoa(channel);
+	  //	  xoap::MessageReference replyFromFED =  commandToAllFEDCrates("FEDCalibrations", parametersToFED);
+	  xoap::MessageReference replyFromFED = SendWithSOAPReply(PixelFEDSupervisors_[fedcrate], "FEDCalibrations", parametersToFED);
+
+	  Attribute_Vector returnValuesFromFED(1);
+	  returnValuesFromFED[0].name_="foundTBMA";
+	  returnValuesFromFED[0].value_= itoa(0);
+
+	  Receive(replyFromFED, returnValuesFromFED);
+
+	  std::cout << "RETURN VALUE = " << returnValuesFromFED[0].value_ << std::endl;
+	}
+      }
     }
   } // end of loop over AOHBias values
 

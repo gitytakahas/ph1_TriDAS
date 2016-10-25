@@ -69,17 +69,21 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::beginCalibration(xoap::Messag
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 xoap::MessageReference PixelFEDPOHBiasCalibration::execute(xoap::MessageReference msg) {
-  Attribute_Vector parameters(3);
+  Attribute_Vector parameters(5);
   parameters[0].name_ = "WhatToDo";
   parameters[1].name_ = "AOHBias";
   parameters[2].name_ = "AOHGain";
+  parameters[3].name_ = "fednumber";
+  parameters[4].name_ = "channel";
   Receive(msg, parameters);
 
   const unsigned AOHBias = atoi(parameters[1].value_.c_str());
   const unsigned AOHGain = atoi(parameters[2].value_.c_str());
+  const unsigned fednumber = atoi(parameters[3].value_.c_str());
+  const unsigned channel = atoi(parameters[4].value_.c_str());
 
   if (parameters[0].value_ == "RetrieveData")
-    RetrieveData(AOHBias, AOHGain);
+    RetrieveData(AOHBias, AOHGain, fednumber, channel);
   else if (parameters[0].value_ == "Analyze")
     Analyze();
   else {
@@ -102,69 +106,60 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::endCalibration(xoap::MessageR
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-void PixelFEDPOHBiasCalibration::RetrieveData(unsigned AOHBias, unsigned AOHGain) {
+xoap::MessageReference PixelFEDPOHBiasCalibration::RetrieveData(unsigned AOHBias, unsigned AOHGain, unsigned int fednumber, unsigned int channel) {
 
+  //void PixelFEDPOHBiasCalibration::RetrieveData(unsigned int AOHBias, unsigned int AOHGain, int fednumber, int channel){
+  
   std::cout << "Enter retrieve data @ event = " << event_ << std::endl;
-
+  std::cout << "AOHBias = " << AOHBias << ", AOHGain = " << AOHGain << " fednumber = " << fednumber << ", channel = " << channel << std::endl;
+  
   PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
   assert(tempCalibObject!=0);
 
-  const std::vector<std::pair<unsigned, std::vector<unsigned> > >& fedsAndChannels = tempCalibObject->fedCardsAndChannels(crate_, theNameTranslation_, theFEDConfiguration_, theDetectorConfiguration_);
+  const unsigned long vmeBaseAddress = theFEDConfiguration_->VMEBaseAddressFromFEDNumber(fednumber);
+  PixelFEDInterface* iFED = FEDInterface_[vmeBaseAddress];
 
-  for (unsigned ifed = 0; ifed < fedsAndChannels.size(); ++ifed) {
-
-    const unsigned fednumber = fedsAndChannels[ifed].first;
-    const unsigned long vmeBaseAddress = theFEDConfiguration_->VMEBaseAddressFromFEDNumber(fednumber);
-    PixelFEDInterface* iFED = FEDInterface_[vmeBaseAddress];
-    const int MaxChans = 37;    
-    uint32_t bufferFifo1[MaxChans][1024];
-    int statusFifo1[MaxChans] = {0};
-
-    std::cout << "[DEBUG] ifed = " << ifed << std::endl;
-    std::cout << "[DEBUG] fednumber = " << fednumber << std::endl;
-    std::cout << "[DEBUG] vmeBaseAddress = " << vmeBaseAddress << std::endl;
-
-    for( unsigned int ch = 0; ch < fedsAndChannels[ifed].second.size(); ch++ ){
-      std::cout << "[DEBUG ] channel = " << fedsAndChannels[ifed].second[ch] << std::endl;
-      statusFifo1[ch] = iFED->drainFifo1(fedsAndChannels[ifed].second[ch], bufferFifo1[ch], 1024);
-      std::cout << "[DEBUG] statusFifo1 = "  << statusFifo1[ch] << std::endl;
-    }
+  uint32_t bufferFifo1[1024];
+  int statusFifo1 = iFED->drainFifo1(channel, bufferFifo1, 1024);
      
-    for( unsigned int ch = 0; ch < fedsAndChannels[ifed].second.size(); ch++ ){
+  bool found_TBMA = false;
 
-      int channel = (fedsAndChannels[ifed].second)[ch];
-      bool found_TBMA = false;
+  if (statusFifo1 > 0) {
 
-      if (statusFifo1[ch] > 0) {
+    DigFIFO1Decoder theFIFO1Decoder(bufferFifo1,statusFifo1);
+    std::cout << "[DEBUG] after Fifo1 definition globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
 
-	std::cout << "[DEBUG] inside Fifo1 = " << channel <<std::endl;
-        DigFIFO1Decoder theFIFO1Decoder(bufferFifo1[ch],statusFifo1[ch]);
-	std::cout << "[DEBUG] after Fifo1 definition globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
-
-        if( (int)theFIFO1Decoder.globalChannel() == channel ){
-	  found_TBMA = theFIFO1Decoder.foundTBM();
+    if( (int)theFIFO1Decoder.globalChannel() == (int)channel ){
+      found_TBMA = theFIFO1Decoder.foundTBM();
 	
-	  if( DumpFIFOs ){
-	    std::cout << "-----------------------------------" << std::endl;
-	    std::cout << "Contents of FIFO 1 for channel " << channel << " (status = " << statusFifo1[ch] << ")" << std::endl;
-	    std::cout << "-----------------------------------" << std::endl;
-	    theFIFO1Decoder.printToStream(std::cout);
-	  }
-	}
-	
+      if( DumpFIFOs ){
+	std::cout << "-----------------------------------" << std::endl;
+	std::cout << "Contents of FIFO 1 for channel " << channel << " (status = " << statusFifo1 << ")" << std::endl;
+	std::cout << "-----------------------------------" << std::endl;
+	theFIFO1Decoder.printToStream(std::cout);
       }
+    }
+  }
 
-      std::cout << "[DEBUG] found_TBMA = " << found_TBMA << std::endl;
-      FillEm(AOHBias, AOHGain, fednumber, channel, found_TBMA);
+  std::cout << "[DEBUG] found_TBMA = " << found_TBMA << std::endl;
+      //      FillEm(AOHBias, AOHGain, fednumber, channel, found_TBMA);
+      //found[fednumber][channel] = found_TBMA;
 
-    }// end loop on channels
-      
-      
-      
-  }//end loop on feds
+
+//    }// end loop on channels
+//  }//end loop on feds
+
   
   event_++;
   sendResets();
+
+  Attribute_Vector returnValues(1);
+  returnValues[0].name_="foundTBMA"; 
+  //  returnValues[0].value_= itoa((int)found_TBMA);
+  returnValues[0].value_= "found";
+  xoap::MessageReference reply = MakeSOAPMessageReference("FEDCalibrationsDone", returnValues);
+
+  return reply;
   
 }
 
@@ -275,54 +270,57 @@ void PixelFEDPOHBiasCalibration::Analyze() {
   //Write out the configs
 
   // mimic PixelSuperVisorConfiguration ... 
-  PixelPortcardMap *thePortCardMap_;
-  PixelConfigInterface::get(thePortCardMap_, "pixel/portcardmap/", *theGlobalKey_);
-  pos::PixelTKFECConfig *theTKFECConfiguration_;
-  std::map<std::string,pos::PixelPortCardConfig*> * getmapNamePortCard();
+//  PixelPortcardMap *thePortCardMap_;
+//  pos::PixelTKFECConfig *theTKFECConfiguration_;
+//
+//  PixelConfigInterface::get(thePortCardMap_, "pixel/portcardmap/", *theGlobalKey_);
+//  PixelConfigInterface::get(theTKFECConfiguration_, "pixel/tkfecconfig/", *theGlobalKey_);
+//
+//  std::map<std::string,pos::PixelPortCardConfig*> * getmapNamePortCard();
+//
+//  tempCalibObject->getTKFECCrates(thePortCardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
 
-  tempCalibObject->getTKFECCrates(thePortCardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
-
-  const std::set<PixelChannel>& channelsToCalibrate = tempCalibObject->channelList();
-  for(std::set<PixelChannel>::const_iterator channelsToCalibrate_itr = channelsToCalibrate.begin();
-      channelsToCalibrate_itr != channelsToCalibrate.end(); channelsToCalibrate_itr++){
-
-    const PixelHdwAddress& channelHdwAddress = theNameTranslation_->getHdwAddress(*channelsToCalibrate_itr);
-    const unsigned int NFed = channelHdwAddress.fednumber();
-    const unsigned int NChannel = channelHdwAddress.fedchannel();
-    const unsigned int NFiber = NChannel/2;
-
-    std::cout << NFed << " " << NChannel << " " << NFiber << std::endl;
-
-    const std::pair< std::string, int > portCardAndAOH = thePortCardMap_->PortCardAndAOH(*channelsToCalibrate_itr);
-    const std::string portCardName = portCardAndAOH.first; assert(portCardName!="none");
-    const int AOHNumber = portCardAndAOH.second;
-
-    std::cout << portCardName << " " << AOHNumber << std::endl;
-
-    // This should be fixed !
-    bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber] = 1.;
-  }
-
-
-  for ( std::map< std::string, std::map< unsigned int, unsigned int > >::iterator portCardName_itr = bias_values_by_portcard_and_aoh_new.begin(); 
-	portCardName_itr != bias_values_by_portcard_and_aoh_new.end(); ++portCardName_itr ){
-
-    std::string portCardName = portCardName_itr->first;
-    std::map<std::string,PixelPortCardConfig*>::iterator mapNamePortCard_itr = getmapNamePortCard()->find(portCardName);
-    assert( mapNamePortCard_itr != getmapNamePortCard()->end() );
-    PixelPortCardConfig* thisPortCardConfig = mapNamePortCard_itr->second;
-		
-    for ( std::map< unsigned int, unsigned int >::iterator AOHNumber_itr = portCardName_itr->second.begin(); AOHNumber_itr != portCardName_itr->second.end(); ++AOHNumber_itr )
-      {
-	unsigned int AOHNumber = AOHNumber_itr->first;
-	unsigned int AOHBiasAddress = thisPortCardConfig->AOHBiasAddressFromAOHNumber(AOHNumber);
-	thisPortCardConfig->setdeviceValues(AOHBiasAddress, bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber]);
-	
-      }
-		
-    //    thisPortCardConfig->writeASCII(outputDir());
-    std::cout << "Wrote portcard_"+portCardName+".dat"<<endl;
-  }
+//  const std::set<PixelChannel>& channelsToCalibrate = tempCalibObject->channelList();
+//  for(std::set<PixelChannel>::const_iterator channelsToCalibrate_itr = channelsToCalibrate.begin();
+//      channelsToCalibrate_itr != channelsToCalibrate.end(); channelsToCalibrate_itr++){
+//
+//    const PixelHdwAddress& channelHdwAddress = theNameTranslation_->getHdwAddress(*channelsToCalibrate_itr);
+//    const unsigned int NFed = channelHdwAddress.fednumber();
+//    const unsigned int NChannel = channelHdwAddress.fedchannel();
+//    const unsigned int NFiber = NChannel/2;
+//
+//    std::cout << NFed << " " << NChannel << " " << NFiber << std::endl;
+//
+//    const std::pair< std::string, int > portCardAndAOH = thePortCardMap_->PortCardAndAOH(*channelsToCalibrate_itr);
+//    const std::string portCardName = portCardAndAOH.first; assert(portCardName!="none");
+//    const int AOHNumber = portCardAndAOH.second;
+//
+//    std::cout << portCardName << " " << AOHNumber << std::endl;
+//
+//    // This should be fixed !
+//    bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber] = 1.;
+//  }
+//
+//
+//  for ( std::map< std::string, std::map< unsigned int, unsigned int > >::iterator portCardName_itr = bias_values_by_portcard_and_aoh_new.begin(); 
+//	portCardName_itr != bias_values_by_portcard_and_aoh_new.end(); ++portCardName_itr ){
+//
+//    std::string portCardName = portCardName_itr->first;
+//    std::map<std::string,PixelPortCardConfig*>::iterator mapNamePortCard_itr = getmapNamePortCard()->find(portCardName);
+//    assert( mapNamePortCard_itr != getmapNamePortCard()->end() );
+//    PixelPortCardConfig* thisPortCardConfig = mapNamePortCard_itr->second;
+//		
+//    for ( std::map< unsigned int, unsigned int >::iterator AOHNumber_itr = portCardName_itr->second.begin(); AOHNumber_itr != portCardName_itr->second.end(); ++AOHNumber_itr )
+//      {
+//	unsigned int AOHNumber = AOHNumber_itr->first;
+//	unsigned int AOHBiasAddress = thisPortCardConfig->AOHBiasAddressFromAOHNumber(AOHNumber);
+//	thisPortCardConfig->setdeviceValues(AOHBiasAddress, bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber]);
+//	
+//      }
+//		
+//    //    thisPortCardConfig->writeASCII(outputDir());
+//    std::cout << "Wrote portcard_"+portCardName+".dat"<<endl;
+//  }
 
 
 
@@ -463,18 +461,18 @@ void PixelFEDPOHBiasCalibration::BookEm(const TString& path) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-void PixelFEDPOHBiasCalibration::FillEm(unsigned AOHBias, unsigned AOHGain, int fedid, int ch, int which) {
-
-
-  std::cout << "[DEBUG] FilEm = " << " "<< AOHBias << " " << AOHGain << " " << fedid << " " << ch << " " << which << std::endl;
-  
-  if(which){
-    std::cout << "Fill in efficiency for fedid = " << fedid << " ch = " << ch << " AOHBias = "  << AOHBias << " " << std::endl;
-
-    effmap[fedid][ch][AOHGain]->Fill(AOHBias);
-  }
-
-}
+//void PixelFEDPOHBiasCalibration::FillEm(unsigned AOHBias, unsigned AOHGain, int fedid, int ch, int which) {
+//
+//
+//  std::cout << "[DEBUG] FilEm = " << " "<< AOHBias << " " << AOHGain << " " << fedid << " " << ch << " " << which << std::endl;
+//  
+//  if(which){
+//    std::cout << "Fill in efficiency for fedid = " << fedid << " ch = " << ch << " AOHBias = "  << AOHBias << " " << std::endl;
+//
+//    effmap[fedid][ch][AOHGain]->Fill(AOHBias);
+//  }
+//
+//}
 
 
 
