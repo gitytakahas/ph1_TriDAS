@@ -22,7 +22,9 @@ class PixelPOHBiasCalibration : public PixelCalibrationBase {
 //  bool CycleScopeChannels;
   //  bool DelayBeforeFirstTrigger;
   //  bool DelayEveryTrigger;
-  //  Attribute_Vector SetupParametersToFED() const;
+  //  Attribute_Vector SetupParametersToFED() const; 
+
+  //  std::map<std::string, std::map<unsigned, unsigned>> bias_values_by_portcard_and_aoh_new;
 };
 
 #endif

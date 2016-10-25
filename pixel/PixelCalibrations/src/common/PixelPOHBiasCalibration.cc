@@ -76,8 +76,6 @@ bool PixelPOHBiasCalibration::execute() {
   std::cout << "[DEBUG] AOHGainStepSize = " << AOHGainStepSize << std::endl;
   std::cout << "[DEBUG] nTriggersPerPOHBias = " << nTriggersPerPOHBias << std::endl;
 
-  //  const std::set<unsigned int> fedcrates=tempCalibObject->getFEDCrates(theNameTranslation_, theFEDConfiguration_);
-  //  const std::set<unsigned int> TKFECcrates=tempCalibObject->getTKFECCrates(thePortcardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
   
   for (unsigned int AOHBias = AOHBiasMin; AOHBias <= AOHBiasMax; AOHBias += AOHBiasStepSize){
       
@@ -129,9 +127,29 @@ void PixelPOHBiasCalibration::endCalibration() {
   parametersToFED[1].name_ = "StateNum"; parametersToFED[1].value_ = "0";
   commandToAllFEDCrates("FEDCalibrations", parametersToFED);
 
+  //Yuta and Lea: added portcard writing
+  //Write out the configs
+  /*  for (std::map<std::string, std::map<unsigned int, unsigned int> >::iterator portCardName_itr = bias_values_by_portcard_and_aoh_new.begin(); portCardName_itr != bias_values_by_portcard_and_aoh_new.end(); portCardName_itr++){
+    std::string portCardName = portCardName_itr->first;
+    std::map<std::string, PixelPortCardConfig*>::iterator mapNamePortCard_itr = getmapNamePortCard()->find(portCardName);
+    assert( mapNamePortCard_itr != getmapNamePortCard()->end());
+    PixelPortCardConfig* thisPortCardConfig = mapNamePortCard_itr->second;
+    for(std::map<unsigned int, unsigned int >::iterator AOHNumber_itr = portCardName_itr->second.begin(); AOHNumber_itr != portCardName_itr->second.end(); AOHNumber_itr++){
+      unsigned int AOHNumber = AOHNumber_itr->first;
+      unsigned int AOHBiasAddress = thisPortCardConfig->AOHBiasAddressFromAOHNumber(AOHNumber);
+      thisPortCardConfig->setdeviceValues(AOHBiasAddress, bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber]);
+	}
+    thisPortCardConfig->writeASCII(outputDir());
+    cout << "Wrote the portcard config for port card: " << portCardName << endl;
+    } */
+  ///
+
+
+
 }
 
 std::vector<std::string> PixelPOHBiasCalibration::calibrated() {
   std::vector<std::string> tmp;
+  tmp.push_back("portcard");
   return tmp;
 }
