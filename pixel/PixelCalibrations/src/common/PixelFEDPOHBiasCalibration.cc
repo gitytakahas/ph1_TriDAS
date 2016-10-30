@@ -12,7 +12,6 @@
 #include "PixelUtilities/PixelFEDDataTools/include/DigScopeDecoder.h"
 #include "PixelUtilities/PixelFEDDataTools/include/DigTransDecoder.h"
 #include "PixelUtilities/PixelFEDDataTools/include/FIFO3Decoder.h"
-#include "PixelUtilities/PixelRootUtilities/include/PixelRootDirectoryMaker.h"
 #include "PixelUtilities/PixelFEDDataTools/include/DigFIFO1Decoder.h"
 
 #include "TFile.h"
@@ -54,10 +53,10 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::beginCalibration(xoap::Messag
   PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
   assert(tempCalibObject != 0);
 
-  tempCalibObject->writeASCII(outputDir());
+  //  tempCalibObject->writeASCII(outputDir());
   DumpFIFOs = tempCalibObject->parameterValue("DumpFIFOs") == "yes";
 
-  std::cout << "[DEBUG] OutputDir = " << outputDir() << ", dumpFIFOs = " << DumpFIFOs << std::endl;
+  std::cout << "DumpFIFOs = " <<DumpFIFOs << std::endl;
 
   setFIFO1Mode();//jen
 
@@ -82,18 +81,16 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::execute(xoap::MessageReferenc
   const unsigned fednumber = atoi(parameters[3].value_.c_str());
   const unsigned channel = atoi(parameters[4].value_.c_str());
 
+    
+  xoap::MessageReference reply = MakeSOAPMessageReference("FEDCalibrationsDone");
+  
   if (parameters[0].value_ == "RetrieveData")
-    RetrieveData(AOHBias, AOHGain, fednumber, channel);
-  //  else if (parameters[0].value_ == "Analyze")
-  //    Analyze();
+    reply = RetrieveData(AOHBias, AOHGain, fednumber, channel);
   else {
     cout << "ERROR: PixelFEDPOHBiasCalibration::execute() does not understand the WhatToDo command, "<< parameters[0].value_ <<", sent to it.\n";
     assert(0);
   }
 
-
-
-  xoap::MessageReference reply = MakeSOAPMessageReference("FEDCalibrationsDone");
   return reply;
 }
 
@@ -108,11 +105,10 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::endCalibration(xoap::MessageR
 ///////////////////////////////////////////////////////////////////////////////////////////////
 xoap::MessageReference PixelFEDPOHBiasCalibration::RetrieveData(unsigned AOHBias, unsigned AOHGain, unsigned int fednumber, unsigned int channel){
 
-  //void PixelFEDPOHBiasCalibration::RetrieveData(unsigned int AOHBias, unsigned int AOHGain, int fednumber, int channel){
-  
-  std::cout << "Enter retrieve data @ event = " << event_ << std::endl;
-  std::cout << "AOHBias = " << AOHBias << ", AOHGain = " << AOHGain << " fednumber = " << fednumber << ", channel = " << channel << std::endl;
-  
+  //  std::cout << "Enter retrieve data @ event = " << event_ << std::endl;
+  //  std::cout << "AOHBias = " << AOHBias << ", AOHGain = " << AOHGain << " fednumber = " << fednumber << ", channel = " << channel << std::endl;
+
+ 
   PixelCalibConfiguration* tempCalibObject = dynamic_cast <PixelCalibConfiguration*> (theCalibObject_);
   assert(tempCalibObject!=0);
 
@@ -127,27 +123,16 @@ xoap::MessageReference PixelFEDPOHBiasCalibration::RetrieveData(unsigned AOHBias
   if (statusFifo1 > 0) {
 
     DigFIFO1Decoder theFIFO1Decoder(bufferFifo1,statusFifo1);
-    std::cout << "[DEBUG] after Fifo1 definition globalChannel = " << (int)theFIFO1Decoder.globalChannel() << " " << channel <<std::endl;
 
     if( (int)theFIFO1Decoder.globalChannel() == (int)channel ){
       found_TBMA = theFIFO1Decoder.foundTBM();
 	
-      if( DumpFIFOs ){
-	std::cout << "-----------------------------------" << std::endl;
-	std::cout << "Contents of FIFO 1 for channel " << channel << " (status = " << statusFifo1 << ")" << std::endl;
-	std::cout << "-----------------------------------" << std::endl;
-	theFIFO1Decoder.printToStream(std::cout);
-      }
+      std::cout << "-----------------------------------" << std::endl;
+      std::cout << "Contents of FIFO 1 for channel " << channel << " (status = " << statusFifo1 << ")" << std::endl;
+      std::cout << "-----------------------------------" << std::endl;
+      theFIFO1Decoder.printToStream(std::cout);
     }
   }
-
-  std::cout << "[DEBUG] found_TBMA = " << found_TBMA << std::endl;
-      //      FillEm(AOHBias, AOHGain, fednumber, channel, found_TBMA);
-      //found[fednumber][channel] = found_TBMA;
-
-
-//    }// end loop on channels
-//  }//end loop on feds
 
   
   event_++;

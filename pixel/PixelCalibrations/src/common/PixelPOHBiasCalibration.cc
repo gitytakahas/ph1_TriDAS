@@ -3,6 +3,7 @@
 #include "PixelCalibrations/include/PixelPOHBiasCalibration.h"
 #include "PixelCalibrations/include/PixelPOHBiasCalibrationParameters.h"
 
+#include "PixelUtilities/PixelRootUtilities/include/PixelRootDirectoryMaker.h"
 #include <toolbox/convertstring.h>
 
 using namespace pos;
@@ -20,6 +21,45 @@ PixelPOHBiasCalibration::PixelPOHBiasCalibration(const PixelSupervisorConfigurat
 void PixelPOHBiasCalibration::beginCalibration() {
   PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
   assert(tempCalibObject != 0);
+
+  AOHBiasMin = k_ScanMin_default;
+  if ( tempCalibObject->parameterValue("ScanMin") != "" ) AOHBiasMin = atoi(tempCalibObject->parameterValue("ScanMin").c_str());
+
+  AOHBiasMax = k_ScanMax_default;;
+  if ( tempCalibObject->parameterValue("ScanMax") != "" ) AOHBiasMax = atoi(tempCalibObject->parameterValue("ScanMax").c_str());
+
+  AOHBiasStepSize = k_ScanStepSize_default;
+  if ( tempCalibObject->parameterValue("ScanStepSize") != "" ) AOHBiasStepSize = atoi(tempCalibObject->parameterValue("ScanStepSize").c_str());
+
+  AOHGainMin = k_GainMin_default;
+  if ( tempCalibObject->parameterValue("GainMin") != "" ) AOHGainMin = atoi(tempCalibObject->parameterValue("GainMin").c_str());
+
+  AOHGainMax = k_GainMax_default;;
+  if ( tempCalibObject->parameterValue("GainMax") != "" ) AOHGainMax = atoi(tempCalibObject->parameterValue("GainMax").c_str());
+
+  AOHGainStepSize = k_GainStepSize_default;
+  if ( tempCalibObject->parameterValue("GainStepSize") != "" ) AOHGainStepSize = atoi(tempCalibObject->parameterValue("GainStepSize").c_str());
+
+  nTriggersPerPOHBias = k_nTriggersPerPOHBias_default;
+  if ( tempCalibObject->parameterValue("nTriggersPerPOHBias") != "" ) nTriggersPerPOHBias = atoi(tempCalibObject->parameterValue("nTriggersPerPOHBias").c_str());
+
+  AllowPlateau = k_AllowPlateau_default;
+  if ( tempCalibObject->parameterValue("AllowPlateau") != "" ) AllowPlateau = atof(tempCalibObject->parameterValue("AllowPlateau").c_str());
+
+  std::cout << "[INFO] AOHBiasMin = " << AOHBiasMin << std::endl;
+  std::cout << "[INFO] AOHBiasMax = " << AOHBiasMax << std::endl;
+  std::cout << "[INFO] AOHBiasStepSize = " << AOHBiasStepSize << std::endl;
+  std::cout << "[INFO] AOHGainMin = " << AOHGainMin << std::endl;
+  std::cout << "[INFO] AOHGainMax = " << AOHGainMax << std::endl;
+  std::cout << "[INFO] AOHGainStepSize = " << AOHGainStepSize << std::endl;
+  std::cout << "[INFO] nTriggersPerPOHBias = " << nTriggersPerPOHBias << std::endl;
+  std::cout << "[INFO] AllowPlateau = " << AllowPlateau << std::endl;
+
+  tempCalibObject->writeASCII(outputDir());
+  std::cout << "[INFO] OutputDir = " << outputDir() << std::endl;
+    
+
+  BookEm();
 }
 
 
@@ -30,7 +70,6 @@ bool PixelPOHBiasCalibration::execute() {
   const bool firstOfPattern = event_ % tempCalibObject->nTriggersPerPattern() == 0;
   reportProgress(0.05);
 
-
   // Configure all TBMs and ROCs according to the PixelCalibConfiguration settings, but only when it's time for a new configuration.
   if (firstOfPattern) {
     commandToAllFECCrates("CalibRunning");
@@ -40,47 +79,11 @@ bool PixelPOHBiasCalibration::execute() {
   commandToAllFEDCrates("JMTJunk");
 
 
-  // Read out data from each FED.
-  std::cout << "[DEBUG] nTriggersPerPattern = " << tempCalibObject->nTriggersPerPattern() << std::endl;
-  std::cout << "[DEBUG] nTriggersTotal = " << tempCalibObject->nTriggersTotal() << std::endl;
-  std::cout << "[DEBUG] event_ = " << event_ << std::endl;
-
-
   const std::set<unsigned int> fedcrates=tempCalibObject->getFEDCrates(theNameTranslation_, theFEDConfiguration_);
   const std::set<unsigned int> TKFECcrates=tempCalibObject->getTKFECCrates(thePortcardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
 
 
   // Scan the AOH Bias 
-  
-  unsigned int AOHBiasMin = k_ScanMin_default;
-  if ( tempCalibObject->parameterValue("ScanMin") != "" ) AOHBiasMin = atoi(tempCalibObject->parameterValue("ScanMin").c_str());
-
-  unsigned int AOHBiasMax = k_ScanMax_default;;
-  if ( tempCalibObject->parameterValue("ScanMax") != "" ) AOHBiasMax = atoi(tempCalibObject->parameterValue("ScanMax").c_str());
-
-  unsigned int AOHBiasStepSize = k_ScanStepSize_default;
-  if ( tempCalibObject->parameterValue("ScanStepSize") != "" ) AOHBiasStepSize = atoi(tempCalibObject->parameterValue("ScanStepSize").c_str());
-
-  unsigned int AOHGainMin = k_GainMin_default;
-  if ( tempCalibObject->parameterValue("GainMin") != "" ) AOHGainMin = atoi(tempCalibObject->parameterValue("GainMin").c_str());
-
-  unsigned int AOHGainMax = k_GainMax_default;;
-  if ( tempCalibObject->parameterValue("GainMax") != "" ) AOHGainMax = atoi(tempCalibObject->parameterValue("GainMax").c_str());
-
-  unsigned int AOHGainStepSize = k_GainStepSize_default;
-  if ( tempCalibObject->parameterValue("GainStepSize") != "" ) AOHGainStepSize = atoi(tempCalibObject->parameterValue("GainStepSize").c_str());
-
-  unsigned int nTriggersPerPOHBias = k_nTriggersPerPOHBias_default;
-  if ( tempCalibObject->parameterValue("nTriggersPerPOHBias") != "" ) nTriggersPerPOHBias = atoi(tempCalibObject->parameterValue("nTriggersPerPOHBias").c_str());
-
-  std::cout << "[DEBUG] AOHBiasMin = " << AOHBiasMin << std::endl;
-  std::cout << "[DEBUG] AOHBiasMax = " << AOHBiasMax << std::endl;
-  std::cout << "[DEBUG] AOHBiasStepSize = " << AOHBiasStepSize << std::endl;
-  std::cout << "[DEBUG] AOHGainMin = " << AOHGainMin << std::endl;
-  std::cout << "[DEBUG] AOHGainMax = " << AOHGainMax << std::endl;
-  std::cout << "[DEBUG] AOHGainStepSize = " << AOHGainStepSize << std::endl;
-  std::cout << "[DEBUG] nTriggersPerPOHBias = " << nTriggersPerPOHBias << std::endl;
-
   const std::set<PixelChannel>& channelsToCalibrate = tempCalibObject->channelList();
   
   for (unsigned int AOHBias = AOHBiasMin; AOHBias <= AOHBiasMax; AOHBias += AOHBiasStepSize){
@@ -90,7 +93,7 @@ bool PixelPOHBiasCalibration::execute() {
     parametersToTKFEC[0].name_="AOHBias"; parametersToTKFEC[0].value_=itoa(AOHBias);
     commandToAllTKFECCrates("SetAOHBiasEnMass", parametersToTKFEC);
     
-    std::cout << "[DEBUG] POH bias = " << AOHBias << std::endl;
+    //    std::cout << "[INFO] POH bias = " << AOHBias << std::endl;
     
     for (unsigned int AOHGain=AOHGainMin; AOHGain <= AOHGainMax; ++AOHGain){
       
@@ -98,8 +101,7 @@ bool PixelPOHBiasCalibration::execute() {
       parametersToTKFEC_Gain[0].name_="AOHGain"; parametersToTKFEC_Gain[0].value_=itoa(AOHGain);
       commandToAllTKFECCrates("SetAOHGainEnMass", parametersToTKFEC_Gain);
       
-      std::cout << "[DEBUG] POH gain = " << AOHGain << std::endl;
-      
+      //      std::cout << "[INFO] POH gain = " << AOHGain << std::endl;
       
       for ( std::set<PixelChannel>::const_iterator channelsToCalibrate_itr = channelsToCalibrate.begin(); channelsToCalibrate_itr != channelsToCalibrate.end(); channelsToCalibrate_itr++ ){
 	
@@ -108,13 +110,11 @@ bool PixelPOHBiasCalibration::execute() {
 	const unsigned int fednumber = channelHdwAddress.fednumber();
 	const unsigned int fedcrate=theFEDConfiguration_->crateFromFEDNumber( fednumber );
 	const unsigned int channel = channelHdwAddress.fedchannel();
-	
-	std::cout << "CHECK !!!!! fednumber = " << fednumber << " fedcrate = " << fedcrate << " channel = " << channel << std::endl;
-	
+
 	for (unsigned int i_event=0; i_event < nTriggersPerPOHBias; ++i_event){
 
-	  sendTTCCalSync();	    	  
-	  
+	  sendTTCCalSync(); 
+  
 	  // Send trigger to all TBMs and ROCs.
 	  
 	  Attribute_Vector parametersToFED(5);
@@ -130,17 +130,23 @@ bool PixelPOHBiasCalibration::execute() {
 	  parametersToFED[3].value_ = itoa(fednumber);
 	  parametersToFED[4].value_ = itoa(channel);
 
-	  //	  xoap::MessageReference replyFromFED =  commandToAllFEDCrates("FEDCalibrations", parametersToFED);
 	  xoap::MessageReference replyFromFED = SendWithSOAPReply(PixelFEDSupervisors_[fedcrate], "FEDCalibrations", parametersToFED);
 
 
 	  Attribute_Vector returnValuesFromFED(1);
 	  returnValuesFromFED[0].name_="foundTBMA";
-	  //	  returnValuesFromFED[0].value_="TEST";
-
 	  Receive(replyFromFED, returnValuesFromFED);
 
-	  std::cout << "RETURN VALUE = " << returnValuesFromFED[0].value_ << std::endl;
+//	  b_channel = channel; 
+//	  b_fednumber = fednumber;
+//	  b_AOHGain = AOHGain;
+//	  b_AOHBias = AOHBias;
+//	  b_isFound = (int)atoi(returnValuesFromFED[0].value_.c_str());
+//	  tree->Fill();
+	  
+	  Int_t found_ = (int)atoi(returnValuesFromFED[0].value_.c_str());
+
+	  if(found_) histos[fednumber][channel][AOHGain]->Fill(AOHBias);
 	}
       }
     }
@@ -152,39 +158,120 @@ bool PixelPOHBiasCalibration::execute() {
 }
 
 void PixelPOHBiasCalibration::endCalibration() {
+
   PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
   assert(tempCalibObject != 0);
   assert(event_ == tempCalibObject->nTriggersTotal());
+
+  for(int index=0; index < (int)fednumber_.size(); index++){
+
+    int fed = fednumber_[index];
+    int channel = channel_[index];
+    int aoh = aohnumber_[index];
+    string portcard = portcard_[index];
+
+    Int_t firstPlateau_forPOH = -1;
 	
-//  Attribute_Vector parametersToFED(2);
-//  parametersToFED[0].name_ = "WhatToDo"; parametersToFED[0].value_ = "Analyze";
-//  parametersToFED[1].name_ = "StateNum"; parametersToFED[1].value_ = "0";
-//  commandToAllFEDCrates("FEDCalibrations", parametersToFED);
+    for(int channel_index = 0; channel_index < 2; channel_index++){
+      for (unsigned int AOHGain=AOHGainMin; AOHGain <= AOHGainMax; ++AOHGain){      
+
+	
+	if(AOHGain!=2) continue;
+
+	Int_t ch = channel + channel_index;
+	
+	histos[fed][ch][AOHGain]->Scale(1./nTriggersPerPOHBias);
+
+	bool reach_plateau = false;
+
+	//	Int_t counter_fail = 0;
+	//	Int_t counter_success = 0;
+	Int_t firstPlateau = -1;
+	Float_t plateau_eff = 0;
+	Float_t nplateau = 0;
+
+	for(int ibin=1; ibin < histos[fed][ch][AOHGain]->GetXaxis()->GetNbins()+1; ibin++){
+
+	  Float_t yval = histos[fed][ch][AOHGain]->GetBinContent(ibin);
+
+	  if(yval==1){
+	    if(reach_plateau==false){
+	      firstPlateau = histos[fed][ch][AOHGain]->GetBinLowEdge(ibin);
+	      if(firstPlateau_forPOH < firstPlateau) firstPlateau_forPOH = firstPlateau;
+	    }
+	    reach_plateau = true;
+	  }
+	  
+
+	  if(reach_plateau){
+	    plateau_eff += yval;
+	    nplateau+=1;
+	    //	    std::cout << "eff = " << plateau_eff << " yval =" << yval << " " << nplateau << std::endl;
+	  }
+	}
 
 
+	plateau_eff /= nplateau;
+
+	std::cout << "fed = " << fed << ", channel = " << ch << ", plateau = " << firstPlateau << " eff = " << plateau_eff << std::endl;
+	std::cout << "allow = " << AllowPlateau << std::endl;
+
+	if(plateau_eff > AllowPlateau) b_isStable = 1;
+	else b_isStable = 0;
+
+	if(firstPlateau < 20 && firstPlateau >= 0) b_isFastPlateau = 1;
+	else b_isFastPlateau = 0;
+
+	b_isPass = (b_isStable==1 && b_isFastPlateau==1);
+	b_channel = ch;
+	b_plateauX = firstPlateau;
+	b_fednumber = fed;
+	b_plateauEff = plateau_eff;
+	b_AOHGain = AOHGain;
+
+	tree->Fill();
+
+      }
+    }
+
+    std::cout << "-----------------------------------------" << std::endl;
+    std::cout << "New settings : FED" << fed << ", AOH" << aoh << " (portcard : " << portcard << ") : bias = " << firstPlateau_forPOH +5 <<  std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
+
+    if(firstPlateau_forPOH==-1){
+      bias_values_by_portcard_and_aoh_new[portcard][aoh] = 30;
+    }else{
+      bias_values_by_portcard_and_aoh_new[portcard][aoh] = firstPlateau_forPOH + 5; // safety factor
+    }
 
 
+  }
 
 
-
-
-  //Yuta and Lea: added portcard writing
+	
+  std::cout << "Start writing to the portcard config ..." << std::endl;
   //Write out the configs
-  /*  for (std::map<std::string, std::map<unsigned int, unsigned int> >::iterator portCardName_itr = bias_values_by_portcard_and_aoh_new.begin(); portCardName_itr != bias_values_by_portcard_and_aoh_new.end(); portCardName_itr++){
+
+  for (std::map<std::string, std::map<unsigned int, unsigned int> >::iterator portCardName_itr = bias_values_by_portcard_and_aoh_new.begin(); 
+       portCardName_itr != bias_values_by_portcard_and_aoh_new.end(); portCardName_itr++){
+
     std::string portCardName = portCardName_itr->first;
+
     std::map<std::string, PixelPortCardConfig*>::iterator mapNamePortCard_itr = getmapNamePortCard()->find(portCardName);
     assert( mapNamePortCard_itr != getmapNamePortCard()->end());
     PixelPortCardConfig* thisPortCardConfig = mapNamePortCard_itr->second;
+
     for(std::map<unsigned int, unsigned int >::iterator AOHNumber_itr = portCardName_itr->second.begin(); AOHNumber_itr != portCardName_itr->second.end(); AOHNumber_itr++){
       unsigned int AOHNumber = AOHNumber_itr->first;
       unsigned int AOHBiasAddress = thisPortCardConfig->AOHBiasAddressFromAOHNumber(AOHNumber);
       thisPortCardConfig->setdeviceValues(AOHBiasAddress, bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber]);
-	}
+      
+    }
     thisPortCardConfig->writeASCII(outputDir());
     cout << "Wrote the portcard config for port card: " << portCardName << endl;
-    } */
-  ///
+  }
 
+  CloseRootf();  
 
 
 }
@@ -197,298 +284,113 @@ std::vector<std::string> PixelPOHBiasCalibration::calibrated() {
 
 
 void PixelPOHBiasCalibration::CloseRootf() {
-//  if (rootf) {
-//    rootf->Write();
-//    rootf->Close();
-//    delete rootf;
-//  }
+  if (rootf) {
+    rootf->Write();
+    rootf->Close();
+    delete rootf;
+  }
 }
 
 
+void PixelPOHBiasCalibration::BookEm(){
 
-void PixelPOHBiasCalibration::BookEm(const TString &path) {
+  root_fn.Form("%s/POHBias.root", outputDir().c_str());
+  CloseRootf();
 
-//  TString root_fn;
-//  if (path == "")
-//    root_fn.Form("%s/POHBias.root", outputDir().c_str());
-//  else
-//    root_fn.Form("%s/POHBias_%s.root", outputDir().c_str(), path.Data());
-//
-//  cout << "writing histograms to file " << root_fn << endl;
-//  CloseRootf();
-//
-//  rootf = new TFile(root_fn, "create");
-//  assert(rootf->IsOpen());
-//
-//  tree = new TTree("tree", "tree");
-//
-//  tree->Branch("channel",&b_channel,"channel/I");
-//  tree->Branch("fednumber",&b_fednumber,"fednumber/I");
-//  tree->Branch("AOHGain",&b_AOHGain,"AOHGain/I");
-//  tree->Branch("isPass",&b_isPass,"isPass/I");
-//  tree->Branch("isStable",&b_isStable,"isStable/I");
-//  tree->Branch("isFirstPlateau",&b_isFirstPlateau,"isFirstPlateau/I");
-//    
-//
-//  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
-//  assert(tempCalibObject != 0);
-//
-//
-//  unsigned int AOHBiasMin = k_ScanMin_default;
-//  if ( tempCalibObject->parameterValue("ScanMin") != "" ) AOHBiasMin = atoi(tempCalibObject->parameterValue("ScanMin").c_str());
-//
-//  unsigned int AOHBiasMax = k_ScanMax_default;;
-//  if ( tempCalibObject->parameterValue("ScanMax") != "" ) AOHBiasMax = atoi(tempCalibObject->parameterValue("ScanMax").c_str());
-//
-//  unsigned int AOHBiasStepSize = k_ScanStepSize_default;
-//  if ( tempCalibObject->parameterValue("ScanStepSize") != "" ) AOHBiasStepSize = atoi(tempCalibObject->parameterValue("ScanStepSize").c_str());
-//
-//  unsigned int AOHGainMin = k_GainMin_default;
-//  if ( tempCalibObject->parameterValue("GainMin") != "" ) AOHGainMin = atoi(tempCalibObject->parameterValue("GainMin").c_str());
-//
-//  unsigned int AOHGainMax = k_GainMax_default;;
-//  if ( tempCalibObject->parameterValue("GainMax") != "" ) AOHGainMax = atoi(tempCalibObject->parameterValue("GainMax").c_str());
-//
-//  unsigned int AOHGainStepSize = k_GainStepSize_default;
-//  if ( tempCalibObject->parameterValue("GainStepSize") != "" ) AOHGainStepSize = atoi(tempCalibObject->parameterValue("GainStepSize").c_str());
-//
-//
-//  const std::vector<std::pair<unsigned, std::vector<unsigned> > >& fedsAndChannels = tempCalibObject->fedCardsAndChannels(crate_, theNameTranslation_, theFEDConfiguration_, theDetectorConfiguration_);
-//
-//  PixelRootDirectoryMaker rootDirs(fedsAndChannels,gDirectory);
-//
-//  std::vector<int> fed_contents;
-//  std::vector<int> channel_contents;
-//  
-//
-//  for (unsigned ifed = 0; ifed < fedsAndChannels.size(); ++ifed) {
-//
-//    const unsigned fednumber = fedsAndChannels[ifed].first;    
-//
-//    fed_contents.push_back(fednumber);
-//    std::cout << "[Analyze] fednumber : " << fednumber << std::endl;
-//
-//    std::map<int, std::map<int, TH1F*>> chmap;
-//    
-//    for( unsigned int ch = 0; ch < fedsAndChannels[ifed].second.size(); ch++ ){
-//
-//      int channel = (fedsAndChannels[ifed].second)[ch];
-//      if(ifed==0) channel_contents.push_back(channel); // avoid over-counting
-//      
-//      std::cout << "[Analyze] channel : " << channel << std::endl;
-//      
-//      rootDirs.cdDirectory(fedsAndChannels[ifed].first, (fedsAndChannels[ifed].second)[ch]);
-//      
-//      std::map<int, TH1F*> gainmap;
-//      TH1F *h_eff;
-//
-//      for (unsigned int AOHGain=AOHGainMin; AOHGain <= AOHGainMax; ++AOHGain){      
-//	
-//	TString hname; 
-//	hname.Form("Ch%i_Gain%i",(fedsAndChannels[ifed].second)[ch], AOHGain);
-//	
-//	h_eff = new TH1F(hname+"_eff", hname+"_eff", (AOHBiasMax - AOHBiasMin), AOHBiasMin, AOHBiasMax);
-//	h_eff->Sumw2();
-//	gainmap[AOHGain] = h_eff;
-//	
-//      }
-//      
-//      chmap[(fedsAndChannels[ifed].second)[ch]] = gainmap;
-//      
-//    }
-//
-//    effmap[fedsAndChannels[ifed].first] = chmap;
-//  }//close loop on feds
-//
-//   
-//  rootf->cd();
-//
-//
-//  summarymap = new TH2F("summarymap", "summarymap", 
-//			fed_contents.size(), 0, fed_contents.size(),
-//			channel_contents.size(), 0, channel_contents.size()
-//			);
-//  
-//  for(int xbin=1; xbin < summarymap->GetXaxis()->GetNbins()+1; xbin++){
-//    TString xlabel; xlabel.Form("FED%i", fed_contents.at(xbin-1));
-//
-//    summarymap->GetXaxis()->SetBinLabel(xbin, xlabel);
-//  }
-//  for(int ybin=1; ybin < summarymap->GetYaxis()->GetNbins()+1; ybin++){
-//    TString ylabel; ylabel.Form("Ch%i", channel_contents.at(ybin-1));
-//
-//    summarymap->GetYaxis()->SetBinLabel(ybin, ylabel);
-//  }
-//  summarymap->GetXaxis()->SetTitle("FED number");
-//  summarymap->GetYaxis()->SetTitle("Channel");
-//
-//  
-//  rootf->cd();
+  std::cout << "writing ROOT file" << std::endl;
+
+  rootf = new TFile(root_fn, "recreate");
+  assert(rootf->IsOpen());
+
+  tree = new TTree("tree", "tree");
+
+  tree->Branch("channel",&b_channel,"channel/I");
+  tree->Branch("fednumber",&b_fednumber,"fednumber/I");
+  tree->Branch("AOHGain",&b_AOHGain,"AOHGain/I");
+  tree->Branch("isStable",&b_isStable,"isStable/I");
+  tree->Branch("isFastPlateau",&b_isFastPlateau,"isFastPlateau/I");
+  tree->Branch("plateauX",&b_plateauX,"plateauX/I");
+  tree->Branch("plateauEff",&b_plateauEff,"plateauEff/F");
+  tree->Branch("isPass",&b_isPass,"isPass/I");
+
+
+
+  vectorOfPortcards.clear();  
+  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
+  assert(tempCalibObject != 0);
+
+  const std::set<PixelChannel>& channelsToCalibrate = tempCalibObject->channelList();
+
+  for ( std::set<PixelChannel>::const_iterator channelsToCalibrate_itr = channelsToCalibrate.begin(); 
+	channelsToCalibrate_itr != channelsToCalibrate.end(); channelsToCalibrate_itr++ ){
+	
+    const PixelHdwAddress& channelHdwAddress = theNameTranslation_->getHdwAddress(*channelsToCalibrate_itr);
+    const unsigned int fednumber = channelHdwAddress.fednumber();
+    const unsigned int channel = channelHdwAddress.fedchannel();
+
+    const std::pair< std::string, int > portCardAndAOH = thePortcardMap_->PortCardAndAOH(*channelsToCalibrate_itr);
+    const std::string portCardName = portCardAndAOH.first;     
+    const std::string tbmname = (*channelsToCalibrate_itr).TBMChannelStringFull();
+    
+    // This is to escape for A2/B2 channels - YT
+    if(tbmname.find("2")!=std::string::npos) continue;
+    assert(portCardName!="none");
+    
+    const int AOHNumber = portCardAndAOH.second;    
+
+    string vec = portCardName;
+    vec += "_POH";
+    vec += AOHNumber;
+      
+    std::cout << vec << std::endl;
+
+    vectorOfPortcards.push_back(vec);
+    portcard_.push_back(portCardName);
+    aohnumber_.push_back(AOHNumber);
+    channel_.push_back(channel);
+    fednumber_.push_back(fednumber);
+      
+  }
+
+  
+  rootDirs = new PixelRootDirectoryMaker(vectorOfPortcards, gDirectory);
+
+  for(int istr=0; istr < (int)portcard_.size(); istr++){
+    string dirname = portcard_[istr];
+    dirname += "_POH";
+    dirname += aohnumber_[istr];
+
+    std::cout << dirname << std::endl;
+
+    rootDirs->cdDirectory(dirname);
+
+    for(int channel_index = 0; channel_index < 2; channel_index++){
+      for (unsigned int AOHGain=AOHGainMin; AOHGain <= AOHGainMax; ++AOHGain){      
+	
+	Int_t channelstr = channel_[istr] + channel_index;
+	
+	TString hname = "h_eff_fed";
+	hname += fednumber_[istr];
+	hname += "_channel";
+	hname += channelstr;
+	hname += "_Gain";
+	hname += AOHGain;
+	
+	int nbins = ((AOHBiasMax - AOHBiasMin)/AOHBiasStepSize)+1;
+
+	TH1F *h_eff = new TH1F(hname, hname, 
+			       nbins, AOHBiasMin, AOHBiasMax+1);
+
+	//	h_eff->GetXaxis()->SetTitle("POH bias");
+	//	h_eff->GetYaxis()->SetTitle("efficiency");
+
+	histos[fednumber_[istr]][channelstr][AOHGain] = h_eff;
+
+      }
+    }
+  }
+
+  rootf->cd();
 }
 
-
-
-
-void PixelPOHBiasCalibration::Analyze() {
-//
-//  std::cout << "[DEBUG] entering Analyze function @ event_ = " << event_ << std::endl;
-//
-//  PixelCalibConfiguration* tempCalibObject = dynamic_cast<PixelCalibConfiguration*>(theCalibObject_);
-//  assert(tempCalibObject != 0);
-//
-//  //  const std::set<unsigned int> fedcrates=tempCalibObject->getFEDCrates(theNameTranslation_, theFEDConfiguration_);
-//  //  const std::set<unsigned int> TKFECcrates=tempCalibObject->getTKFECCrates(thePortcardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
-//
-//  unsigned int nTriggersPerPOHBias = k_nTriggersPerPOHBias_default;
-//  if ( tempCalibObject->parameterValue("nTriggersPerPOHBias") != "" ) nTriggersPerPOHBias = atoi(tempCalibObject->parameterValue("nTriggersPerPOHBias").c_str());
-//
-//  int fedcount = 0;
-//
-//  for(std::map<int,std::map<int, std::map<int, TH1F* > > >::iterator it1 = effmap.begin(); it1 != effmap.end(); ++it1){
-//    fedcount ++;
-//    
-//    int channelcount = 0;
-//    for(std::map<int, std::map<int, TH1F* > >::iterator it2 = it1->second.begin(); it2 != it1->second.end(); ++it2){
-//      channelcount ++;
-//      
-//      for(std::map<int, TH1F*>::iterator it3 = it2->second.begin(); it3 != it2->second.end(); ++it3){
-//
-//	Int_t fednumber = it1->first;
-//	Int_t channel = it2->first;
-//	Int_t AOHGain = it3->first;
-//
-//	std::cout << "[summary] fednumber = " << fednumber << std::endl;
-//	std::cout << "[summary] channel = " << channel << std::endl;
-//	std::cout << "[summary] AOHGain = " << AOHGain << std::endl;
-//	
-//	//	std::cout << it3->second->GetBinContent(1) << std::endl;
-//	
-//	//	bool isStable = false;
-//	//	bool isLatePlateau = false;
-//	bool reach_plateau = false;
-//
-//	Int_t counter_fail = 0;
-//	Int_t counter_success = 0;
-//
-//	Int_t firstPlateau = 999;
-//
-//	std::cout << "number of bins = " << it3->second->GetXaxis()->GetNbins() << std::endl;
-//	
-//	for(int ibin=1; ibin < it3->second->GetXaxis()->GetNbins()+1; ibin++){
-//	  Float_t yval = it3->second->GetBinContent(ibin);
-//	  std::cout << "yval = " << yval << std::endl;
-//
-//	  if(yval==nTriggersPerPOHBias){
-//	    std::cout << "reached plateau at " << it3->second->GetBinLowEdge(ibin) << std::endl;
-//	    if(reach_plateau==false) firstPlateau = it3->second->GetBinLowEdge(ibin);
-//	    reach_plateau = true;
-//	  }
-//	  
-//
-//	  if(reach_plateau){
-//	    if(yval==nTriggersPerPOHBias) counter_success ++;
-//	    else counter_fail ++;
-//	  }
-//
-//	}
-//	
-//
-//
-//	Float_t plateau_eff = 0;
-//	if(counter_success+counter_fail!=0){
-//	  plateau_eff = counter_success/(counter_success + counter_fail);
-//	}
-//
-//	std::cout << "plateau eff. = " << plateau_eff << std::endl;
-//
-//	if(plateau_eff == 1) b_isStable = 1;
-//	else b_isStable = 0;
-//
-//	if(firstPlateau < 15) b_isFirstPlateau = 1;
-//	else b_isFirstPlateau = 0;
-//
-//	std::cout << "check6 : " << firstPlateau << "-> isFirstPlateau = " << b_isFirstPlateau << std::endl;
-//
-//	b_isPass = (b_isStable==1 && b_isFirstPlateau==1);
-//	b_channel = channel;
-//	b_fednumber = fednumber;
-//	b_AOHGain = AOHGain;
-//	tree->Fill();
-//	
-//	// store here the best AOH Bias values ! 
-//	//	bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber] = selectedBiasValue;
-//
-//	if(AOHGain==2){
-//	  summarymap->SetBinContent(fedcount, channelcount, b_isPass);
-//	}
-//
-//      }
-//    }
-//  }
-//
-//
-//
-//
-//
-//  //bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber] = selectedBiasValue;
-//  //Write out the configs
-//
-//  // mimic PixelSuperVisorConfiguration ... 
-////  PixelPortcardMap *thePortCardMap_;
-////  pos::PixelTKFECConfig *theTKFECConfiguration_;
-////
-////  PixelConfigInterface::get(thePortCardMap_, "pixel/portcardmap/", *theGlobalKey_);
-////  PixelConfigInterface::get(theTKFECConfiguration_, "pixel/tkfecconfig/", *theGlobalKey_);
-////
-////  std::map<std::string,pos::PixelPortCardConfig*> * getmapNamePortCard();
-////
-////  tempCalibObject->getTKFECCrates(thePortCardMap_, *getmapNamePortCard(), theTKFECConfiguration_);
-//
-////  const std::set<PixelChannel>& channelsToCalibrate = tempCalibObject->channelList();
-////  for(std::set<PixelChannel>::const_iterator channelsToCalibrate_itr = channelsToCalibrate.begin();
-////      channelsToCalibrate_itr != channelsToCalibrate.end(); channelsToCalibrate_itr++){
-////
-////    const PixelHdwAddress& channelHdwAddress = theNameTranslation_->getHdwAddress(*channelsToCalibrate_itr);
-////    const unsigned int NFed = channelHdwAddress.fednumber();
-////    const unsigned int NChannel = channelHdwAddress.fedchannel();
-////    const unsigned int NFiber = NChannel/2;
-////
-////    std::cout << NFed << " " << NChannel << " " << NFiber << std::endl;
-////
-////    const std::pair< std::string, int > portCardAndAOH = thePortCardMap_->PortCardAndAOH(*channelsToCalibrate_itr);
-////    const std::string portCardName = portCardAndAOH.first; assert(portCardName!="none");
-////    const int AOHNumber = portCardAndAOH.second;
-////
-////    std::cout << portCardName << " " << AOHNumber << std::endl;
-////
-////    // This should be fixed !
-////    bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber] = 1.;
-////  }
-////
-////
-////  for ( std::map< std::string, std::map< unsigned int, unsigned int > >::iterator portCardName_itr = bias_values_by_portcard_and_aoh_new.begin(); 
-////	portCardName_itr != bias_values_by_portcard_and_aoh_new.end(); ++portCardName_itr ){
-////
-////    std::string portCardName = portCardName_itr->first;
-////    std::map<std::string,PixelPortCardConfig*>::iterator mapNamePortCard_itr = getmapNamePortCard()->find(portCardName);
-////    assert( mapNamePortCard_itr != getmapNamePortCard()->end() );
-////    PixelPortCardConfig* thisPortCardConfig = mapNamePortCard_itr->second;
-////		
-////    for ( std::map< unsigned int, unsigned int >::iterator AOHNumber_itr = portCardName_itr->second.begin(); AOHNumber_itr != portCardName_itr->second.end(); ++AOHNumber_itr )
-////      {
-////	unsigned int AOHNumber = AOHNumber_itr->first;
-////	unsigned int AOHBiasAddress = thisPortCardConfig->AOHBiasAddressFromAOHNumber(AOHNumber);
-////	thisPortCardConfig->setdeviceValues(AOHBiasAddress, bias_values_by_portcard_and_aoh_new[portCardName][AOHNumber]);
-////	
-////      }
-////		
-////    //    thisPortCardConfig->writeASCII(outputDir());
-////    std::cout << "Wrote portcard_"+portCardName+".dat"<<endl;
-////  }
-//
-//
-//
-//  CloseRootf();
-
-}
 

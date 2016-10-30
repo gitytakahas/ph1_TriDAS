@@ -18,6 +18,7 @@ namespace PixelPOHBiasCalibrationParameters {
 	const unsigned int k_GainMax_default = 3;
 	const unsigned int k_GainStepSize_default = 1;
 	const unsigned int k_nTriggersPerPOHBias_default = 8;
+	const float k_AllowPlateau_default = 0.95;
 	//	const unsigned int k_TargetBMin_default = 512-100;
 	//	const unsigned int k_TargetBMax_default = 512+100;
 	//	const int k_SaturationPointOffset_default = 4; // = 5 degrees x (22.5 ADC counts at 2Vpp / degree) / (29 ADC counts at 2Vpp / POH bias count) = 3.9 POH bias counts ~= 4 POH bias counts

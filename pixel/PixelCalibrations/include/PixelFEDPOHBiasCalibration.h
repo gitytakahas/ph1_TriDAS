@@ -59,7 +59,6 @@ class PixelFEDPOHBiasCalibration: public PixelFEDCalibrationBase {
 //  Int_t b_isStable;
 //  Int_t b_isFirstPlateau;
 
-  //  bool found_TBMA;
 
   // To write ASCII files
   //  pos::PixelPortcardMap *thePortCardMap_;
