@@ -1,13 +1,12 @@
 Mode: TBMDelay
 Parameters:
-DumpFIFOs yes
+DumpFIFOs no
 ReadFifo1 yes
 Rows:
-10
 Cols:
-10
 VcalHigh
-Set: Vcal 200
-Repeat: 10
+Scan: TBMPLL 0 255 4
+Set: Vcal 0
+Repeat: 100
 Rocs:
 all

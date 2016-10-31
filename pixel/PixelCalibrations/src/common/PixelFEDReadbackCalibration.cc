@@ -156,7 +156,19 @@ void PixelFEDReadbackCalibration::RetrieveData(unsigned state) {
        uint32_t mk = (w >> 21) & 0x1f;
        uint32_t az = (w >> 8) & 0x1fff;
        uint32_t f8 = w & 0xff;
+
+       uint32_t dcol = (w >> 16) & 0x1f;
+       uint32_t pxl = (w >> 8) & 0xff;
+
+       int column = dcol*2 + pxl%2;
+       int row = 80 - (pxl/2);
+
+       if(az!=0 && mk != 0x1e && mk != 0x1f){
+	 std::cout << "[column, row] = " << column << " " << row << std::endl;
+       }
+
        if (az == 0 && mk != 0x1e ){
+	 std::cout << "check : " << mk << " " << rocs.size() << std::endl;
         if( mk <= rocs.size() ){
          last_dacs[fedsAndChannels[ifed].first][channel][mk].push_back(f8);
         }
@@ -185,6 +197,7 @@ void PixelFEDReadbackCalibration::Analyze() {
   assert(tempCalibObject != 0);
 
   std::map<std::string,int> nFEDchannelsPerModule;
+  std::map<std::string,int> nROCsPerModule;  
 
   //fill histo with sum of channels
   for( std::map<int,std::map<int,std::vector<TH2F*> > >::iterator it1 = scansROCs.begin(); it1 != scansROCs.end(); ++it1 ){
@@ -199,6 +212,10 @@ void PixelFEDReadbackCalibration::Analyze() {
 
     if( nFEDchannelsPerModule.find(moduleName) == nFEDchannelsPerModule.end() ) nFEDchannelsPerModule[moduleName] = 1;
     else nFEDchannelsPerModule[moduleName] += 1;
+
+    const std::vector<PixelROCName>& rocs = theNameTranslation_->getROCsFromFEDChannel(it1->first, it2->first);
+    if( nROCsPerModule.find(moduleName) == nROCsPerModule.end() ) nROCsPerModule[moduleName] = rocs.size();
+    else nROCsPerModule[moduleName]+=rocs.size();
 
     for( unsigned int h = 0; h < it2->second.size(); ++h ) ROCsHistoSum[moduleName][0]->Add(it2->second[h]);
 
@@ -247,7 +264,7 @@ void PixelFEDReadbackCalibration::Analyze() {
 
    int delayXnew = delayXold;
    int delayYnew = delayYold;
-   if( nROCsForDelay[moduleName] == 16 ){
+   if( nROCsForDelay[moduleName] == nROCsPerModule[moduleName] ){
     passState[moduleName] = 1;
    }
    else{//maybe try here +=1 or 2 bins from the current value?
@@ -256,7 +273,7 @@ void PixelFEDReadbackCalibration::Analyze() {
 
     for( int bx = 1; bx < it->second[0]->GetNbinsX()+1; ++bx ){
      for( int by = 1; by < it->second[0]->GetNbinsY()+1; ++by ){ 
-      if( it->second[0]->GetBinContent(bx,by) == 16 ){ delayXnew = bx-1; delayYnew = by-1; passState[moduleName] = 1; break;}
+      if( it->second[0]->GetBinContent(bx,by) == nROCsPerModule[moduleName] ){ delayXnew = bx-1; delayYnew = by-1; passState[moduleName] = 1; break;}
      }//close loop on by
     }//close loop on bx
     
