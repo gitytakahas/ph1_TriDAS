@@ -2,11 +2,12 @@ Mode: TBMDelay
 Parameters:
 DumpFIFOs no
 ReadFifo1 yes
+writeElog yes
 Rows:
 Cols:
 VcalHigh
 Scan: TBMPLL 0 255 4
 Set: Vcal 0
-Repeat: 100
+Repeat: 1
 Rocs:
 all
