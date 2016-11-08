@@ -211,7 +211,6 @@ void PixelFEDIanaCalibration::IanaAnalysis(PixelCalibConfiguration* tmpCalib) {
 
   std::ofstream ofs(outtext);
   ofs << std::endl;
-
   
   branch theBranch;
   branch_sum theBranch_sum;
@@ -372,6 +371,15 @@ void PixelFEDIanaCalibration::IanaAnalysis(PixelCalibConfiguration* tmpCalib) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 void PixelFEDIanaCalibration::VdigAnalysis(PixelCalibConfiguration* tmpCalib) {  
 
+  std::ofstream ofs(outtext);
+  ofs << std::endl;
+  
+  string cmd = "/home/cmspixel/user/local/elog -h elog.physik.uzh.ch -p 8080 -s -v -u cmspixel uzh2014 -n 0 -l Pixel -a Filename=\"[POS e-log] ";
+  cmd += runDir();
+  cmd += " : Vdigi Scan\" -m ";
+  cmd += outtext;
+
+
   branch_sum_vdig theBranch;
   TDirectory* dirSummaries = gDirectory->mkdir("SummaryTrees","SummaryTrees");
   dirSummaries->cd();
@@ -451,11 +459,29 @@ void PixelFEDIanaCalibration::VdigAnalysis(PixelCalibConfiguration* tmpCalib) {
 
         delete froc;
 
+	TString cname = "Summary_";
+	cname += theROC.rocname();
+
+	TCanvas *can = new TCanvas(cname, cname);
+
         hVdig->Draw("HIST");
         hVdig->Write();
 
         theBranch.Mean = hVdig->GetMean();
         theBranch.RMS = hVdig->GetRMS();
+
+	ofs << "[result] Mean = " << hVdig->GetMean() << ", RMS = " << hVdig->GetRMS() << " for " << theROC.rocname().c_str() << std::endl;
+
+	TString filename = outputDir().c_str();
+	filename += "/";
+	filename += theROC.rocname().c_str();
+	filename += ".gif";
+	
+	can->Print(filename);
+
+	cmd += " -f ";
+	cmd += filename;
+
         tree->Fill();
 
      }            
@@ -464,6 +490,14 @@ void PixelFEDIanaCalibration::VdigAnalysis(PixelCalibConfiguration* tmpCalib) {
     in.close();  
    }//close loop on fed channels  
   }//close loop on feds  
+
+  if(writeElog){
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "e-log post:" << cmd << std::endl;
+    system(cmd.c_str());
+    std::cout << "---------------------------" << std::endl;
+  }
+
 
   CloseRootf();
 
