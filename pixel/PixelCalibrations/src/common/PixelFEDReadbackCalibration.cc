@@ -337,10 +337,12 @@ void PixelFEDReadbackCalibration::Analyze() {
    tree_sum->Fill();
    
    ofs << "[result] moduleName = "  << moduleName << std::endl;
-   ofs << "[result] deltaDelayX = " << delayXnew-delayXold << std::endl;
-   ofs << "[result] deltaDelayY = " << delayYnew-delayYold << std::endl;
+   ofs << "[result] old Delay X = " << delayXold << std::endl;
+   ofs << "[result] old Delay Y = " << delayYold << std::endl;
    ofs << "[result] new Delay X = " << delayXnew << std::endl;
    ofs << "[result] new Delay Y = " << delayYnew << std::endl;
+   ofs << "[result] deltaDelayX = " << delayXnew-delayXold << std::endl;
+   ofs << "[result] deltaDelayY = " << delayYnew-delayYold << std::endl;
    ofs << "[result] nROCsForDelay = " << nROCsForDelay[moduleName] << std::endl;
    ofs << "[result] passSate = "  << passState[moduleName] << std::endl;
 
@@ -441,8 +443,8 @@ void PixelFEDReadbackCalibration::BookEm(const TString& path) {
    std::vector<TH2F*> histosROC;
    TString hname(moduleName);
    TH2F* h_nROCHeaders = new TH2F(hname, hname, 8, 0, 8, 8, 0, 8 );
-   //h_nROCHeaders->SetXTitle("400 MHz phase");
-   //h_nROCHeaders->SetYTitle("160 MHz phase");
+   h_nROCHeaders->SetXTitle("400 MHz phase");
+   h_nROCHeaders->SetYTitle("160 MHz phase");
    histosROC.push_back(h_nROCHeaders);   
    ROCsHistoSum[moduleName] = histosROC;
     

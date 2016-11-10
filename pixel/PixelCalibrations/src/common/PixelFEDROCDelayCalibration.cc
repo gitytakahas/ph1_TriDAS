@@ -470,9 +470,11 @@ void PixelFEDROCDelayCalibration::Analyze() {
 
 
 
+   ofs << "[result] current ROC delay = " << currentTBMAdelay[it->first] << std::endl;
+   ofs << "[result] best ROC delay = " << bestROCDelay[it->first] << std::endl;
+   ofs << "[result] delta ROC delay = " << bestROCDelay[it->first] - currentTBMAdelay[it->first] << std::endl;
    ofs << "[result] port0 phase = " << (bestROCDelay[it->first]&7) << std::endl;
    ofs << "[result] port1 phase = " << ((bestROCDelay[it->first]&56)>>3) << std::endl;
-   ofs << "[result] delay ROC delay = " << bestROCDelay[it->first] - currentTBMAdelay[it->first] << std::endl;
    ofs << "[result] # ROCs = " << nROCsForBestROCDelay[it->first] << std::endl;
    ofs << "[result] isPass = " << passState[it->first] << std::endl;
 

@@ -639,12 +639,12 @@ void PixelFEDTBMDelayCalibration::BookEm(const TString& path) {
     std::vector<TH2F*> histosTBM;
     TString hname(moduleName);
     TH2F* h_TBM_nDecodes = new TH2F(hname+"_nTBMDecodes", hname+"_nTBMDecodes", 8, 0, 8, 8, 0, 8 );
-    //h_TBM_nDecodes->SetXTitle("400 MHz phase");
-    //h_TBM_nDecodes->SetYTitle("160 MHz phase");
+    h_TBM_nDecodes->SetXTitle("400 MHz phase");
+    h_TBM_nDecodes->SetYTitle("160 MHz phase");
     histosTBM.push_back(h_TBM_nDecodes);
     TH2F* h_nROCHeaders = new TH2F(hname+"_nROCHeaders", hname+"_nROCHeaders", 8, 0, 8, 8, 0, 8 );
-    //h_nROCHeaders->SetXTitle("400 MHz phase");
-    //h_nROCHeaders->SetYTitle("160 MHz phase");
+    h_nROCHeaders->SetXTitle("400 MHz phase");
+    h_nROCHeaders->SetYTitle("160 MHz phase");
     histosTBM.push_back(h_nROCHeaders);   
     TBMsHistoSum[moduleName] = histosTBM;
     
