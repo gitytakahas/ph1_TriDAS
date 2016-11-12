@@ -20,7 +20,7 @@ PixelElogMaker::PixelElogMaker(const std::string name){
 
 void PixelElogMaker::post(const std::string run, const std::string logoutput, const std::string plotcommand){
   
-  string cmd = "/home/cmspixel/user/local/elog -h elog.physik.uzh.ch -p 8080 -s -u cmspixel uzh2014 -n 0 -l PixelPOS -a Filename=\"[POS e-log] ";
+  string cmd = "/home/cmspixel/user/local/elog -h elog.physik.uzh.ch -p 8080 -s -u cmspixel uzh2014 -n 0 -l PixelPOS -a Filename=\"";
   cmd += run;
   cmd += " : ";
   cmd += titlename;

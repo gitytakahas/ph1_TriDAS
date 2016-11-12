@@ -71,6 +71,7 @@ xoap::MessageReference PixelFEDTBMDelayCalibration::beginCalibration(xoap::Messa
   }
 
   outtext.Form("%s/log.txt", outputDir().c_str());
+  elog = new PixelElogMaker("TBMPLL Delay scan");
 
   BookEm("");
 
@@ -152,6 +153,7 @@ void PixelFEDTBMDelayCalibration::RetrieveData(unsigned state) {
     const int MaxChans = 37;    
     uint32_t bufferFifo1[MaxChans][1024];
     int statusFifo1[MaxChans] = {0};
+
 
     //iFED->SetFitelFiberSwitchTopDauCard(0); // this should be configurable from outside
     //iFED->SetFitelFiberSwitchBottomDauCard(0);
@@ -463,11 +465,7 @@ void PixelFEDTBMDelayCalibration::Analyze() {
 
   if(writeElog){
 
-    string cmd = "/home/cmspixel/user/local/elog -h elog.physik.uzh.ch -p 8080 -s -v -u cmspixel uzh2014 -n 0 -l Pixel -a Filename=\"[POS e-log] ";
-    cmd += runDir();
-    cmd += " : TBMDelayCalibration\" -m ";
-    cmd += outtext;
-
+    string cmd = "";
 
     for( std::map<std::string,std::vector<int> >::iterator it = FEDchannelsPerModule.begin(); it != FEDchannelsPerModule.end(); ++it ){
       ofs << "Module : " << it->first << " ch = ";
@@ -536,13 +534,7 @@ void PixelFEDTBMDelayCalibration::Analyze() {
       }
     }
 
-
-    std::cout << "---------------------------" << std::endl;
-    std::cout << "e-log post:" << cmd << std::endl;
-    system(cmd.c_str());
-    //    int i = system(cmd.c_str());
-    // std::cout << "returnCode = " << i << std::endl;
-    std::cout << "---------------------------" << std::endl;    
+    elog->post(runDir(), (string)outtext, cmd);
 
   }
 

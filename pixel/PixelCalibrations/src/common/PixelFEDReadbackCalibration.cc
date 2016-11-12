@@ -67,6 +67,8 @@ xoap::MessageReference PixelFEDReadbackCalibration::beginCalibration(xoap::Messa
   }
 
   outtext.Form("%s/log.txt", outputDir().c_str());
+  elog = new PixelElogMaker("TBMPLL delay scan for readback");
+  
   BookEm("");
 
   xoap::MessageReference reply = MakeSOAPMessageReference("BeginCalibrationDone");
@@ -248,11 +250,7 @@ void PixelFEDReadbackCalibration::Analyze() {
   tree_sum->Branch("SummaryInfo",&theBranch_sum,"deltaDelayX/I:deltaDelayY/I:newDelayX/I:newDelayY/I:nROCs/D:moduleName/C",4096000);
   rootf->cd();
 
-  string cmd = "/home/cmspixel/user/local/elog -h elog.physik.uzh.ch -p 8080 -s -v -u cmspixel uzh2014 -n 0 -l Pixel -a Filename=\"[POS e-log] ";
-  cmd += runDir();
-  cmd += " : TBMPLL delay scan for readback Test\" -m ";
-  cmd += outtext;
-
+  string cmd = "";
 
   for( std::map<std::string,std::vector<TH2F*> >::iterator it = ROCsHistoSum.begin(); it != ROCsHistoSum.end(); ++it ){
 
@@ -366,12 +364,7 @@ void PixelFEDReadbackCalibration::Analyze() {
   }
   
   if(writeElog){
-    std::cout << "---------------------------" << std::endl;
-    std::cout << "e-log post:" << cmd << std::endl;
-    system(cmd.c_str());
-    //    int i = system(cmd.c_str());
-    // std::cout << "returnCode = " << i << std::endl;
-    std::cout << "---------------------------" << std::endl;    
+    elog->post(runDir(), (string)outtext, cmd);
   }
 
 

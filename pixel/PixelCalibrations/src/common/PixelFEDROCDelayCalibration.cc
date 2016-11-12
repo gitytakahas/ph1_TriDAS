@@ -75,6 +75,7 @@ xoap::MessageReference PixelFEDROCDelayCalibration::beginCalibration(xoap::Messa
     BookEm("");
 
   outtext.Form("%s/log.txt", outputDir().c_str());
+  elog = new PixelElogMaker("ROC Delay Scan");
 
   xoap::MessageReference reply = MakeSOAPMessageReference("BeginCalibrationDone");
   return reply;
@@ -483,10 +484,7 @@ void PixelFEDROCDelayCalibration::Analyze() {
 
   if(writeElog){
 
-    string cmd = "/home/cmspixel/user/local/elog -h elog.physik.uzh.ch -p 8080 -s -v -u cmspixel uzh2014 -n 0 -l Pixel -a Filename=\"[POS e-log] ";
-    cmd += runDir();
-    cmd += " : ROC Delay Scan\" -m ";
-    cmd += outtext;
+    string cmd = "";
     
     for( std::map<std::string,std::vector<TH2F*> >::iterator it = ROCsHistoSum.begin(); it != ROCsHistoSum.end(); ++it ){
       
@@ -509,12 +507,7 @@ void PixelFEDROCDelayCalibration::Analyze() {
       
     }
 
-    std::cout << "---------------------------" << std::endl;
-    std::cout << "e-log post:" << cmd << std::endl;
-    system(cmd.c_str());
-    std::cout << "---------------------------" << std::endl;
-
-
+    elog->post(runDir(), (string)outtext, cmd);
   }
 
 
